@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Pawn extends Piece {
     public Pawn(Position p, boolean isWhite) {
-        this.setFitWidth(80);
-        this.setFitHeight(80);
+        this.setFitWidth(this.width);
+        this.setFitHeight(this.width);
         this.pos = p;
         this.isWhite = isWhite;
         this.imgUrl = this.isWhite ?

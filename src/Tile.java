@@ -16,7 +16,7 @@ public class Tile extends StackPane {
         Color c = isWhite ? Color.LIGHTGREY : Color.DARKGRAY;
         Background b = new Background(new BackgroundFill(c, null, null));
         this.setBackground(b);
-        this.getChildren().add(new Rectangle(100, 100, Color.TRANSPARENT));
+        this.getChildren().add(new Rectangle(50, 50, Color.TRANSPARENT));
     }
 
 
