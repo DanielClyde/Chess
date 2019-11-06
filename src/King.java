@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class King extends Piece {
     public King(Position p, boolean isWhite) {
+        this.setFitWidth(80);
+        this.setFitHeight(80);
         this.pos = p;
         this.isWhite = isWhite;
         this.imgUrl = this.isWhite ?
@@ -14,5 +16,8 @@ public class King extends Piece {
 
     public ArrayList<Position> getLegalMoves() {
         return null;
+    }
+    public String toString() {
+        return "King at " + this.pos.col + "x" + this.pos.row;
     }
 }

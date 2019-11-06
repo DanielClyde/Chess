@@ -33,8 +33,11 @@ public class Board extends GridPane{
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    System.out.println("clicked");
-                    System.out.println(t.position.col + " " + t.position.row);
+                    if (t.piece != null) {
+                        System.out.println(t.piece.toString());
+                    } else {
+                        System.out.println("No piece at " + t.position.col + "x" + t.position.row);
+                    }
                 });
                 this.tiles[x][y] = t;
                 this.add(this.tiles[x][y], x, y);
@@ -55,6 +58,51 @@ public class Board extends GridPane{
                     t.setPiece(new Pawn(t.position, true));
                 } else if (t.position.row == 6) {
                     t.setPiece(new Pawn(t.position, false));
+                }
+                if (t.position.row == 0) {
+                    switch(t.position.col) {
+                        case 0:
+                        case 7:
+                            t.setPiece(new Rook(t.position, true));
+                            break;
+                        case 1:
+                        case 6:
+                            t.setPiece(new Knight(t.position, true));
+                            break;
+                        case 2:
+                        case 5:
+                            t.setPiece(new Bishop(t.position, true));
+                            break;
+                        case 3:
+                            t.setPiece(new Queen(t.position, true));
+                            break;
+                        case 4:
+                            t.setPiece(new King(t.position, true));
+                            break;
+                        default: break;
+                    }
+                } else if (t.position.row == 7){
+                    switch(t.position.col) {
+                        case 0:
+                        case 7:
+                            t.setPiece(new Rook(t.position, false));
+                            break;
+                        case 1:
+                        case 6:
+                            t.setPiece(new Knight(t.position, false));
+                            break;
+                        case 2:
+                        case 5:
+                            t.setPiece(new Bishop(t.position, false));
+                            break;
+                        case 3:
+                            t.setPiece(new Queen(t.position, false));
+                            break;
+                        case 4:
+                            t.setPiece(new King(t.position, false));
+                            break;
+                        default: break;
+                    }
                 }
 
             }

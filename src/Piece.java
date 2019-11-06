@@ -9,5 +9,6 @@ public abstract class Piece extends ImageView {
     public boolean isCaptured;
 
     public abstract ArrayList<Position> getLegalMoves();
+    public abstract String toString();
 
 }

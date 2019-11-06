@@ -17,4 +17,7 @@ public class Pawn extends Piece {
     public ArrayList<Position> getLegalMoves() {
         return null;
     }
+    public String toString() {
+        return "Pawn at " + this.pos.col + "x" + this.pos.row;
+    }
 }
