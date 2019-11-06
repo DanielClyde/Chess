@@ -10,6 +10,7 @@ public class Chess extends Application{
 
     @Override
     public void start(Stage stage) {
+        System.out.println("Testing");
         Board board = new Board();
         Scene sc = new Scene(board);
         stage.setScene(sc);
