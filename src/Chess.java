@@ -14,5 +14,6 @@ public class Chess extends Application{
         Scene sc = new Scene(board);
         stage.setScene(sc);
         stage.show();
+// changed something
     }
 }
