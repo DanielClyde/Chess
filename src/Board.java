@@ -1,6 +1,8 @@
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Board extends GridPane{
     public Tile[][] tiles;
@@ -27,7 +29,7 @@ public class Board extends GridPane{
     /**
     populates board with appropriate tiles and pieces
      */
-    public void putTilesOnBoard() {
+    private void putTilesOnBoard() {
         boolean isWhite = true;
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -35,6 +37,8 @@ public class Board extends GridPane{
                 t.setOnMouseClicked(e -> {
                     if (t.piece != null) {
                         System.out.println(t.piece.toString());
+                        ArrayList<Position> moves = t.piece.getLegalMoves();
+                        this.highlightAvailableMoves(moves);
                     } else {
                         System.out.println("No piece at " + t.position.col + "x" + t.position.row);
                     }
@@ -51,7 +55,7 @@ public class Board extends GridPane{
     /**
      used to test putting pictures on the board
      */
-    public void addPieces() {
+    private void addPieces() {
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
@@ -105,6 +109,19 @@ public class Board extends GridPane{
                     }
                 }
 
+            }
+        }
+    }
+
+    private void highlightAvailableMoves(ArrayList<Position> moves) {
+        for (int i = 0; i < 8; i ++) {
+            for (int j = 0; j < 8; j++) {
+                Position p = this.tiles[i][j].position;
+                for (Position pos : moves) {
+                    if(pos.col == p.col && pos.row == p.row) {
+                        this.tiles[i][j].setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
+                    }
+                }
             }
         }
     }

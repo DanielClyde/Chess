@@ -15,7 +15,15 @@ public class King extends Piece {
     }
 
     public ArrayList<Position> getLegalMoves() {
-        return null;
+        ArrayList<Position> moves = new ArrayList<Position>();
+        for (int rows = this.pos.row - 1; rows <= this.pos.row + 1; rows++) {
+            for (int cols = this.pos.col - 1; cols <= this.pos.col + 1; cols++) {
+                if (rows >= 0 && rows <= 7 && cols >= 0 && cols <= 7) {
+                    moves.add(new Position(cols, rows));
+                }
+            }
+        }
+        return moves;
     }
     public String toString() {
         return "King at " + this.pos.col + "x" + this.pos.row;
