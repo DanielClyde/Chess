@@ -1,9 +1,11 @@
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 
 public abstract class Piece extends ImageView {
-    public String imgUrl;
+//    public String imgUrl;
+    public Image img;
     public Position pos;
     public boolean isWhite;
     public boolean isCaptured;

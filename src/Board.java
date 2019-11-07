@@ -8,21 +8,13 @@ public class Board extends GridPane{
     public Tile[][] tiles;
 
     public Board () {
+        PieceImages pi = new PieceImages();
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
-        addPieces();
+        addPieces(pi);
     }
 
-    /**
-     unfinished, called when a tile is clicked, check if there is a piece on deck and move piece to that tile
-     */
-//    public void handleOnDeck(int i, int j){
-//        boardNodes[i][j] = this.onDeck;
-//        for (Node n : gp.getChildren()){
-//            System.out.println(n);
-//        }
-//        gp.add(this.onDeck.getImageView(), i, j);
-//    }
+
 
 
 
@@ -55,33 +47,33 @@ public class Board extends GridPane{
     /**
      used to test putting pictures on the board
      */
-    private void addPieces() {
+    private void addPieces(PieceImages pi) {
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
-                    t.setPiece(new Pawn(t.position, true));
+                    t.setPiece(new Pawn(t.position, true, pi));
                 } else if (t.position.row == 6) {
-                    t.setPiece(new Pawn(t.position, false));
+                    t.setPiece(new Pawn(t.position, false, pi));
                 }
                 if (t.position.row == 0) {
                     switch(t.position.col) {
                         case 0:
                         case 7:
-                            t.setPiece(new Rook(t.position, true));
+                            t.setPiece(new Rook(t.position, true, pi));
                             break;
                         case 1:
                         case 6:
-                            t.setPiece(new Knight(t.position, true));
+                            t.setPiece(new Knight(t.position, true, pi));
                             break;
                         case 2:
                         case 5:
-                            t.setPiece(new Bishop(t.position, true));
+                            t.setPiece(new Bishop(t.position, true, pi));
                             break;
                         case 3:
-                            t.setPiece(new Queen(t.position, true));
+                            t.setPiece(new Queen(t.position, true, pi));
                             break;
                         case 4:
-                            t.setPiece(new King(t.position, true));
+                            t.setPiece(new King(t.position, true, pi));
                             break;
                         default: break;
                     }
@@ -89,21 +81,21 @@ public class Board extends GridPane{
                     switch(t.position.col) {
                         case 0:
                         case 7:
-                            t.setPiece(new Rook(t.position, false));
+                            t.setPiece(new Rook(t.position, false, pi));
                             break;
                         case 1:
                         case 6:
-                            t.setPiece(new Knight(t.position, false));
+                            t.setPiece(new Knight(t.position, false, pi));
                             break;
                         case 2:
                         case 5:
-                            t.setPiece(new Bishop(t.position, false));
+                            t.setPiece(new Bishop(t.position, false, pi));
                             break;
                         case 3:
-                            t.setPiece(new Queen(t.position, false));
+                            t.setPiece(new Queen(t.position, false, pi));
                             break;
                         case 4:
-                            t.setPiece(new King(t.position, false));
+                            t.setPiece(new King(t.position, false, pi));
                             break;
                         default: break;
                     }
