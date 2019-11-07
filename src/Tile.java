@@ -8,6 +8,7 @@ public class Tile extends StackPane {
     boolean isWhite;
     public Piece piece;
     public Position position;
+    public boolean hasPiece;
 
 
     public Tile(boolean isWhite, Position position){
@@ -23,5 +24,10 @@ public class Tile extends StackPane {
     public void setPiece(Piece p) {
         this.piece = p;
         this.getChildren().add(this.piece);
+        this.hasPiece = true;
+    }
+
+    public boolean isActive(){
+        return true;
     }
 }

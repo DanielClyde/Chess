@@ -14,10 +14,6 @@ public class Board extends GridPane{
         addPieces(pi);
     }
 
-
-
-
-
     /**
     populates board with appropriate tiles and pieces
      */
@@ -30,7 +26,7 @@ public class Board extends GridPane{
                     if (t.piece != null) {
                         System.out.println(t.piece.toString());
                         ArrayList<Position> moves = t.piece.getLegalMoves();
-                        this.highlightAvailableMoves(moves);
+                        this.highlightAvailableMoves(moves, t.isWhite);
                     } else {
                         System.out.println("No piece at " + t.position.col + "x" + t.position.row);
                     }
@@ -105,12 +101,12 @@ public class Board extends GridPane{
         }
     }
 
-    private void highlightAvailableMoves(ArrayList<Position> moves) {
+    private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i ++) {
             for (int j = 0; j < 8; j++) {
                 Position p = this.tiles[i][j].position;
                 for (Position pos : moves) {
-                    if(pos.col == p.col && pos.row == p.row) {
+                    if(pos.col == p.col && pos.row == p.row && !this.tiles[i][j].isActive() && (isWhite ^ this.tiles[i][j].isWhite)) {
                         this.tiles[i][j].setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
                     }
                 }
