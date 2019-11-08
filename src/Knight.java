@@ -3,21 +3,35 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class Knight extends Piece {
-    public Knight(Position p, boolean isWhite, PieceImages images) {
+    public Knight(Position p, boolean isWhite, PieceImages images, Board bd) {
         this.setFitWidth(this.width);
         this.setFitHeight(this.width);
         this.pos = p;
         this.isWhite = isWhite;
-        this.img = this.isWhite ?
-//                "https://www.pinclipart.com/picdir/big/191-1916865_horse-chess-piece-knight-comments-knight-chess-piece.png" :
-//                "https://www.pinclipart.com/picdir/big/60-602828_chess-piece-knight-bishop-king-knight-chess-clip.png";
-                images.whiteKnight :
-                images.blackKnight;
+        this.img = this.isWhite ? images.whiteKnight : images.blackKnight;
         this.setImage(img);
+        this.board = bd;
     }
 
     public ArrayList<Position> getLegalMoves() {
-        return null;
+        ArrayList<Position> moves = new ArrayList<>();
+        if (this.pos.col - 2 >= 0 && this.pos.row-1 >= 0 && !this.board.tiles[this.pos.col-2][this.pos.row-1].hasPiece){
+            moves.add(new Position(this.pos.col-2, this.pos.row-1));}
+        if (this.pos.col - 2 >= 0 && this.pos.row+1 <= 7 && !this.board.tiles[this.pos.col-2][this.pos.row+1].hasPiece){
+            moves.add(new Position(this.pos.col-2, this.pos.row+1));}
+        if (this.pos.col + 2 <= 7 && this.pos.row-1 >= 0 && !this.board.tiles[this.pos.col+2][this.pos.row-1].hasPiece){
+            moves.add(new Position(this.pos.col+2, this.pos.row-1));}
+        if (this.pos.col + 2 <= 7 && this.pos.row+1 <= 7 && !this.board.tiles[this.pos.col+2][this.pos.row+1].hasPiece){
+            moves.add(new Position(this.pos.col+2, this.pos.row+1));}
+        if (this.pos.col - 1 >= 0 && this.pos.row-2 >= 0 && !this.board.tiles[this.pos.col-1][this.pos.row-2].hasPiece){
+            moves.add(new Position(this.pos.col-1, this.pos.row-2));}
+        if (this.pos.col + 1 <= 7 && this.pos.row-2 >= 0 && !this.board.tiles[this.pos.col+1][this.pos.row-2].hasPiece){
+            moves.add(new Position(this.pos.col+1, this.pos.row-2));}
+        if (this.pos.col - 1 >= 0 && this.pos.row+2 <= 7 && !this.board.tiles[this.pos.col-1][this.pos.row+2].hasPiece){
+            moves.add(new Position(this.pos.col-1, this.pos.row+2));}
+        if (this.pos.col +1 <= 7 && this.pos.row+2 <= 7 && !this.board.tiles[this.pos.col+1][this.pos.row+2].hasPiece ){
+            moves.add(new Position(this.pos.col+1, this.pos.row+2));}
+        return moves;
     }
     public String toString() {
         return "Knight at " + this.pos.col + "x" + this.pos.row;

@@ -8,9 +8,7 @@ public class King extends Piece {
         this.setFitHeight(this.width);
         this.pos = p;
         this.isWhite = isWhite;
-        this.img = this.isWhite ?
-                images.whiteKing :
-                images.blackKing;
+        this.img = this.isWhite ? images.whiteKing : images.blackKing;
         this.setImage(img);
     }
 
