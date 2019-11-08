@@ -42,13 +42,13 @@ public class Board extends GridPane{
 
 
     private void addPieces(PieceImages pi) {
-        this.tiles[4][4].setPiece(new Queen(new Position(4,4), true, pi, this));
+        this.tiles[7][5].setPiece(new Queen(new Position(4,4), true, pi, this));
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
-                    t.setPiece(new Pawn(t.position, true, pi));
+                    t.setPiece(new Pawn(t.position, true, pi, this));
                 } else if (t.position.row == 6) {
-                    t.setPiece(new Pawn(t.position, false, pi));
+                    t.setPiece(new Pawn(t.position, false, pi, this));
                 }
                 if (t.position.row == 0) {
                     switch(t.position.col) {
