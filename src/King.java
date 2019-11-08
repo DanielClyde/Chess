@@ -9,8 +9,6 @@ public class King extends Piece {
         this.pos = p;
         this.isWhite = isWhite;
         this.img = this.isWhite ?
-//                "https://www.pinclipart.com/picdir/big/69-695089_all-photo-png-clipart-king-chess-piece-clip.png" :
-//                "https://www.pinclipart.com/picdir/big/82-825511_big-image-png-king-chess-piece-silhouette-clipart.png";
                 images.whiteKing :
                 images.blackKing;
         this.setImage(img);

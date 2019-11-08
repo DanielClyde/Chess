@@ -44,61 +44,65 @@ public class Board extends GridPane{
      used to test putting pictures on the board
      */
     private void addPieces(PieceImages pi) {
-        for (Tile[] row : this.tiles) {
-            for (Tile t : row) {
-                if (t.position.row == 1) {
-                    t.setPiece(new Pawn(t.position, true, pi));
-                } else if (t.position.row == 6) {
-                    t.setPiece(new Pawn(t.position, false, pi));
-                }
-                if (t.position.row == 0) {
-                    switch(t.position.col) {
-                        case 0:
-                        case 7:
-                            t.setPiece(new Rook(t.position, true, pi));
-                            break;
-                        case 1:
-                        case 6:
-                            t.setPiece(new Knight(t.position, true, pi));
-                            break;
-                        case 2:
-                        case 5:
-                            t.setPiece(new Bishop(t.position, true, pi));
-                            break;
-                        case 3:
-                            t.setPiece(new Queen(t.position, true, pi));
-                            break;
-                        case 4:
-                            t.setPiece(new King(t.position, true, pi));
-                            break;
-                        default: break;
-                    }
-                } else if (t.position.row == 7){
-                    switch(t.position.col) {
-                        case 0:
-                        case 7:
-                            t.setPiece(new Rook(t.position, false, pi));
-                            break;
-                        case 1:
-                        case 6:
-                            t.setPiece(new Knight(t.position, false, pi));
-                            break;
-                        case 2:
-                        case 5:
-                            t.setPiece(new Bishop(t.position, false, pi));
-                            break;
-                        case 3:
-                            t.setPiece(new Queen(t.position, false, pi));
-                            break;
-                        case 4:
-                            t.setPiece(new King(t.position, false, pi));
-                            break;
-                        default: break;
-                    }
-                }
-
-            }
-        }
+        this.tiles[4][4].setPiece(new Rook(new Position(4,4), false, pi, this));
+        this.tiles[7][4].setPiece(new Rook(new Position(7,4), true, pi, this));
+        this.tiles[0][0].setPiece(new King(new Position(0,0), false, pi));
+        this.tiles[0][7].setPiece(new Rook(new Position(0,7), true, pi, this));
+//        for (Tile[] row : this.tiles) {
+//            for (Tile t : row) {
+//                if (t.position.row == 1) {
+//                    t.setPiece(new Pawn(t.position, true, pi));
+//                } else if (t.position.row == 6) {
+//                    t.setPiece(new Pawn(t.position, false, pi));
+//                }
+//                if (t.position.row == 0) {
+//                    switch(t.position.col) {
+//                        case 0:
+//                        case 7:
+//                            t.setPiece(new Rook(t.position, true, pi, this));
+//                            break;
+//                        case 1:
+//                        case 6:
+//                            t.setPiece(new Knight(t.position, true, pi));
+//                            break;
+//                        case 2:
+//                        case 5:
+//                            t.setPiece(new Bishop(t.position, true, pi));
+//                            break;
+//                        case 3:
+//                            t.setPiece(new Queen(t.position, true, pi));
+//                            break;
+//                        case 4:
+//                            t.setPiece(new King(t.position, true, pi));
+//                            break;
+//                        default: break;
+//                    }
+//                } else if (t.position.row == 7){
+//                    switch(t.position.col) {
+//                        case 0:
+//                        case 7:
+//                            t.setPiece(new Rook(t.position, false, pi, this));
+//                            break;
+//                        case 1:
+//                        case 6:
+//                            t.setPiece(new Knight(t.position, false, pi));
+//                            break;
+//                        case 2:
+//                        case 5:
+//                            t.setPiece(new Bishop(t.position, false, pi));
+//                            break;
+//                        case 3:
+//                            t.setPiece(new Queen(t.position, false, pi));
+//                            break;
+//                        case 4:
+//                            t.setPiece(new King(t.position, false, pi));
+//                            break;
+//                        default: break;
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
@@ -106,7 +110,7 @@ public class Board extends GridPane{
             for (int j = 0; j < 8; j++) {
                 Position p = this.tiles[i][j].position;
                 for (Position pos : moves) {
-                    if(pos.col == p.col && pos.row == p.row && !this.tiles[i][j].isActive() && (isWhite ^ this.tiles[i][j].isWhite)) {
+                    if(pos.col == p.col && pos.row == p.row ){//&& !this.tiles[i][j].isActive() && (isWhite ^ this.tiles[i][j].isWhite)) {
                         this.tiles[i][j].setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
                     }
                 }

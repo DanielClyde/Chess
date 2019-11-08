@@ -27,7 +27,5 @@ public class Tile extends StackPane {
         this.hasPiece = true;
     }
 
-    public boolean isActive(){
-        return true;
-    }
+
 }

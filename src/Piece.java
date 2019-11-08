@@ -10,7 +10,7 @@ public abstract class Piece extends ImageView {
     public boolean isWhite;
     public boolean isCaptured;
     public int width = 40;
-
+    public Board board;
     public abstract ArrayList<Position> getLegalMoves();
     public abstract String toString();
 

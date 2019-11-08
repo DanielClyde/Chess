@@ -9,16 +9,25 @@ public class Pawn extends Piece {
         this.pos = p;
         this.isWhite = isWhite;
         this.img = this.isWhite ?
-//                "https://www.pinclipart.com/picdir/big/203-2039435_bishop-rubber-stamp-chess-pawn-png-clipart.png" :
-//                "https://www.pinclipart.com/picdir/big/184-1845764_chess-piece-remix-pawn-pen-clipart.png";
                 images.whitePawn :
                 images.blackPawn;
         this.setImage(img);
+        boolean isFirstMove = true;
     }
 
     public ArrayList<Position> getLegalMoves() {
-        return null;
-    }
+        ArrayList<Position> moves = new ArrayList<>();
+        for (int i=0; i<8; i++){
+            for (int j=0; j<8; j++){
+
+            }
+        }
+//        if (this.pos.row-1)
+
+
+
+
+        return null;}
     public String toString() {
         return "Pawn at " + this.pos.col + "x" + this.pos.row;
     }
