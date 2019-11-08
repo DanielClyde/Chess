@@ -40,30 +40,8 @@ public class Board extends GridPane{
 
     }
 
-    /**
-     used to test putting pictures on the board
-     */
+
     private void addPieces(PieceImages pi) {
-//        this.tiles[3][1].setPiece(new Bishop(new Position(3,1), true, pi, this));
-//        this.tiles[3][3].setPiece(new Bishop(new Position(3,3), true, pi, this));
-//        this.tiles[4][7].setPiece(new Bishop(new Position(4,7), true, pi, this));
-//        this.tiles[4][2].setPiece(new Bishop(new Position(4,2), true, pi, this));
-//        this.tiles[0][0].setPiece(new Bishop(new Position(0,0), true, pi, this));
-
-
-//        this.tiles[5][3].setPiece(new Bishop(new Position(5,3), true, pi, this));
-//        this.tiles[4][4].setPiece(new Bishop(new Position(4,4), true, pi, this));
-//        this.tiles[7][4].setPiece(new Bishop(new Position(7,4), true, pi, this));
-//        this.tiles[0][0].setPiece(new King  (new Position(0,0), false, pi));
-//        this.tiles[0][7].setPiece(new Bishop(new Position(0,7), true, pi, this));
-//        this.tiles[3][2].setPiece(new Bishop(new Position(3,2), true, pi, this));
-//        boolean set = true;
-//        for (Tile[] row : this.tiles){
-//            for (Tile t : row){
-//                if (set){ t.setPiece(new Bishop(t.position, true, pi, this));}
-//                set = !set;
-//            }
-//        }
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
@@ -126,7 +104,7 @@ public class Board extends GridPane{
             for (int j = 0; j < 8; j++) {
                 Position p = this.tiles[i][j].position;
                 for (Position pos : moves) {
-                    if(pos.col == p.col && pos.row == p.row ){//&& !this.tiles[i][j].isActive() && (isWhite ^ this.tiles[i][j].isWhite)) {
+                    if(pos.col == p.col && pos.row == p.row ){
                         this.tiles[i][j].setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
                     }
                 }
