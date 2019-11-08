@@ -42,6 +42,7 @@ public class Board extends GridPane{
 
 
     private void addPieces(PieceImages pi) {
+        this.tiles[4][4].setPiece(new Queen(new Position(4,4), true, pi, this));
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
@@ -64,10 +65,10 @@ public class Board extends GridPane{
                             t.setPiece(new Bishop(t.position, true, pi, this));
                             break;
                         case 3:
-                            t.setPiece(new Queen(t.position, true, pi));
+                            t.setPiece(new Queen(t.position, true, pi, this));
                             break;
                         case 4:
-                            t.setPiece(new King(t.position, true, pi));
+                            t.setPiece(new King(t.position, true, pi, this));
                             break;
                         default: break;
                     }
@@ -86,10 +87,10 @@ public class Board extends GridPane{
                             t.setPiece(new Bishop(t.position, false, pi, this));
                             break;
                         case 3:
-                            t.setPiece(new Queen(t.position, false, pi));
+                            t.setPiece(new Queen(t.position, false, pi, this));
                             break;
                         case 4:
-                            t.setPiece(new King(t.position, false, pi));
+                            t.setPiece(new King(t.position, false, pi, this));
                             break;
                         default: break;
                     }
