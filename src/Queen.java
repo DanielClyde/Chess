@@ -21,124 +21,159 @@ public class Queen extends Piece {
         moves = addDownRight(moves);
         moves = addUpLeft(moves);
         moves = addUpRight(moves);
+        moves = addUp(moves);
+        moves = addLeft(moves);
+        moves = addDown(moves);
+        moves = addRight(moves);
 
-        // add tiles above
-        for (int rows=this.pos.row-1; rows>this.pos.row-7; rows--){
-            if (rows >= 0) {
-                if (!this.board.tiles[this.pos.col][rows].hasPiece) {
-                    System.out.println("(" + this.pos.col + ", " + rows + ")");
-                    moves.add(new Position(this.pos.col, rows));
-                }
-                else break;
-            }
-        }
-        // add tiles below
-        for (int rows=this.pos.row+1; rows<this.pos.row+7; rows++){
-            if (rows <= 7) {
-                if (!this.board.tiles[this.pos.col][rows].hasPiece) {
-                    System.out.println("(" + this.pos.col + ", " + rows + ")");
-                    moves.add(new Position(this.pos.col, rows));
-                }
-                else break;
-            }
-        }
-        // add tiles left
-        for (int columns=this.pos.col-1; columns>=this.pos.col-7; columns--){
-            if (columns >= 0){
-                if (!this.board.tiles[columns][this.pos.row].hasPiece){
-                    moves.add(new Position(columns, this.pos.row));
-                }
-                else break;
-            }
-        }
-        // add tiles right
-        for (int columns=this.pos.col+1; columns<=this.pos.col+7; columns++){
-            if (columns <= 7){
-                if (!this.board.tiles[columns][this.pos.row].hasPiece){
-                    moves.add(new Position(columns, this.pos.row));
-                }
-                else break;
-            }
-        }
 
         return moves;
     }
-    public ArrayList<Position> addDownLeft(ArrayList<Position> m){
-        // add tiles to the down and left
-        boolean done = false;
-        int row = this.pos.row+1;
-        int column = this.pos.col-1;
-        while(!done){
-            if (row <= 7 && column >= 0 ){
-                if (!board.tiles[column][row].hasPiece){
-                    m.add(new Position(column, row));
-                    row++;
-                    column--;
-                }
-                else done = true;
-            }
-            else done = true;
-        }
-        return m;
-    }
-
-    public ArrayList<Position> addUpLeft(ArrayList<Position> m){
-        // add tiles to the down and left
+    public ArrayList<Position> addUp(ArrayList<Position> moves){
         boolean done = false;
         int row = this.pos.row-1;
-        int column = this.pos.col-1;
-        while(!done){
-            if (row >= 0 && column >= 0 ){
-                if (!board.tiles[column][row].hasPiece){
-                    m.add(new Position(column, row));
-                    row--;
-                    column--;
+        while (!done){
+            if (row >= 0){
+                if (this.board.tiles[this.pos.col][row].hasPiece){
+                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(this.pos.col, row));
+                        break;
+                    }else break;
                 }
-                else done = true;
+                moves.add(new Position(this.pos.col, row));
+                row--;
             }
             else done = true;
         }
-        return m;
+        return moves;
     }
 
-    public ArrayList<Position> addDownRight(ArrayList<Position> m){
-        // add tiles to the down and left
+    public ArrayList<Position> addDown(ArrayList<Position> moves){
         boolean done = false;
         int row = this.pos.row+1;
-        int column = this.pos.col+1;
-        while(!done){
-            if (row <= 7 && column <= 7 ){
-                if (!board.tiles[column][row].hasPiece){
-                    m.add(new Position(column, row));
-                    row++;
-                    column++;
+        while (!done){
+            if (row <= 7){
+                if (this.board.tiles[this.pos.col][row].hasPiece){
+                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(this.pos.col, row));
+                        break;
+                    }else break;
                 }
-                else done = true;
+                moves.add(new Position(this.pos.col, row));
+                row++;
             }
             else done = true;
         }
-        return m;
+        return moves;
     }
 
-    public ArrayList<Position> addUpRight(ArrayList<Position> m){
-        // add tiles to the down and left
+    public ArrayList<Position> addRight(ArrayList<Position> moves){
         boolean done = false;
-        int row = this.pos.row-1;
-        int column = this.pos.col+1;
-        while(!done){
-            if (row >= 0 && column <= 7 ){
-                if (!board.tiles[column][row].hasPiece){
-                    m.add(new Position(column, row));
-                    row--;
-                    column++;
+        int col = this.pos.col+1;
+        while (!done){
+            if (col <= 7){
+                if (this.board.tiles[col][this.pos.row].hasPiece){
+                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(col, this.pos.row));
+                        break;
+                    }else break;
                 }
-                else done = true;
+                moves.add(new Position(col, this.pos.row));
+                col++; }
+            else done = true; }
+        return moves;
+    }
+
+    public ArrayList<Position> addLeft(ArrayList<Position> moves){
+        boolean done = false;
+        int col = this.pos.col-1;
+        while (!done){
+            if (col >= 0){
+                if (this.board.tiles[col][this.pos.row].hasPiece){
+                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(col, this.pos.row));
+                        break;
+                    }else break;
+                }
+                moves.add(new Position(col, this.pos.row));
+                col--;
             }
             else done = true;
         }
-        return m;
+        return moves;
+
     }
 
+    public ArrayList<Position> addDownLeft(ArrayList<Position> moves){
+        int row = this.pos.row+1;
+        int col = this.pos.col-1;
+        while(row <= 7 && col >= 0) {
+            if (this.board.tiles[col][row].hasPiece) {
+                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite) {
+                    moves.add(new Position(col, row));
+                    break;
+                } else break;
+            }
+            moves.add(new Position(col, row));
+            row++;
+            col--;
+        }
+        return moves;
+    }
+
+    public ArrayList<Position> addUpLeft(ArrayList<Position> moves){
+        int row = this.pos.row-1;
+        int col = this.pos.col-1;
+        while(row >= 0 && col >= 0){
+            if (this.board.tiles[col][row].hasPiece){
+                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(col, row));
+                    break;
+                }
+                else break;
+            }
+            moves.add(new Position(col, row));
+            row--;
+            col--;
+        }
+        return moves;
+    }
+
+    public ArrayList<Position> addDownRight(ArrayList<Position> moves){
+        int row = this.pos.row+1;
+        int col = this.pos.col+1;
+        while(row <= 7 && col <= 7){
+            if (this.board.tiles[col][row].hasPiece){
+                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(col, row));
+                    break;
+                }
+                else break;
+            }
+            moves.add(new Position(col, row));
+            row++;
+            col++;
+        }
+        return moves;
+    }
+
+    public ArrayList<Position> addUpRight(ArrayList<Position> moves){
+        int row = this.pos.row-1;
+        int col = this.pos.col+1;
+        while(row >= 0 && col <= 7){
+            if (this.board.tiles[col][row].hasPiece){
+                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(col, row));
+                    break;
+                }
+                else break;
+            }
+            moves.add(new Position(col, row));
+            row--;
+            col++;
+        }
+        return moves;
+    }
 
 
 

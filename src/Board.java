@@ -42,7 +42,9 @@ public class Board extends GridPane{
 
 
     private void addPieces(PieceImages pi) {
-        this.tiles[7][5].setPiece(new Queen(new Position(4,4), true, pi, this));
+        this.tiles[3][3].setPiece(new Bishop(new Position(3,3), true, pi, this));
+        this.tiles[1][5].setPiece(new Queen(new Position(1, 5), true, pi, this));
+
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {

@@ -1,4 +1,4 @@
-import javafx.scene.image.Image;
+
 
 import java.util.ArrayList;
 
@@ -18,69 +18,91 @@ public class Rook extends Piece {
 
         public ArrayList<Position> getLegalMoves() {
         ArrayList<Position> moves = new ArrayList<>();
-        // add tiles above
-        for (int rows=this.pos.row-1; rows>this.pos.row-7; rows--){
-            if (rows >= 0) {
-                if (!this.board.tiles[this.pos.col][rows].hasPiece) {
-                    System.out.println("(" + this.pos.col + ", " + rows + ")");
-                    moves.add(new Position(this.pos.col, rows));
-                }
-                else break;
-            }
-        }
-        // add tiles below
-        for (int rows=this.pos.row+1; rows<this.pos.row+7; rows++){
-                if (rows <= 7) {
-                    if (!this.board.tiles[this.pos.col][rows].hasPiece) {
-                        System.out.println("(" + this.pos.col + ", " + rows + ")");
-                        moves.add(new Position(this.pos.col, rows));
-                    }
-                    else break;
-                }
-            }
-        // add tiles left
-        for (int columns=this.pos.col-1; columns>=this.pos.col-7; columns--){
-            if (columns >= 0){
-                if (!this.board.tiles[columns][this.pos.row].hasPiece){
-                    moves.add(new Position(columns, this.pos.row));
-                }
-                else break;
-            }
-        }
-        // add tiles right
-        for (int columns=this.pos.col+1; columns<=this.pos.col+7; columns++){
-            if (columns <= 7){
-                if (!this.board.tiles[columns][this.pos.row].hasPiece){
-                    moves.add(new Position(columns, this.pos.row));
-                }
-                else break;
-            }
-        }
-
-
-
-
-
-
-        
-//        for (int rows=this.pos.row-7; rows<this.pos.row+8; rows++){
-//            if (rows >=0 && rows <= 7){
-//                moves.add(new Position(this.pos.col, rows));
-//            }
-//            if (rows == this.pos.row){
-//                for (int cols = this.pos.col-7; cols <= this.pos.col+7; cols++){
-//                    if (cols >= 0 && cols <= 7){
-//                        moves.add(new Position(cols, rows));
-//                    }
-//                }
-//            }
-//        }
-
-
-
-
+            moves = addUp(moves);
+            moves = addDown(moves);
+            moves = addRight(moves);
+            moves = addLeft(moves);
         return moves;
     }
+    public ArrayList<Position> addUp(ArrayList<Position> moves){
+        boolean done = false;
+        int row = this.pos.row-1;
+        while (!done){
+            if (row >= 0){
+                if (this.board.tiles[this.pos.col][row].hasPiece){
+                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(this.pos.col, row));
+                        break;
+                    }else break;
+                }
+                moves.add(new Position(this.pos.col, row));
+                row--;
+            }
+            else done = true;
+        }
+        return moves;
+    }
+
+
+    public ArrayList<Position> addDown(ArrayList<Position> moves){
+        boolean done = false;
+        int row = this.pos.row+1;
+        while (!done){
+            if (row <= 7){
+                if (this.board.tiles[this.pos.col][row].hasPiece){
+                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(this.pos.col, row));
+                        break;
+                    }else break;
+                }
+                moves.add(new Position(this.pos.col, row));
+                row++;
+            }
+            else done = true;
+        }
+        return moves;
+    }
+
+    public ArrayList<Position> addRight(ArrayList<Position> moves){
+        boolean done = false;
+        int col = this.pos.col+1;
+        while (!done){
+            if (col <= 7){
+                if (this.board.tiles[col][this.pos.row].hasPiece){
+                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(col, this.pos.row));
+                        break;
+                    }else break;
+                }
+                moves.add(new Position(col, this.pos.row));
+                col++; }
+            else done = true; }
+        return moves;
+    }
+
+    public ArrayList<Position> addLeft(ArrayList<Position> moves){
+        boolean done = false;
+        int col = this.pos.col-1;
+        while (!done){
+            if (col >= 0){
+                if (this.board.tiles[col][this.pos.row].hasPiece){
+                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
+                        moves.add(new Position(col, this.pos.row));
+                        break;
+                    }else break;
+                }
+                moves.add(new Position(col, this.pos.row));
+                col--;
+            }
+            else done = true;
+        }
+        return moves;
+
+    }
+
+
+
+
     public String toString() {
         return "Rook at " + this.pos.col + "x" + this.pos.row;
     }
