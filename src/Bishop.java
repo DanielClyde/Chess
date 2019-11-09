@@ -92,23 +92,6 @@ public class Bishop extends Piece {
         return moves;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public String toString() {
         return "Bishop at " + this.pos.col + "x" + this.pos.row;
     }

@@ -15,22 +15,64 @@ public class Knight extends Piece {
 
     public ArrayList<Position> getLegalMoves() {
         ArrayList<Position> moves = new ArrayList<>();
-        if (this.pos.col - 2 >= 0 && this.pos.row-1 >= 0 && !this.board.tiles[this.pos.col-2][this.pos.row-1].hasPiece){
-            moves.add(new Position(this.pos.col-2, this.pos.row-1));}
-        if (this.pos.col - 2 >= 0 && this.pos.row+1 <= 7 && !this.board.tiles[this.pos.col-2][this.pos.row+1].hasPiece){
-            moves.add(new Position(this.pos.col-2, this.pos.row+1));}
-        if (this.pos.col + 2 <= 7 && this.pos.row-1 >= 0 && !this.board.tiles[this.pos.col+2][this.pos.row-1].hasPiece){
-            moves.add(new Position(this.pos.col+2, this.pos.row-1));}
-        if (this.pos.col + 2 <= 7 && this.pos.row+1 <= 7 && !this.board.tiles[this.pos.col+2][this.pos.row+1].hasPiece){
-            moves.add(new Position(this.pos.col+2, this.pos.row+1));}
-        if (this.pos.col - 1 >= 0 && this.pos.row-2 >= 0 && !this.board.tiles[this.pos.col-1][this.pos.row-2].hasPiece){
-            moves.add(new Position(this.pos.col-1, this.pos.row-2));}
-        if (this.pos.col + 1 <= 7 && this.pos.row-2 >= 0 && !this.board.tiles[this.pos.col+1][this.pos.row-2].hasPiece){
-            moves.add(new Position(this.pos.col+1, this.pos.row-2));}
-        if (this.pos.col - 1 >= 0 && this.pos.row+2 <= 7 && !this.board.tiles[this.pos.col-1][this.pos.row+2].hasPiece){
-            moves.add(new Position(this.pos.col-1, this.pos.row+2));}
-        if (this.pos.col +1 <= 7 && this.pos.row+2 <= 7 && !this.board.tiles[this.pos.col+1][this.pos.row+2].hasPiece ){
-            moves.add(new Position(this.pos.col+1, this.pos.row+2));}
+        if (this.pos.col - 2 >= 0 && this.pos.row-1 >= 0){
+            if (this.board.tiles[this.pos.col-2][this.pos.row-1].hasPiece){
+                if (this.board.tiles[this.pos.col-2][this.pos.row-1].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col-2, this.pos.row-1));
+                }
+            }
+            else moves.add(new Position(this.pos.col-2, this.pos.row-1));}
+
+
+        if (this.pos.col + 2 <= 7 && this.pos.row-1 >= 0){
+            if (this.board.tiles[this.pos.col+2][this.pos.row-1].hasPiece){
+                if (this.board.tiles[this.pos.col+2][this.pos.row-1].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col+2, this.pos.row-1));
+                }
+            }
+            else moves.add(new Position(this.pos.col+2, this.pos.row-1));}
+
+        if (this.pos.col + 2 <= 7 && this.pos.row+1 <= 7){
+            if (this.board.tiles[this.pos.col+2][this.pos.row+1].hasPiece){
+                if (this.board.tiles[this.pos.col+2][this.pos.row+1].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col+2, this.pos.row+1));
+                }
+            }
+            else moves.add(new Position(this.pos.col+2, this.pos.row+1));}
+
+        if (this.pos.col - 1 >= 0 && this.pos.row-2 >= 0){
+            if (this.board.tiles[this.pos.col-1][this.pos.row-2].hasPiece){
+                if (this.board.tiles[this.pos.col-1][this.pos.row-2].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col-1, this.pos.row-2));
+                }
+            }
+            else moves.add(new Position(this.pos.col-1, this.pos.row-2));}
+
+        if (this.pos.col + 1 <= 7 && this.pos.row-2 >= 0){
+            if (this.board.tiles[this.pos.col+1][this.pos.row-2].hasPiece){
+                if (this.board.tiles[this.pos.col+1][this.pos.row-2].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col+1, this.pos.row-2));
+                }
+            }
+            else moves.add(new Position(this.pos.col+1, this.pos.row-2));}
+
+        if (this.pos.col - 1 >= 0 && this.pos.row+2 <= 7){
+            if (this.board.tiles[this.pos.col-1][this.pos.row+2].hasPiece){
+                if (this.board.tiles[this.pos.col-1][this.pos.row+2].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col-1, this.pos.row+2));
+                }
+            }
+            else moves.add(new Position(this.pos.col-1, this.pos.row+2));}
+
+        if (this.pos.col + 1 <= 7 && this.pos.row+2 <= 7){
+            if (this.board.tiles[this.pos.col+1][this.pos.row+2].hasPiece){
+                if (this.board.tiles[this.pos.col+1][this.pos.row+2].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col+1, this.pos.row+2));
+                }
+            }
+            else moves.add(new Position(this.pos.col+1, this.pos.row+2));}
+
+
         return moves;
     }
     public String toString() {
