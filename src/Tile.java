@@ -9,12 +9,15 @@ public class Tile extends StackPane {
     public Piece piece;
     public Position position;
     public boolean hasPiece;
+    public Color c;
 
 
     public Tile(boolean isWhite, Position position){
         this.position = position;
         this.isWhite = isWhite;
-        Color c = isWhite ? Color.BURLYWOOD : Color.GREEN;
+        Color white = Color.BURLYWOOD;
+        Color dark = Color.GREEN;
+        this.c = isWhite ? white : dark;
         Background b = new Background(new BackgroundFill(c, null, null));
         this.setBackground(b);
         this.getChildren().add(new Rectangle(50, 50, Color.TRANSPARENT));

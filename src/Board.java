@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Board extends GridPane{
     public Tile[][] tiles;
+    public Tile onDeck;
 
     public Board () {
         PieceImages pi = new PieceImages();
@@ -23,14 +24,35 @@ public class Board extends GridPane{
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
+                    if (this.onDeck == null){
                     if (t.piece != null) {
+                        this.onDeck = t;
                         System.out.println(t.piece.toString());
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else {
                         System.out.println("No piece at " + t.position.col + "x" + t.position.row);
                     }
-                });
+                }
+                else {
+                    ArrayList<Position> moves = onDeck.piece.getLegalMoves();
+                        System.out.println("09809809809809809");
+                    for (Position p : moves){
+                        if (p.row == t.position.row && p.col == t.position.col){
+                            Piece piece = onDeck.piece;
+                            onDeck.piece = null;
+                            this.tiles[t.position.col][t.position.row].getChildren().remove(t.piece);
+                            this.tiles[t.position.col][t.position.row].setPiece(piece);
+                            System.out.println("============================");
+
+                        }
+                    }
+                    for (Position p : moves){
+//                        t.c = t.isWhite white : dark;
+                    }
+                }
+                }
+                );
                 this.tiles[x][y] = t;
                 this.add(this.tiles[x][y], x, y);
                 isWhite = !isWhite;
@@ -116,29 +138,3 @@ public class Board extends GridPane{
     }
 }
 
-
-
-
-
-
-// populate multidimensional array boardNodes with pieces (doesn't put anything on the gui)
-//        for (int i=0; i < 8; i++){
-//            for (int j=0; j < 8; j++) {
-//                if (j == 1) boardNodes[i][j] = new Pieces.Pawn(p1, this);
-//                else if (j == 6) boardNodes[i][j] = new Pieces.Pawn(p2, this);
-//                else if (j == 7){
-//                    if (i == 2 || i == 5) boardNodes[i][j] = new Pieces.Bishop(p2);
-//                    if (i == 1 || i == 6) boardNodes[i][j] = new Pieces.Knight(p2);
-//                    if (i == 0 || i == 7) boardNodes[i][j] = new Pieces.Rook(p2);
-//                    if (i == 4) boardNodes[i][j] = new Pieces.King(p2);
-//                    if (i == 3) boardNodes[i][j] = new Pieces.Queen(p2);
-//                }
-//                else if (j == 0){
-//                    if (i == 2 || i == 5) boardNodes[i][j] = new Pieces.Bishop(p1);
-//                    if (i == 1 || i == 6) boardNodes[i][j] = new Pieces.Knight(p1);
-//                    if (i == 0 || i == 7) boardNodes[i][j] = new Pieces.Rook(p1);
-//                    if (i == 3) boardNodes[i][j] = new Pieces.King(p1);
-//                    if (i == 4) boardNodes[i][j] = new Pieces.Queen(p1);
-//                }
-//            }
-//        }
