@@ -1,3 +1,5 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -6,6 +8,7 @@ import java.util.ArrayList;
 
 public class Board extends GridPane{
     public Tile[][] tiles;
+    public Tile activeTile = null;
 
     public Board () {
         PieceImages pi = new PieceImages();
@@ -23,13 +26,29 @@ public class Board extends GridPane{
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null) {
+                    if (t.piece != null && this.activeTile == null) {
                         System.out.println(t.piece.toString());
+                        this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
+                    } else if (t.isHighlighted.getValue() && this.activeTile.piece != null){
+                        t.setPiece(activeTile.piece);
+                        this.activeTile.setPiece(null);
+                        this.activeTile = null;
+                        this.clearHighlightedTiles();
                     } else {
-                        System.out.println("No piece at " + t.position.col + "x" + t.position.row);
+                        this.activeTile = null;
+                        this.clearHighlightedTiles();
                     }
+                });
+                t.isHighlighted.addListener((o,b,b1) -> {
+                   if (o.getValue() == true) {
+                       t.setBackground(new Background(new BackgroundFill(Color.YELLOW, null,null)));
+                   } else {
+                       Color c = t.isWhite ? Color.BURLYWOOD : Color.GREEN;
+                       Background back = new Background(new BackgroundFill(c, null, null));
+                       t.setBackground(back);
+                   }
                 });
                 this.tiles[x][y] = t;
                 this.add(this.tiles[x][y], x, y);
@@ -38,6 +57,16 @@ public class Board extends GridPane{
             isWhite = !isWhite;
         }
 
+    }
+
+    private void clearHighlightedTiles() {
+        for (Tile[] row : this.tiles) {
+            for (Tile t : row) {
+                if (t.isHighlighted.getValue()) {
+                    t.isHighlighted.set(false);
+                }
+            }
+        }
     }
 
 
@@ -108,37 +137,10 @@ public class Board extends GridPane{
                 Position p = this.tiles[i][j].position;
                 for (Position pos : moves) {
                     if(pos.col == p.col && pos.row == p.row ){
-                        this.tiles[i][j].setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
+                        this.tiles[i][j].isHighlighted.set(true);
                     }
                 }
             }
         }
     }
 }
-
-
-
-
-
-
-// populate multidimensional array boardNodes with pieces (doesn't put anything on the gui)
-//        for (int i=0; i < 8; i++){
-//            for (int j=0; j < 8; j++) {
-//                if (j == 1) boardNodes[i][j] = new Pieces.Pawn(p1, this);
-//                else if (j == 6) boardNodes[i][j] = new Pieces.Pawn(p2, this);
-//                else if (j == 7){
-//                    if (i == 2 || i == 5) boardNodes[i][j] = new Pieces.Bishop(p2);
-//                    if (i == 1 || i == 6) boardNodes[i][j] = new Pieces.Knight(p2);
-//                    if (i == 0 || i == 7) boardNodes[i][j] = new Pieces.Rook(p2);
-//                    if (i == 4) boardNodes[i][j] = new Pieces.King(p2);
-//                    if (i == 3) boardNodes[i][j] = new Pieces.Queen(p2);
-//                }
-//                else if (j == 0){
-//                    if (i == 2 || i == 5) boardNodes[i][j] = new Pieces.Bishop(p1);
-//                    if (i == 1 || i == 6) boardNodes[i][j] = new Pieces.Knight(p1);
-//                    if (i == 0 || i == 7) boardNodes[i][j] = new Pieces.Rook(p1);
-//                    if (i == 3) boardNodes[i][j] = new Pieces.King(p1);
-//                    if (i == 4) boardNodes[i][j] = new Pieces.Queen(p1);
-//                }
-//            }
-//        }

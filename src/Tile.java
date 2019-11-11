@@ -1,3 +1,4 @@
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
@@ -9,6 +10,7 @@ public class Tile extends StackPane {
     public Piece piece;
     public Position position;
     public boolean hasPiece;
+    public SimpleBooleanProperty isHighlighted = new SimpleBooleanProperty(false);
 
 
     public Tile(boolean isWhite, Position position){
@@ -23,8 +25,11 @@ public class Tile extends StackPane {
 
     public void setPiece(Piece p) {
         this.piece = p;
-        this.getChildren().add(this.piece);
-        this.hasPiece = true;
+        if (p != null) {
+            this.getChildren().add(this.piece);
+            this.hasPiece = true;
+            this.piece.pos = this.position;
+        }
     }
 
 
