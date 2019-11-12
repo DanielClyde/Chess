@@ -1,7 +1,10 @@
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -40,14 +43,13 @@ public class Board extends GridPane{
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                     }
+                    this.updatePieceBoards();
                 });
                 t.isHighlighted.addListener((o,b,b1) -> {
                    if (o.getValue() == true) {
-                       t.setBackground(new Background(new BackgroundFill(Color.YELLOW, null,null)));
+                       t.startHighlight();
                    } else {
-                       Color c = t.isWhite ? Color.BURLYWOOD : Color.GREEN;
-                       Background back = new Background(new BackgroundFill(c, null, null));
-                       t.setBackground(back);
+                       t.clearHighlight();
                    }
                 });
                 this.tiles[x][y] = t;
@@ -57,6 +59,16 @@ public class Board extends GridPane{
             isWhite = !isWhite;
         }
 
+    }
+
+    private void updatePieceBoards() {
+        for (Tile[] row : this.tiles) {
+            for (Tile t : row) {
+                if (t.piece != null) {
+                    t.piece.updateBoard(this);
+                }
+            }
+        }
     }
 
     private void clearHighlightedTiles() {

@@ -1,9 +1,11 @@
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class Tile extends StackPane {
     boolean isWhite;
@@ -11,6 +13,7 @@ public class Tile extends StackPane {
     public Position position;
     public boolean hasPiece;
     public SimpleBooleanProperty isHighlighted = new SimpleBooleanProperty(false);
+    public Rectangle highlight;
 
 
     public Tile(boolean isWhite, Position position){
@@ -30,6 +33,24 @@ public class Tile extends StackPane {
             this.hasPiece = true;
             this.piece.pos = this.position;
         }
+    }
+
+    public void startHighlight() {
+        this.highlight = new Rectangle(this.getWidth(), this.getHeight(), Color.YELLOW);
+        FadeTransition ft = new FadeTransition();
+        ft.setNode(this.highlight);
+        ft.setFromValue(0.01);
+        ft.setToValue(0.8);
+        ft.setDuration(Duration.millis(1000));
+        ft.setCycleCount(4);
+        ft.setAutoReverse(true);
+        this.getChildren().add(this.highlight);
+        ft.play();
+    }
+
+    public void clearHighlight() {
+        this.getChildren().remove(this.highlight);
+        this.highlight = null;
     }
 
 
