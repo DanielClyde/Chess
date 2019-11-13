@@ -32,6 +32,7 @@ public class Tile extends StackPane {
             this.getChildren().add(this.piece);
             this.hasPiece = true;
             this.piece.pos = this.position;
+            this.piece.isFirstMove = false;
         }
     }
 

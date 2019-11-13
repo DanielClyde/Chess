@@ -25,6 +25,7 @@ public class Rook extends Piece {
         return moves;
     }
     public ArrayList<Position> addUp(ArrayList<Position> moves){
+        //TODO add castleing @Josh
         boolean done = false;
         int row = this.pos.row-1;
         while (!done){

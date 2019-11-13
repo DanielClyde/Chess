@@ -15,13 +15,15 @@ public class Pawn extends Piece {
         this.isFirstMove = true;
     }
     public ArrayList<Position> getLegalMoves() {
+        //TODO add first move thing @Jaxon
+        //TODO add lepeon move thing maybe i don't know @Josh
         ArrayList<Position> moves = new ArrayList<>();
         int forwardTwo = this.isWhite ? 2 : -2;
         int forwardOne = this.isWhite ? 1 : -1;
         if (this.pos.row+forwardOne >= 0 && this.pos.row+forwardOne <= 7){
             if (!this.board.tiles[this.pos.col][this.pos.row+forwardOne].hasPiece) {
                 moves.add(new Position(this.pos.col, this.pos.row+forwardOne));
-                if (this.pos.row+forwardTwo >= 0 && this.pos.row+forwardTwo <= 7){
+                if (this.pos.row+forwardTwo >= 0 && this.pos.row+forwardTwo <= 7 && this.isFirstMove){
                     if (this.board.tiles[this.pos.col][this.pos.row+forwardTwo].hasPiece){
                         if (this.board.tiles[this.pos.col][this.pos.row+forwardTwo].piece.isWhite ^ this.isWhite){
                             moves.add(new Position(this.pos.col, this.pos.row+forwardTwo));

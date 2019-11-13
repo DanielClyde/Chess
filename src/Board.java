@@ -14,6 +14,7 @@ public class Board extends GridPane{
     public Tile activeTile = null;
 
     public Board () {
+        //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
@@ -35,15 +36,21 @@ public class Board extends GridPane{
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null){
+                        //TODO add capture logic include adding things to the graveyard @Josh
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
+                        activeTile.hasPiece = false;
                         this.activeTile = null;
                         this.clearHighlightedTiles();
+                        //TODO this is where a message will be sent (send a board) @Daniel
+                        //TODO call a method to check for check and thats it @Jaxon
+                        //TODO add a check for if the king was just captured then end the game @Jaxon or whatever
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                     }
                     this.updatePieceBoards();
+                    //TODO toggle turn
                 });
                 t.isHighlighted.addListener((o,b,b1) -> {
                    if (o.getValue() == true) {
