@@ -2,7 +2,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -14,6 +13,7 @@ public class Board extends GridPane{
         PieceImages pi = new PieceImages();
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
+
         addPieces(pi);
     }
 
@@ -69,11 +69,7 @@ public class Board extends GridPane{
         }
     }
 
-
     private void addPieces(PieceImages pi) {
-        this.tiles[3][3].setPiece(new Bishop(new Position(3,3), true, pi, this));
-        this.tiles[1][5].setPiece(new Queen(new Position(1, 5), true, pi, this));
-
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
