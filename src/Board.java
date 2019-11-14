@@ -14,10 +14,12 @@ public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
     public boolean isWhiteTurn;
+    public ArrayList<Piece> capturedPieces;
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
+        this.capturedPieces = new ArrayList<>();
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -42,6 +44,7 @@ public class Board extends GridPane {
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
                         //TODO add capture logic include adding things to the graveyard @Josh
                         t.getChildren().remove(1);
+                        if (t.hasPiece) this.capturedPieces.add(t.piece); //adds the piece to the captured pieces arrayList
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
                         activeTile.hasPiece = false;
