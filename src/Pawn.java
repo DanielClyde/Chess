@@ -26,9 +26,9 @@ public class Pawn extends Piece {
                 if (this.pos.row+forwardTwo >= 0 && this.pos.row+forwardTwo <= 7 && this.isFirstMove){
                     if (this.board.tiles[this.pos.col][this.pos.row+forwardTwo].hasPiece){
                         if (this.board.tiles[this.pos.col][this.pos.row+forwardTwo].piece.isWhite ^ this.isWhite){
-                            moves.add(new Position(this.pos.col, this.pos.row+forwardTwo));
+                            moves.add(new Position(this.pos.col, this.pos.row+forwardTwo, true));
                         }
-                    }else moves.add(new Position(this.pos.col, this.pos.row+forwardTwo));
+                    }else moves.add(new Position(this.pos.col, this.pos.row+forwardTwo, true));
                 }
             }else {
                 if (this.board.tiles[this.pos.col][this.pos.row+forwardOne].piece.isWhite ^ this.isWhite){

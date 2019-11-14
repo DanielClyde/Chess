@@ -170,9 +170,10 @@ public class Board extends GridPane {
      * @param isWhite
      */
     private void checks(boolean isWhite) {
+        String player = isWhite ? "White" : "Black";
         if (check(isWhite)) {
-            if (checkMate(isWhite)) System.out.println("Game over, checkmate!");
-            else System.out.println("You're in Check!!"); }
+            if (checkMate(isWhite)) System.out.println("Game over! " + player + " is in checkmate!");
+            else System.out.println(player + " is in check!"); }
     }
 
     /**
