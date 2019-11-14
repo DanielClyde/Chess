@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
+    public boolean isWhiteTurn;
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -20,6 +21,8 @@ public class Board extends GridPane {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
+        isWhiteTurn = true;
+
     }
 
     /**
@@ -31,12 +34,12 @@ public class Board extends GridPane {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null) {
+                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
-                    } else if (t.isHighlighted.getValue() && this.activeTile.piece != null) {
+                    } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
                         //TODO add capture logic include adding things to the graveyard @Josh
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
@@ -44,9 +47,8 @@ public class Board extends GridPane {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         //TODO this is where a message will be sent (send a board) @Daniel
-                        //TODO call a method to check for check and thats it @Jaxon
                         checks();
-                        //TODO add a check for if the king was just captured then end the game @Jaxon or whatever
+                        isWhiteTurn = !isWhiteTurn;
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
