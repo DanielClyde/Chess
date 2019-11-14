@@ -45,7 +45,7 @@ public class Board extends GridPane {
                         this.clearHighlightedTiles();
                         //TODO this is where a message will be sent (send a board) @Daniel
                         //TODO call a method to check for check and thats it @Jaxon
-                        check(true);
+                        checks();
                         //TODO add a check for if the king was just captured then end the game @Jaxon or whatever
                     } else {
                         this.activeTile = null;
@@ -92,15 +92,15 @@ public class Board extends GridPane {
 
 
     private void addPieces(PieceImages pi) {
-        this.tiles[3][3].setPiece(new Bishop(new Position(3, 3), true, pi, this));
-        this.tiles[1][5].setPiece(new Queen(new Position(1, 5), true, pi, this));
+
 
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
                     t.setPiece(new Pawn(t.position, true, pi, this));
                     t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
-                } else if (t.position.row == 6) {
+                }
+                else if (t.position.row == 6) {
                     t.setPiece(new Pawn(t.position, false, pi, this));
                     t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
 
@@ -157,34 +157,84 @@ public class Board extends GridPane {
         }
     }
 
-    private void check(boolean isWhite) {
+    /**
+     * run checks on both kings to see if one is in checkmate or check
+     */
+    private void checks(){
+        checks(true);
+        checks(false);
+    }
+
+    /**
+     * run checks on one king to see if it is in checkmate or check
+     * @param isWhite
+     */
+    private void checks(boolean isWhite) {
+        if (check(isWhite)) {
+            if (checkMate(isWhite)) System.out.println("Game over, checkmate!");
+            else System.out.println("You're in Check!!"); }
+    }
+
+    /**
+     * check to see if a king is in check
+     * @param isWhite
+     * @return
+     */
+    private boolean check(boolean isWhite) {
         Tile kingTile = null;
-        ArrayList<Position> kingMoves = new ArrayList<>();
-        ArrayList<Tile> opponentPieces = new ArrayList<>();
         ArrayList<Position> opponentMoves = new ArrayList<>();
+        // find king's tile and populate opponent pieces and moves
         for (Tile[] t : this.tiles) {
             for (Tile tile : t) {
                 if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
                     kingTile = tile;
-                    kingMoves = tile.piece.getLegalMoves();
                 }
                 if (tile.hasPiece && tile.piece.isWhite != isWhite) {
-                    opponentPieces.add(tile);
                     opponentMoves.addAll(tile.piece.getLegalMoves());
                 }
             }
         }
-
+        // compare every position with king's position
         for (Position opponentMove : opponentMoves) {
             if (opponentMove.equals(kingTile.position)) {
-                System.out.println("yall are in check!!");
+                return true;
             }
-
         }
-
-
+        return false;
     }
 
+    /**
+     * check to see if a king is in checkmate
+     * @param isWhite
+     * @return
+     */
+    private boolean checkMate(boolean isWhite){
+        ArrayList<Position> kingMoves = new ArrayList<>();
+        ArrayList<Position> opponentMoves = new ArrayList<>();
+        // find king's tile and populate opponent moves
+        for (Tile[] t : this.tiles) {
+            for (Tile tile : t) {
+                if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
+                    kingMoves = tile.piece.getLegalMoves();
+                }
+                if (tile.hasPiece && tile.piece.isWhite != isWhite) {
+                    opponentMoves.addAll(tile.piece.getLegalMoves());
+                }
+            }
+        }
+        // check every possible move of the opponent against every possible move of the king, only return true if ALL
+        // of the king's moves equal the opponent's
+        int matchingTiles = 0;
+        for (int i=0; i<kingMoves.size(); i++){
+        for (Position opponentMove : opponentMoves) {
+            if (opponentMove.equals(kingMoves.get(i))) {
+                matchingTiles++;
+                break;
+            }
+            }
+        }
+        return matchingTiles >= kingMoves.size();
+    }
 
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i++) {
