@@ -10,11 +10,11 @@ import javafx.util.Duration;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Board extends GridPane{
+public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
 
-    public Board () {
+    public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
         this.tiles = new Tile[8][8];
@@ -23,7 +23,7 @@ public class Board extends GridPane{
     }
 
     /**
-    populates board with appropriate tiles and pieces
+     * populates board with appropriate tiles and pieces
      */
     private void putTilesOnBoard() {
         boolean isWhite = true;
@@ -36,7 +36,7 @@ public class Board extends GridPane{
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
-                    } else if (t.isHighlighted.getValue() && this.activeTile.piece != null){
+                    } else if (t.isHighlighted.getValue() && this.activeTile.piece != null) {
                         //TODO add capture logic include adding things to the graveyard @Josh
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
@@ -54,12 +54,12 @@ public class Board extends GridPane{
                     this.updatePieceBoards();
                     //TODO toggle turn
                 });
-                t.isHighlighted.addListener((o,b,b1) -> {
-                   if (o.getValue() == true) {
-                       t.startHighlight();
-                   } else {
-                       t.clearHighlight();
-                   }
+                t.isHighlighted.addListener((o, b, b1) -> {
+                    if (o.getValue() == true) {
+                        t.startHighlight();
+                    } else {
+                        t.clearHighlight();
+                    }
                 });
                 this.tiles[x][y] = t;
                 this.add(this.tiles[x][y], x, y);
@@ -92,7 +92,7 @@ public class Board extends GridPane{
 
 
     private void addPieces(PieceImages pi) {
-        this.tiles[3][3].setPiece(new Bishop(new Position(3,3), true, pi, this));
+        this.tiles[3][3].setPiece(new Bishop(new Position(3, 3), true, pi, this));
         this.tiles[1][5].setPiece(new Queen(new Position(1, 5), true, pi, this));
 
         for (Tile[] row : this.tiles) {
@@ -106,7 +106,7 @@ public class Board extends GridPane{
 
                 }
                 if (t.position.row == 0) {
-                    switch(t.position.col) {
+                    switch (t.position.col) {
                         case 0:
                         case 7:
                             t.setPiece(new Rook(t.position, true, pi, this));
@@ -125,10 +125,11 @@ public class Board extends GridPane{
                         case 4:
                             t.setPiece(new King(t.position, true, pi, this));
                             break;
-                        default: break;
+                        default:
+                            break;
                     }
-                } else if (t.position.row == 7){
-                    switch(t.position.col) {
+                } else if (t.position.row == 7) {
+                    switch (t.position.col) {
                         case 0:
                         case 7:
                             t.setPiece(new Rook(t.position, false, pi, this));
@@ -147,53 +148,50 @@ public class Board extends GridPane{
                         case 4:
                             t.setPiece(new King(t.position, false, pi, this));
                             break;
-                        default: break;
+                        default:
+                            break;
                     }
                 }
 
             }
         }
     }
-    private void check(boolean isWhite){
-        Tile kingTile;
+
+    private void check(boolean isWhite) {
+        Tile kingTile = null;
         ArrayList<Position> kingMoves = new ArrayList<>();
         ArrayList<Tile> opponentPieces = new ArrayList<>();
-        ArrayList<Position> opponentMoves= new ArrayList<>();
-        for (Tile[] t : this.tiles){
-            for (Tile tile : t){
-                if (tile.piece instanceof King && tile.piece.isWhite == isWhite){
+        ArrayList<Position> opponentMoves = new ArrayList<>();
+        for (Tile[] t : this.tiles) {
+            for (Tile tile : t) {
+                if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
                     kingTile = tile;
                     kingMoves = tile.piece.getLegalMoves();
                 }
-                if (tile.hasPiece && tile.piece.isWhite != isWhite){
+                if (tile.hasPiece && tile.piece.isWhite != isWhite) {
                     opponentPieces.add(tile);
                     opponentMoves.addAll(tile.piece.getLegalMoves());
                 }
             }
         }
-        for (int i=0; i < kingMoves.size(); i++){
-            for (int j=0; j < opponentMoves.size(); j++){
-                if (opponentMoves.get(j).equals(kingMoves.get(i))){
-                    System.out.println("yall are in check!!");
-                }
+
+        for (Position opponentMove : opponentMoves) {
+            if (opponentMove.equals(kingTile.position)) {
+                System.out.println("yall are in check!!");
             }
+
         }
-
-
-
 
 
     }
 
 
-
-
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
-        for (int i = 0; i < 8; i ++) {
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Position p = this.tiles[i][j].position;
                 for (Position pos : moves) {
-                    if(pos.col == p.col && pos.row == p.row ){
+                    if (pos.col == p.col && pos.row == p.row) {
                         this.tiles[i][j].isHighlighted.set(true);
                     }
                 }
