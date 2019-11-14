@@ -15,7 +15,6 @@ public class Pawn extends Piece {
         this.isFirstMove = true;
     }
     public ArrayList<Position> getLegalMoves() {
-        //TODO add first move thing @Jaxon
         //TODO add lepeon move thing maybe i don't know @Josh
         ArrayList<Position> moves = new ArrayList<>();
         int forwardTwo = this.isWhite ? 2 : -2;

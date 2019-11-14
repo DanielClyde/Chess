@@ -1,6 +1,7 @@
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -38,13 +39,13 @@ public class Board extends GridPane{
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null){
                         //TODO add capture logic include adding things to the graveyard @Josh
                         t.setPiece(activeTile.piece);
-//                        t.piece.isFirstMove=true; //setPiece sets this to false, this is where we'll make it true for the first time
                         this.activeTile.setPiece(null);
                         activeTile.hasPiece = false;
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         //TODO this is where a message will be sent (send a board) @Daniel
                         //TODO call a method to check for check and thats it @Jaxon
+                        check(true);
                         //TODO add a check for if the king was just captured then end the game @Jaxon or whatever
                     } else {
                         this.activeTile = null;
@@ -153,6 +154,39 @@ public class Board extends GridPane{
             }
         }
     }
+    private void check(boolean isWhite){
+        Tile kingTile;
+        ArrayList<Position> kingMoves = new ArrayList<>();
+        ArrayList<Tile> opponentPieces = new ArrayList<>();
+        ArrayList<Position> opponentMoves= new ArrayList<>();
+        for (Tile[] t : this.tiles){
+            for (Tile tile : t){
+                if (tile.piece instanceof King && tile.piece.isWhite == isWhite){
+                    kingTile = tile;
+                    kingMoves = tile.piece.getLegalMoves();
+                }
+                if (tile.hasPiece && tile.piece.isWhite != isWhite){
+                    opponentPieces.add(tile);
+                    opponentMoves.addAll(tile.piece.getLegalMoves());
+                }
+            }
+        }
+        for (int i=0; i < kingMoves.size(); i++){
+            for (int j=0; j < opponentMoves.size(); j++){
+                if (opponentMoves.get(j).equals(kingMoves.get(i))){
+                    System.out.println("yall are in check!!");
+                }
+            }
+        }
+
+
+
+
+
+    }
+
+
+
 
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i ++) {

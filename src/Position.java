@@ -6,4 +6,8 @@ public class Position {
         this.col = x;
         this.row = y;
     }
+
+    public boolean equals(Position p) {
+        return this.row == p.row && this.col == p.col;
+    }
 }

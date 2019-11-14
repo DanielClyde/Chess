@@ -18,8 +18,14 @@ public class King extends Piece {
         ArrayList<Position> moves = new ArrayList<Position>();
         for (int rows = this.pos.row - 1; rows <= this.pos.row + 1; rows++) {
             for (int cols = this.pos.col - 1; cols <= this.pos.col + 1; cols++) {
-                if (rows >= 0 && rows <= 7 && cols >= 0 && cols <= 7 && !this.board.tiles[cols][rows].hasPiece) {
-                    moves.add(new Position(cols, rows));
+                if (rows >= 0 && rows <= 7 && cols >= 0 && cols <= 7) {
+                    if (this.board.tiles[cols][rows].hasPiece){
+                        if (this.board.tiles[cols][rows].piece.isWhite ^ this.isWhite){
+                            moves.add(new Position(cols, rows));
+                        }
+
+                    }else{
+                    moves.add(new Position(cols, rows));}
                 }
             }
         }
