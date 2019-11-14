@@ -42,7 +42,6 @@ public class Board extends GridPane {
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
-                        //TODO add capture logic include adding things to the graveyard @Josh
                         t.getChildren().remove(1);
                         if (t.hasPiece) this.capturedPieces.add(t.piece); //adds the piece to the captured pieces arrayList
                         t.setPiece(activeTile.piece);

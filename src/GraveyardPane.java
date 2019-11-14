@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * a pane that displays captured pieces in a chess program
  */
+//TODO add functionality to dipslay captured pieces
 public class GraveyardPane extends VBox {
     public ArrayList<Piece> capturedPieces;
 
