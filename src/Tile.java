@@ -25,11 +25,10 @@ public class Tile extends StackPane {
         this.getChildren().add(new Rectangle(50, 50, Color.TRANSPARENT));
     }
 
-
     public void setPiece(Piece p) {
         this.piece = p;
         if (p != null) {
-            this.getChildren().add(this.piece);
+            this.getChildren().add(1, this.piece);
             this.hasPiece = true;
             this.piece.pos = this.position;
             this.piece.isFirstMove = false;

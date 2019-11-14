@@ -41,6 +41,7 @@ public class Board extends GridPane {
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
                         //TODO add capture logic include adding things to the graveyard @Josh
+                        t.getChildren().remove(1);
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
                         activeTile.hasPiece = false;
@@ -54,7 +55,6 @@ public class Board extends GridPane {
                         this.clearHighlightedTiles();
                     }
                     this.updatePieceBoards();
-                    //TODO toggle turn
                 });
                 t.isHighlighted.addListener((o, b, b1) -> {
                     if (o.getValue() == true) {
