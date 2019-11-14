@@ -13,7 +13,7 @@ public abstract class Piece extends ImageView {
     public Board board;
     public abstract ArrayList<Position> getLegalMoves();
     public abstract String toString();
-    public boolean isFirstMove;
+    public boolean isFirstMove = true;
     public void updateBoard(Board b) {
         this.board = b;
     }

@@ -38,6 +38,7 @@ public class Board extends GridPane{
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null){
                         //TODO add capture logic include adding things to the graveyard @Josh
                         t.setPiece(activeTile.piece);
+//                        t.piece.isFirstMove=true; //setPiece sets this to false, this is where we'll make it true for the first time
                         this.activeTile.setPiece(null);
                         activeTile.hasPiece = false;
                         this.activeTile = null;
@@ -97,8 +98,11 @@ public class Board extends GridPane{
             for (Tile t : row) {
                 if (t.position.row == 1) {
                     t.setPiece(new Pawn(t.position, true, pi, this));
+                    t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
                 } else if (t.position.row == 6) {
                     t.setPiece(new Pawn(t.position, false, pi, this));
+                    t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
+
                 }
                 if (t.position.row == 0) {
                     switch(t.position.col) {

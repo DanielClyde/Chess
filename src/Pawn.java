@@ -20,6 +20,7 @@ public class Pawn extends Piece {
         ArrayList<Position> moves = new ArrayList<>();
         int forwardTwo = this.isWhite ? 2 : -2;
         int forwardOne = this.isWhite ? 1 : -1;
+//        this.isFirstMove = true;
         if (this.pos.row+forwardOne >= 0 && this.pos.row+forwardOne <= 7){
             if (!this.board.tiles[this.pos.col][this.pos.row+forwardOne].hasPiece) {
                 moves.add(new Position(this.pos.col, this.pos.row+forwardOne));
