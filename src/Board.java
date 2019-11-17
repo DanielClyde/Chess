@@ -7,7 +7,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Board extends GridPane {
@@ -15,8 +19,11 @@ public class Board extends GridPane {
     public Tile activeTile = null;
     public boolean isWhiteTurn;
     public ArrayList<Piece> capturedPieces;
+    public Socket socket;
+    public ObjectInputStream in;
+    public ObjectOutputStream out;
 
-    public Board() {
+    public Board(String ip, int port) {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
         this.capturedPieces = new ArrayList<>();
@@ -24,7 +31,20 @@ public class Board extends GridPane {
         putTilesOnBoard();
         addPieces(pi);
         isWhiteTurn = true;
+        try {
+            this.socket = new Socket(ip, port);
+            System.out.println("client connected");
+            this.in = new ObjectInputStream(socket.getInputStream());
+            this.out = new ObjectOutputStream(socket.getOutputStream());
+        } catch (Exception e) {}
 
+    }
+
+    private void sendMessage(GameMessage msg) throws IOException {
+        System.out.println("Sending message...");
+        this.out.writeObject(msg);
+        this.out.flush();
+        System.out.println("Message sent!");
     }
 
     /**
@@ -50,6 +70,12 @@ public class Board extends GridPane {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         //TODO this is where a message will be sent (send a board) @Daniel
+                        GameMessage message = new GameMessage("Test", this);
+                        try {
+                            this.sendMessage(message);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
                         checks();
                         isWhiteTurn = !isWhiteTurn;
                     } else {
