@@ -1,10 +1,14 @@
 import java.io.Serializable;
-
+enum MessageType {
+    CHAT,
+    BOARD
+}
 public class GameMessage {
-    public String message;
+    public MessageType type;
+
     public Board board;
-    GameMessage(String msg, Board b) {
-        this.message = msg;
+    GameMessage(MessageType type, Board b) {
+        this.type = type;
         this.board = b;
     }
 }

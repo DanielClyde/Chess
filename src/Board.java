@@ -34,9 +34,10 @@ public class Board extends GridPane {
         try {
             this.socket = new Socket(ip, port);
             System.out.println("client connected");
+
             this.in = new ObjectInputStream(socket.getInputStream());
             this.out = new ObjectOutputStream(socket.getOutputStream());
-            GameMessage msg = new GameMessage("Connected", this);
+            GameMessage msg = new GameMessage(MessageType.BOARD, this);
             this.sendMessage(msg);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -76,11 +77,11 @@ public class Board extends GridPane {
                         checks();
                         isWhiteTurn = !isWhiteTurn;
                         //TODO this is where a message will be sent (send a board) @Daniel
-                        GameMessage message = new GameMessage("Test", this);
+                        GameMessage message = new GameMessage(MessageType.BOARD, this);
                         try {
                             this.sendMessage(message);
                             GameMessage msg = (GameMessage)in.readObject();
-                            System.out.println(msg.message);
+                            System.out.println(msg.type);
                             System.out.println(msg.board);
                         } catch (Exception ex) {
                             System.out.println(ex);
