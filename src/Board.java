@@ -75,6 +75,9 @@ public class Board extends GridPane {
                         GameMessage message = new GameMessage("Test", this);
                         try {
                             this.sendMessage(message);
+                            GameMessage msg = (GameMessage)in.readObject();
+                            System.out.println(msg.message);
+                            System.out.println(msg.board);
                         } catch (Exception ex) {
                             System.out.println(ex);
                         }
