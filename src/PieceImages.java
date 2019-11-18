@@ -1,7 +1,7 @@
 import javafx.scene.image.Image;
 
 public class PieceImages {
-    Image whiteBishop = new Image("https://www.pinclipart.com/picdir/big/60-602746_chess-piece-bishop-king-chessboard-alfil-ajedrez-para.png");
+    Image whiteBishop = new Image("https://www.pinclipart.com/picdir/big/183-1838875_pawn-soldier-chess-piece-comments-pawn-clipart.png");
     Image blackBishop = new Image("https://www.pinclipart.com/picdir/big/100-1006999_clipart-silhouette-chess-piece-remix-bishop-alfil-chess.png");
     Image whiteKing   = new Image("https://www.pinclipart.com/picdir/big/69-695089_all-photo-png-clipart-king-chess-piece-clip.png");
     Image blackKing   = new Image("https://www.pinclipart.com/picdir/big/82-825511_big-image-png-king-chess-piece-silhouette-clipart.png");
