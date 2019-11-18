@@ -15,6 +15,13 @@ public class Chess extends Application{
         Board board = new Board();
         bp.setCenter(board);
         Scene sc = new Scene(bp);
+        stage.setTitle("White's Turn");
+        board.isWhiteTurn.addListener((o, b, b1) -> {
+            if (o.getValue() == true){
+                stage.setTitle("White's Turn");
+            } else {stage.setTitle("Black's Turn");}
+
+        });
         stage.setScene(sc);
         stage.show();
     }

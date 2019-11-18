@@ -1,19 +1,11 @@
-import javafx.animation.FadeTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
-    public boolean isWhiteTurn;
+    public SimpleBooleanProperty isWhiteTurn;
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -21,7 +13,7 @@ public class Board extends GridPane {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-        isWhiteTurn = true;
+        this.isWhiteTurn = new SimpleBooleanProperty(true);
 
     }
 
@@ -34,7 +26,7 @@ public class Board extends GridPane {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn) {
+                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn.get()) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
@@ -49,7 +41,8 @@ public class Board extends GridPane {
                         this.clearHighlightedTiles();
                         //TODO this is where a message will be sent (send a board) @Daniel
                         checks();
-                        isWhiteTurn = !isWhiteTurn;
+//                        isWhiteTurn = !isWhiteTurn;
+                        isWhiteTurn.set(!isWhiteTurn.get());
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -94,7 +87,6 @@ public class Board extends GridPane {
 
 
     private void addPieces(PieceImages pi) {
-
 
         for (Tile[] row : this.tiles) {
             for (Tile t : row) {
@@ -178,19 +170,15 @@ public class Board extends GridPane {
             else System.out.println(player + " is in check!"); }
     }
 
-    /**
-     * check to see if a king is in check
-     * @param isWhite
-     * @return
-     */
-    private boolean check(boolean isWhite) {
-        Tile kingTile = null;
+
+    private boolean checkPiece(boolean isWhite){
+        Tile pieceTile = null;
         ArrayList<Position> opponentMoves = new ArrayList<>();
         // find king's tile and populate opponent pieces and moves
         for (Tile[] t : this.tiles) {
             for (Tile tile : t) {
                 if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
-                    kingTile = tile;
+                    pieceTile = tile;
                 }
                 if (tile.hasPiece && tile.piece.isWhite != isWhite) {
                     opponentMoves.addAll(tile.piece.getLegalMoves());
@@ -199,7 +187,51 @@ public class Board extends GridPane {
         }
         // compare every position with king's position
         for (Position opponentMove : opponentMoves) {
-            if (opponentMove.equals(kingTile.position)) {
+            if (opponentMove.equals(pieceTile.position)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * check to see if a king is in check
+     * @param isWhite
+     * @return
+     */
+    private boolean check(boolean isWhite) {
+        Tile kingPiece = null;
+        ArrayList<Position> opponentMoves = new ArrayList<>();
+        // find king's tile and populate opponent pieces and moves
+        for (Tile[] t : this.tiles) {
+            for (Tile tile : t) {
+                if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
+                    kingPiece = tile;
+                }
+                if (tile.hasPiece && tile.piece.isWhite != isWhite) {
+                    opponentMoves.addAll(tile.piece.getLegalMoves());
+                }
+            }
+        }
+        // compare every position with king's position
+        for (Position opponentMove : opponentMoves) {
+            if (opponentMove.equals(kingPiece.position)) {
                 return true;
             }
         }

@@ -1,3 +1,4 @@
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Background;
@@ -19,10 +20,10 @@ public class Tile extends StackPane {
     public Tile(boolean isWhite, Position position){
         this.position = position;
         this.isWhite = isWhite;
-        Color c = isWhite ? Color.BURLYWOOD : Color.GREEN;
+        Color c = isWhite ? Color.LIGHTCORAL : Color.LIGHTBLUE;
         Background b = new Background(new BackgroundFill(c, null, null));
         this.setBackground(b);
-        this.getChildren().add(new Rectangle(50, 50, Color.TRANSPARENT));
+        this.getChildren().add(new Rectangle(60, 60, Color.TRANSPARENT));
     }
 
     public void setPiece(Piece p) {
@@ -39,10 +40,10 @@ public class Tile extends StackPane {
         this.highlight = new Rectangle(this.getWidth(), this.getHeight(), Color.YELLOW);
         FadeTransition ft = new FadeTransition();
         ft.setNode(this.highlight);
-        ft.setFromValue(0.01);
+        ft.setFromValue(0.11);
         ft.setToValue(0.8);
-        ft.setDuration(Duration.millis(1000));
-        ft.setCycleCount(4);
+        ft.setDuration(Duration.millis(900));
+        ft.setCycleCount(Animation.INDEFINITE);
         ft.setAutoReverse(true);
         this.getChildren().add(this.highlight);
         ft.play();
