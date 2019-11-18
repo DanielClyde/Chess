@@ -15,6 +15,7 @@ public class Knight extends Piece {
 
     public ArrayList<Position> getLegalMoves() {
         ArrayList<Position> moves = new ArrayList<>();
+        // left two up one
         if (this.pos.col - 2 >= 0 && this.pos.row-1 >= 0){
             if (this.board.tiles[this.pos.col-2][this.pos.row-1].hasPiece){
                 if (this.board.tiles[this.pos.col-2][this.pos.row-1].piece.isWhite ^ this.isWhite){
@@ -23,7 +24,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col-2, this.pos.row-1));}
 
-
+        // right two up one
         if (this.pos.col + 2 <= 7 && this.pos.row-1 >= 0){
             if (this.board.tiles[this.pos.col+2][this.pos.row-1].hasPiece){
                 if (this.board.tiles[this.pos.col+2][this.pos.row-1].piece.isWhite ^ this.isWhite){
@@ -32,6 +33,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col+2, this.pos.row-1));}
 
+        // right two down one
         if (this.pos.col + 2 <= 7 && this.pos.row+1 <= 7){
             if (this.board.tiles[this.pos.col+2][this.pos.row+1].hasPiece){
                 if (this.board.tiles[this.pos.col+2][this.pos.row+1].piece.isWhite ^ this.isWhite){
@@ -40,6 +42,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col+2, this.pos.row+1));}
 
+        // left one up two
         if (this.pos.col - 1 >= 0 && this.pos.row-2 >= 0){
             if (this.board.tiles[this.pos.col-1][this.pos.row-2].hasPiece){
                 if (this.board.tiles[this.pos.col-1][this.pos.row-2].piece.isWhite ^ this.isWhite){
@@ -48,6 +51,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col-1, this.pos.row-2));}
 
+        // right one up two
         if (this.pos.col + 1 <= 7 && this.pos.row-2 >= 0){
             if (this.board.tiles[this.pos.col+1][this.pos.row-2].hasPiece){
                 if (this.board.tiles[this.pos.col+1][this.pos.row-2].piece.isWhite ^ this.isWhite){
@@ -56,6 +60,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col+1, this.pos.row-2));}
 
+        // left one down two
         if (this.pos.col - 1 >= 0 && this.pos.row+2 <= 7){
             if (this.board.tiles[this.pos.col-1][this.pos.row+2].hasPiece){
                 if (this.board.tiles[this.pos.col-1][this.pos.row+2].piece.isWhite ^ this.isWhite){
@@ -64,6 +69,7 @@ public class Knight extends Piece {
             }
             else moves.add(new Position(this.pos.col-1, this.pos.row+2));}
 
+        // right one down two
         if (this.pos.col + 1 <= 7 && this.pos.row+2 <= 7){
             if (this.board.tiles[this.pos.col+1][this.pos.row+2].hasPiece){
                 if (this.board.tiles[this.pos.col+1][this.pos.row+2].piece.isWhite ^ this.isWhite){
@@ -71,6 +77,16 @@ public class Knight extends Piece {
                 }
             }
             else moves.add(new Position(this.pos.col+1, this.pos.row+2));}
+
+
+        // left two up one
+        if (this.pos.col - 2 >= 0 && this.pos.row+1 <= 7){
+            if (this.board.tiles[this.pos.col-2][this.pos.row+1].hasPiece){
+                if (this.board.tiles[this.pos.col-2][this.pos.row+1].piece.isWhite ^ this.isWhite){
+                    moves.add(new Position(this.pos.col-2, this.pos.row+1));
+                }
+            }
+            else moves.add(new Position(this.pos.col-2, this.pos.row+1));}
 
 
         return moves;
