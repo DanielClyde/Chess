@@ -69,6 +69,8 @@ public class Board extends GridPane {
                         activeTile.hasPiece = false;
                         this.activeTile = null;
                         this.clearHighlightedTiles();
+                        checks();
+                        isWhiteTurn = !isWhiteTurn;
                         //TODO this is where a message will be sent (send a board) @Daniel
                         GameMessage message = new GameMessage("Test", this);
                         try {
@@ -76,8 +78,6 @@ public class Board extends GridPane {
                         } catch (Exception ex) {
                             System.out.println(ex);
                         }
-                        checks();
-                        isWhiteTurn = !isWhiteTurn;
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
