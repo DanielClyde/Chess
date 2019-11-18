@@ -188,7 +188,7 @@ public class Board extends GridPane {
     private boolean check(boolean isWhite) {
         Tile kingTile = null;
         ArrayList<Position> opponentMoves = new ArrayList<>();
-        // find king's tile and populate opponent pieces and moves
+        // find king's tile and populate opponent moves
         for (Tile[] t : this.tiles) {
             for (Tile tile : t) {
                 if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {

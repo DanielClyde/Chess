@@ -1,3 +1,4 @@
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.Background;
@@ -42,7 +43,7 @@ public class Tile extends StackPane {
         ft.setFromValue(0.01);
         ft.setToValue(0.8);
         ft.setDuration(Duration.millis(1000));
-        ft.setCycleCount(4);
+        ft.setCycleCount(Animation.INDEFINITE);
         ft.setAutoReverse(true);
         this.getChildren().add(this.highlight);
         ft.play();
