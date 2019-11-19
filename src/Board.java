@@ -39,6 +39,7 @@ public class Board extends GridPane {
             this.out = new ObjectOutputStream(socket.getOutputStream());
             GameMessage msg = new GameMessage(MessageType.BOARD, this);
             this.sendMessage(msg);
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
