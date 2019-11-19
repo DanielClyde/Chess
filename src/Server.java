@@ -7,15 +7,16 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static Hashtable<Boolean, ObjectOutputStream> writers = new Hashtable<>();
-    private static boolean bothConnected = false;
+    private static int connectedUsers = 0;
 
     public static void main(String[] args) throws Exception {
         try (ServerSocket listener = new ServerSocket(58901)) {
             System.out.println("Chess Server is Running...");
             ExecutorService pool = Executors.newFixedThreadPool(2);
-            pool.execute(new Handler(listener.accept(), true));
-            pool.execute(new Handler(listener.accept(), false));
-            bothConnected = true;
+            while(true) {
+                pool.execute(new Handler(listener.accept(), connectedUsers == 0 ? true : false));
+                connectedUsers++;
+            }
         }
     }
 
@@ -35,7 +36,7 @@ public class Server {
         @Override
         public void run() {
             try {
-                while(!bothConnected) {
+                while(connectedUsers < 2) {
                     System.out.print("#");
                 }
                 System.out.println();
