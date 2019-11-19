@@ -14,12 +14,12 @@ public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
     public boolean isWhiteTurn;
-    public ArrayList<Piece> capturedPieces;
+    public GraveyardPane graveyard;
 
-    public Board() {
+    public Board(GraveyardPane graveyard) {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
-        this.capturedPieces = new ArrayList<>();
+        this.graveyard = graveyard;
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -43,7 +43,7 @@ public class Board extends GridPane {
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
                         t.getChildren().remove(1);
-                        if (t.hasPiece) this.capturedPieces.add(t.piece); //adds the piece to the captured pieces arrayList
+                        if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
                         t.setPiece(activeTile.piece);
                         this.activeTile.setPiece(null);
                         activeTile.hasPiece = false;

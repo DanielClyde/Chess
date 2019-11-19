@@ -13,8 +13,9 @@ public class Chess extends Application{
     @Override
     public void start(Stage stage) {
         BorderPane bp = new BorderPane();
-        Board board = new Board();
-        GraveyardPane graveyard = new GraveyardPane(board.capturedPieces);
+        GraveyardPane graveyard = new GraveyardPane();
+        Board board = new Board(graveyard);
+
         bp.setCenter(board);
         bp.setLeft(graveyard);
         Scene sc = new Scene(bp);

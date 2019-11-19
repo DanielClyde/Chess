@@ -1,4 +1,5 @@
 import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -10,16 +11,24 @@ import java.util.ArrayList;
 //TODO add functionality to dipslay captured pieces
 public class GraveyardPane extends VBox {
     public ArrayList<Piece> capturedPieces;
+    FlowPane whitePieces;
+    FlowPane blackPieces;
 
-    public GraveyardPane(ArrayList<Piece> pieces){
-        this.capturedPieces = pieces;
+    public GraveyardPane(){
         //to show what it will look like still need to add functionality to add pieces to graveyard
-        this.getChildren().addAll(new Button("White Pieces"), new Button("Black Pieces"));
+        whitePieces = new FlowPane();
+        blackPieces = new FlowPane();
+        this.getChildren().addAll(whitePieces, blackPieces);
 }
 
     public void printPieces(){
         for(Piece piece : capturedPieces){
             System.out.print(piece + ", ");
         }
+    }
+
+    public void addPiece(Piece piece){
+        if (piece.isWhite) whitePieces.getChildren().add(piece);
+        else blackPieces.getChildren().add(piece);
     }
 }
