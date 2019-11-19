@@ -8,7 +8,6 @@ import java.util.ArrayList;
 /**
  * a pane that displays captured pieces in a chess program
  */
-//TODO add functionality to dipslay captured pieces
 public class GraveyardPane extends VBox {
     public ArrayList<Piece> capturedPieces;
     FlowPane whitePieces;
@@ -17,7 +16,7 @@ public class GraveyardPane extends VBox {
     public GraveyardPane(){
         //to show what it will look like still need to add functionality to add pieces to graveyard
         whitePieces = new FlowPane();
-        blackPieces = new FlowPane();
+        blackPieces = new FlowPane(); //TODO Choose or create a better pane to display the captured pieces
         this.getChildren().addAll(whitePieces, blackPieces);
 }
 

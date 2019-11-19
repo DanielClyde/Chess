@@ -15,10 +15,12 @@ public class Board extends GridPane {
     public Tile activeTile = null;
     public boolean isWhiteTurn;
     public GraveyardPane graveyard;
+    public StackPane topPane;
 
-    public Board(GraveyardPane graveyard) {
+    public Board(GraveyardPane graveyard, StackPane topPane) {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
+        this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
         this.graveyard = graveyard;
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
