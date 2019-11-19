@@ -7,15 +7,15 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static Hashtable<Boolean, ObjectOutputStream> writers = new Hashtable<>();
-    private static boolean bothConnected;
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Chess Server is Running...");
-        ExecutorService pool = Executors.newFixedThreadPool(2);
         try (ServerSocket listener = new ServerSocket(58901)) {
-            pool.execute(new Handler(listener.accept(), true));
-            pool.execute(new Handler(listener.accept(), false));
-            bothConnected = true;
+            System.out.println("Chess Server is Running...");
+            ExecutorService pool = Executors.newFixedThreadPool(2);
+            while(true) {
+                pool.execute(new Handler(listener.accept(), true));
+                pool.execute(new Handler(listener.accept(), false));
+            }
         }
     }
 
@@ -35,16 +35,16 @@ public class Server {
         @Override
         public void run() {
             try {
+                System.out.println("In Run of Handler");
                 this.input = new ObjectInputStream(socket.getInputStream());
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 writers.put(this.isWhite, output);
-                while(!bothConnected) {
-                    System.out.print("#");
-                }
-                System.out.println();
+                this.output.writeChars("Welcome player");
+                this.output.flush();
                 while (true) {
                     GameMessage m  = (GameMessage) this.input.readObject();
                     writers.get(!this.isWhite).writeObject(m);
+                    writers.get(!this.isWhite).flush();
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
