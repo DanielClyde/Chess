@@ -10,7 +10,6 @@ public class Server {
     private static int connectedUsers = 0;
 
     public static void main(String[] args) throws Exception {
-        connectedUsers = 0;
         System.out.println("Chess Server is Running...");
         ExecutorService pool = Executors.newFixedThreadPool(2);
         try (ServerSocket listener = new ServerSocket(58901)) {
@@ -39,9 +38,9 @@ public class Server {
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 this.input = new ObjectInputStream(socket.getInputStream());
                 writers.put(this.isWhite, output);
-                while(connectedUsers < 2) {
-                    System.out.print("#");
-                }
+//                while(connectedUsers < 2) {
+//                    System.out.print("#");
+//                }
                 System.out.println();
                 while (true) {
                     try {
