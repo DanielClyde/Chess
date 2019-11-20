@@ -11,11 +11,12 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Board extends GridPane {
+public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
     public Tile activeTile = null;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty();
