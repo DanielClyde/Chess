@@ -36,6 +36,7 @@ public class Server {
         @Override
         public void run() {
             try {
+                System.out.println("In handler");
                 this.input = new ObjectInputStream(socket.getInputStream());
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 writers.put(this.isWhite, output);
