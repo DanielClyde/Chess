@@ -21,17 +21,23 @@ public class Board extends GridPane implements Serializable {
     public Tile activeTile = null;
     public GraveyardPane graveyard;
     public StackPane topPane;
-    public boolean isWhiteTurn = true;
+    public boolean whitePlayer;
+    public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
 
-    public Board(GraveyardPane graveyard, StackPane topPane) {
-        //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
+    public Board(GraveyardPane graveyard, StackPane topPane, boolean white) {
+        this.whitePlayer = white;
         PieceImages pi = new PieceImages();
         this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
         this.graveyard = graveyard;
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
+        this.isWhiteTurn.addListener((o,b,b1) -> {
+            if (o.getValue() != this.whitePlayer) {
+                this.getMessages();
+            }
+        });
     }
 
     /**
@@ -43,7 +49,7 @@ public class Board extends GridPane implements Serializable {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn) {
+                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn.getValue()) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
@@ -60,9 +66,9 @@ public class Board extends GridPane implements Serializable {
                         this.clearHighlightedTiles();
                         checks();
                         GameMessage toSend = this.createMessage(from, to);
-                        this.isWhiteTurn = !isWhiteTurn;
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
+                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -85,6 +91,18 @@ public class Board extends GridPane implements Serializable {
 
     }
 
+    public void getMessages() {
+        while(true){
+            try {
+                GameMessage received = (GameMessage)Chess.in.readObject();
+                if (received != null) {
+                    this.onMessageReceived(received);
+                    break;
+                }
+            } catch (Exception e) {e.printStackTrace();}
+        }
+    }
+
     public GameMessage createMessage(Position from, Position to) {
         Position[] moves = {from ,to};
         return new GameMessage(MessageType.MOVE, moves, null);
@@ -94,15 +112,7 @@ public class Board extends GridPane implements Serializable {
         try {
             Chess.out.writeObject(m);
         } catch (Exception e) {e.printStackTrace();}
-        while (true) {
-            try {
-                GameMessage received = (GameMessage)Chess.in.readObject();
-                if (received != null) {
-                    this.onMessageReceived(received);
-                    break;
-                }
-            } catch (Exception e) {e.printStackTrace();}
-        }
+
     }
 
 
