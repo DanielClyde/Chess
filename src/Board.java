@@ -49,6 +49,8 @@ public class Board extends GridPane implements Serializable {
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
+                        Position from = this.activeTile.position;
+                        Position to = t.position;
                         t.getChildren().remove(1);
                         if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
                         t.setPiece(activeTile.piece);
@@ -57,7 +59,7 @@ public class Board extends GridPane implements Serializable {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
-                        GameMessage toSend = this.createMessage("test");
+                        GameMessage toSend = this.createMessage(from, to);
                         this.isWhiteTurn = !isWhiteTurn;
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
@@ -83,8 +85,9 @@ public class Board extends GridPane implements Serializable {
 
     }
 
-    public GameMessage createMessage(String move) {
-        return new GameMessage(MessageType.MOVE, move, null);
+    public GameMessage createMessage(Position from, Position to) {
+        Position[] moves = {from ,to};
+        return new GameMessage(MessageType.MOVE, moves, null);
     }
 
     public void sendMessage(GameMessage m) {
@@ -104,7 +107,9 @@ public class Board extends GridPane implements Serializable {
 
 
     public void onMessageReceived(GameMessage m) {
-        System.out.println(m.moveMessage);
+        Position from = m.movePositions[0];
+        Position to = m.movePositions[1];
+        System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col);
     }
 
     private void updatePieceBoards() {

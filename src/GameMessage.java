@@ -6,11 +6,11 @@ enum MessageType {
 public class GameMessage implements Serializable {
     public MessageType type;
     public String chatMessage;
-    public String moveMessage;
+    public Position[] movePositions;
 
-    GameMessage(MessageType type, String move, String chatMessage) {
+    GameMessage(MessageType type, Position[] move, String chatMessage) {
         this.type = type;
-        this.moveMessage = move;
+        this.movePositions = move;
         this.chatMessage = chatMessage;
     }
 }
