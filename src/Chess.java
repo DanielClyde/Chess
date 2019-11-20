@@ -41,11 +41,19 @@ public class Chess extends Application{
                 return;
             }
             try {
-                out.writeObject(new GameMessage(MessageType.CHAT, null, null, false));
+                out.writeObject(new GameMessage(MessageType.BOARD, board, null, !board.isWhiteTurn.getValue()));
                 GameMessage msg = null;
                 while (true) {
                     msg = (GameMessage)in.readObject();
                     if (msg != null) {
+                        switch (msg.type) {
+                            case BOARD:
+                                System.out.println("Message Received!");
+                                board = msg.board;
+                                break;
+                            default:
+                                break;
+                        }
                         System.out.println(msg.type);
                         break;
                     }

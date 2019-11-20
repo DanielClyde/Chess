@@ -54,6 +54,7 @@ public class Board extends GridPane {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
+                        System.out.println("Changing white turn from " + isWhiteTurn.getValue() + " to " + !isWhiteTurn.getValue());
                         this.isWhiteTurn.set(!isWhiteTurn.getValue());
                     } else {
                         this.activeTile = null;
