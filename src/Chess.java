@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Chess extends Application{
     public static Board board;
+    public static boolean isWhitePlayer;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -21,6 +22,7 @@ public class Chess extends Application{
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address or localhost: ");
         String ip = input.nextLine();
+        isWhitePlayer = ip == "localhost";
         BorderPane bp = new BorderPane();
         board = new Board();
         GraveyardPane graveyard = new GraveyardPane(board.capturedPieces);
@@ -41,15 +43,17 @@ public class Chess extends Application{
             board.isWhiteTurn.addListener((o, b1, b2) -> {
                 try {
                     output.writeObject(new GameMessage(MessageType.CHAT, null, null, false));
+                    GameMessage msg = null;
+                    while (true) {
+                        msg = (GameMessage)input.readObject();
+                        if (msg != null) {
+                            System.out.println(msg.type);
+                            break;
+                        }
+                    }
                 } catch (Exception e) {e.printStackTrace();}
-
             });
-            GameMessage msg = null;
-            while (true) {
-                msg = (GameMessage)input.readObject();
-                System.out.println("message received");
-                System.out.println(msg.type);
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
