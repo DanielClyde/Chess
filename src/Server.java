@@ -10,17 +10,26 @@ public class Server {
     private static int connectedUsers = 0;
 
     public static void main(String[] args) throws Exception {
-        try (ServerSocket listener = new ServerSocket(58901)) {
-            System.out.println("Chess Server is Running...");
-            ExecutorService pool = Executors.newFixedThreadPool(2);
-            while(true) {
-                pool.execute(new Handler(listener.accept(), connectedUsers == 0 ? true : false));
-                connectedUsers++;
+        ServerSocket serverSocket = null;
+        Socket socket = null;
+        try {
+            serverSocket = new ServerSocket(58901);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        boolean isWhite = true;
+        while (true) {
+            try {
+                socket = serverSocket.accept();
+                new Handler(socket, isWhite).start();
+                isWhite = !isWhite;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    private static class Handler implements Runnable{
+    private static class Handler extends Thread{
         public Socket socket;
         public boolean isWhite;
         public ObjectInputStream input;
@@ -36,15 +45,11 @@ public class Server {
         @Override
         public void run() {
             try {
-                while(connectedUsers < 2) {
-                    System.out.print("#");
-                }
-                System.out.println();
                 System.out.println("In Run of Handler");
                 this.input = new ObjectInputStream(socket.getInputStream());
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 writers.put(this.isWhite, output);
-                this.output.writeChars("Welcome player");
+                this.output.writeObject(new GameMessage(MessageType.INIT, null, null, this.isWhite));
                 this.output.flush();
                 while (true) {
                     GameMessage m  = (GameMessage) this.input.readObject();
@@ -52,12 +57,12 @@ public class Server {
                     writers.get(!this.isWhite).flush();
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             } finally {
                 if (output != null) {
                     writers.remove(this.isWhite);
                 }
-                try {socket.close(); } catch (IOException e) {}
+                try {socket.close(); } catch (IOException e) {e.printStackTrace();}
             }
         }
     }

@@ -1,14 +1,29 @@
 import java.io.Serializable;
 enum MessageType {
     CHAT,
-    BOARD
+    BOARD,
+    INIT,
 }
 public class GameMessage {
     public MessageType type;
-
+    public String chatMessage;
     public Board board;
-    GameMessage(MessageType type, Board b) {
+    public boolean white;
+
+    GameMessage(MessageType type, Board b, String chatMessage, boolean isWhite) {
         this.type = type;
-        this.board = b;
+        switch (this.type) {
+            case CHAT:
+                this.chatMessage = chatMessage;
+                break;
+            case BOARD:
+                this.board = b;
+                break;
+            case INIT:
+                this.white = isWhite;
+                break;
+            default:
+                break;
+        }
     }
 }
