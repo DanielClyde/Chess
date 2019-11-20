@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class Chess extends Application{
     public static Board board;
     public static Socket socket = null;
-    public static ObjectInputStream in = null;
     public static ObjectOutputStream out = null;
+    public static ObjectInputStream in = null;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -58,8 +58,8 @@ public class Chess extends Application{
         try {
             socket = new Socket(ip, port);
             System.out.println("Connected to Server");
-            in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
         } catch(IOException e) {e.printStackTrace();}
     }
 }

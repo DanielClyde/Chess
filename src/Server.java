@@ -24,22 +24,20 @@ public class Server {
     private static class Handler implements Runnable{
         public Socket socket;
         public boolean isWhite;
-        public ObjectInputStream input;
         public ObjectOutputStream output;
+        public ObjectInputStream input;
 
         Handler(Socket s, boolean white) {
             this.socket = s;
             this.isWhite = white;
-            String str = white ? "Welcome White! Waiting for black connection..." : "Welcome Black! Let's play!";
-            System.out.println(str);
         }
 
         @Override
         public void run() {
             try {
-                System.out.println("In handler");
-                this.input = new ObjectInputStream(socket.getInputStream());
+                System.out.println("In handler " + (this.isWhite ? "white" : "black"));
                 this.output = new ObjectOutputStream(socket.getOutputStream());
+                this.input = new ObjectInputStream(socket.getInputStream());
                 writers.put(this.isWhite, output);
                 while(connectedUsers < 2) {
                     System.out.print("#");
@@ -47,8 +45,10 @@ public class Server {
                 System.out.println();
                 while (true) {
                     try {
+                        System.out.println("listening...");
                         GameMessage m  = (GameMessage) this.input.readObject();
                         writers.get(!this.isWhite).writeObject(m);
+                        System.out.println("writing!...");
                         writers.get(!this.isWhite).flush();
                     } catch (Exception e) {e.printStackTrace();}
                 }
