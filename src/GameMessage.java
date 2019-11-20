@@ -4,7 +4,7 @@ enum MessageType {
     BOARD,
     INIT,
 }
-public class GameMessage {
+public class GameMessage implements Serializable {
     public MessageType type;
     public String chatMessage;
     public Board board;

@@ -49,6 +49,7 @@ public class Server {
                     try {
                         GameMessage m  = (GameMessage) this.input.readObject();
                         writers.get(!this.isWhite).writeObject(m);
+                        writers.get(!this.isWhite).flush();
                     } catch (Exception e) {e.printStackTrace();}
                 }
             } catch (Exception e) {
