@@ -7,9 +7,10 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private static Hashtable<Boolean, ObjectOutputStream> writers = new Hashtable<>();
-    private static int connectedUsers;
+    private static int connectedUsers = 0;
 
     public static void main(String[] args) throws Exception {
+        connectedUsers = 0;
         System.out.println("Chess Server is Running...");
         ExecutorService pool = Executors.newFixedThreadPool(2);
         try (ServerSocket listener = new ServerSocket(58901)) {
