@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class Chess extends Application{
     public static Board board;
-    public static boolean isWhitePlayer;
     public static Socket socket = null;
     public static ObjectInputStream in = null;
     public static ObjectOutputStream out = null;
@@ -26,7 +25,6 @@ public class Chess extends Application{
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address or localhost: ");
         String ip = input.nextLine();
-        isWhitePlayer = ip == "localhost";
         BorderPane bp = new BorderPane();
         board = new Board();
         GraveyardPane graveyard = new GraveyardPane(board.capturedPieces);
