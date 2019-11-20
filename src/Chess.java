@@ -51,6 +51,7 @@ public class Chess extends Application{
             while (true) {
                 GameMessage m = (GameMessage) in.readObject();
                 if (m.type == MessageType.BOARD || m.type == MessageType.INIT) {
+                    System.out.println("message received");
                     board.onMessage(m);
                 } else {
                     // chat room stuff

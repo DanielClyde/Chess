@@ -29,7 +29,7 @@ public class Board extends GridPane {
         putTilesOnBoard();
         addPieces(pi);
     }
-    
+
     public void onMessage(GameMessage m) {
         System.out.println(m.type);
     }
