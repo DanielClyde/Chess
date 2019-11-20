@@ -19,9 +19,11 @@ import java.util.ArrayList;
 public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
     public Tile activeTile = null;
-    public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty();
+    public boolean isWhiteTurn = true;
     public ArrayList<Piece> capturedPieces;
     public String moveMsg = "";
+    public GameMessage toSend;
+    public boolean hasMessageToSend = false;
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -30,7 +32,6 @@ public class Board extends GridPane implements Serializable {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-        this.isWhiteTurn.set(true);
     }
 
     /**
@@ -42,7 +43,7 @@ public class Board extends GridPane implements Serializable {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn.getValue()) {
+                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
@@ -56,9 +57,11 @@ public class Board extends GridPane implements Serializable {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
-                        this.moveMsg = this.toString();
-                        System.out.println("Changing white turn from " + isWhiteTurn.getValue() + " to " + !isWhiteTurn.getValue());
-                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
+                        this.moveMsg = "Moving Test";
+                        this.toSend = new GameMessage(MessageType.MOVE, moveMsg, null);
+                        System.out.println("Changing white turn from " + isWhiteTurn + " to " + !isWhiteTurn);
+                        this.isWhiteTurn = !isWhiteTurn;
+                        this.hasMessageToSend = true;
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -79,6 +82,15 @@ public class Board extends GridPane implements Serializable {
             isWhite = !isWhite;
         }
 
+    }
+
+    public GameMessage getToSend() {
+        this.hasMessageToSend = false;
+        return this.toSend;
+    }
+
+    public void onMessageReceived(GameMessage m) {
+        System.out.println(m.moveMessage);
     }
 
     private void updatePieceBoards() {

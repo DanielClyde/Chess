@@ -34,36 +34,9 @@ public class Chess extends Application{
         stage.setScene(sc);
         stage.show();
         connectToServer(ip, 58901);
-        System.out.println("Connected... adding listener");
-        board.isWhiteTurn.addListener((o, b1, b2) -> {
-            if (socket == null || in == null || out == null) {
-                System.out.println("null values, returning ");
-                return;
-            }
-            try {
-                out.writeObject(new GameMessage(MessageType.MOVE, board.moveMsg, null));
-                GameMessage msg = null;
-                while (true) {
-                    msg = (GameMessage)in.readObject();
-                    if (msg != null) {
-                        switch (msg.type) {
-                            case MOVE:
-                                System.out.println("Message Received!");
-                                System.out.println(msg.moveMessage);
-                                break;
-                            case CHAT:
-                                System.out.println("Chat Message Recieved");
-                                System.out.println(msg.chatMessage);
-                                break;
-                            default:
-                                break;
-                        }
-                        System.out.println(msg.type);
-                        break;
-                    }
-                }
-            } catch (Exception e) {e.printStackTrace();}
-        });
+
+        System.out.println("Connected... Let's Play!");
+        play();
     }
 
     private static void connectToServer(String ip, int port) {
@@ -73,5 +46,24 @@ public class Chess extends Application{
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
         } catch(IOException e) {e.printStackTrace();}
+    }
+
+    private static void play() {
+        while(true) {
+            if(board.hasMessageToSend) {
+                GameMessage msg = board.getToSend();
+                try {
+                    out.writeObject(msg);
+                    out.flush();
+                } catch (Exception e) {e.printStackTrace();}
+            }
+            try {
+                GameMessage m = (GameMessage)in.readObject();
+                if (m != null) {
+                    board.onMessageReceived(m);
+                }
+            } catch (Exception e) {e.printStackTrace();}
+
+        }
     }
 }
