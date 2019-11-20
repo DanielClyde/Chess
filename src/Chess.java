@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -61,8 +62,6 @@ public class Chess extends Application{
             System.out.println("Connected to Server");
             in = new ObjectInputStream(socket.getInputStream());
             out = new ObjectOutputStream(socket.getOutputStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch(IOException e) {e.printStackTrace();}
     }
 }
