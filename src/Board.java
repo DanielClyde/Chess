@@ -1,4 +1,5 @@
 import javafx.animation.FadeTransition;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -7,15 +8,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.net.Socket;
 import java.util.ArrayList;
 
-public class Board extends GridPane {
+public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
     public Tile activeTile = null;
-    public boolean isWhiteTurn;
     public GraveyardPane graveyard;
     public StackPane topPane;
+    public boolean isWhiteTurn = true;
+    public ArrayList<Piece> capturedPieces;
 
     public Board(GraveyardPane graveyard, StackPane topPane) {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -25,8 +32,6 @@ public class Board extends GridPane {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-        isWhiteTurn = true;
-
     }
 
     /**
@@ -51,9 +56,11 @@ public class Board extends GridPane {
                         activeTile.hasPiece = false;
                         this.activeTile = null;
                         this.clearHighlightedTiles();
-                        //TODO this is where a message will be sent (send a board) @Daniel
                         checks();
-                        isWhiteTurn = !isWhiteTurn;
+                        GameMessage toSend = this.createMessage("test");
+                        this.isWhiteTurn = !isWhiteTurn;
+                        this.updatePieceBoards();
+                        this.sendMessage(toSend);
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -74,6 +81,30 @@ public class Board extends GridPane {
             isWhite = !isWhite;
         }
 
+    }
+
+    public GameMessage createMessage(String move) {
+        return new GameMessage(MessageType.MOVE, move, null);
+    }
+
+    public void sendMessage(GameMessage m) {
+        try {
+            Chess.out.writeObject(m);
+        } catch (Exception e) {e.printStackTrace();}
+        while (true) {
+            try {
+                GameMessage received = (GameMessage)Chess.in.readObject();
+                if (received != null) {
+                    this.onMessageReceived(received);
+                    break;
+                }
+            } catch (Exception e) {e.printStackTrace();}
+        }
+    }
+
+
+    public void onMessageReceived(GameMessage m) {
+        System.out.println(m.moveMessage);
     }
 
     private void updatePieceBoards() {
