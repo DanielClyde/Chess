@@ -25,6 +25,8 @@ public class Chess extends Application{
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address or localhost: ");
         String ip = input.nextLine();
+        connectToServer(ip, 58901);
+        System.out.println("Connected... Let's Play!");
         BorderPane bp = new BorderPane();
         board = new Board();
         GraveyardPane graveyard = new GraveyardPane(board.capturedPieces);
@@ -33,10 +35,6 @@ public class Chess extends Application{
         Scene sc = new Scene(bp);
         stage.setScene(sc);
         stage.show();
-        connectToServer(ip, 58901);
-
-        System.out.println("Connected... Let's Play!");
-        play();
     }
 
     private static void connectToServer(String ip, int port) {
@@ -46,24 +44,5 @@ public class Chess extends Application{
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
         } catch(IOException e) {e.printStackTrace();}
-    }
-
-    private static void play() {
-        while(true) {
-            if(board.hasMessageToSend) {
-                GameMessage msg = board.getToSend();
-                try {
-                    out.writeObject(msg);
-                    out.flush();
-                } catch (Exception e) {e.printStackTrace();}
-            }
-            try {
-                GameMessage m = (GameMessage)in.readObject();
-                if (m != null) {
-                    board.onMessageReceived(m);
-                }
-            } catch (Exception e) {e.printStackTrace();}
-
-        }
     }
 }

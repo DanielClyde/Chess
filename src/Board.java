@@ -21,9 +21,6 @@ public class Board extends GridPane implements Serializable {
     public Tile activeTile = null;
     public boolean isWhiteTurn = true;
     public ArrayList<Piece> capturedPieces;
-    public String moveMsg = "";
-    public GameMessage toSend;
-    public boolean hasMessageToSend = false;
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -57,11 +54,9 @@ public class Board extends GridPane implements Serializable {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
-                        this.moveMsg = "Moving Test";
-                        this.toSend = new GameMessage(MessageType.MOVE, moveMsg, null);
-                        System.out.println("Changing white turn from " + isWhiteTurn + " to " + !isWhiteTurn);
+                        GameMessage toSend = new GameMessage(MessageType.MOVE, "Testing move", null);
                         this.isWhiteTurn = !isWhiteTurn;
-                        this.hasMessageToSend = true;
+                        this.sendMessage(toSend);
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -84,10 +79,21 @@ public class Board extends GridPane implements Serializable {
 
     }
 
-    public GameMessage getToSend() {
-        this.hasMessageToSend = false;
-        return this.toSend;
+    public void sendMessage(GameMessage m) {
+        try {
+            Chess.out.writeObject(m);
+        } catch (Exception e) {e.printStackTrace();}
+        while (true) {
+            try {
+                GameMessage received = (GameMessage)Chess.in.readObject();
+                if (received != null) {
+                    this.onMessageReceived(received);
+                    break;
+                }
+            } catch (Exception e) {e.printStackTrace();}
+        }
     }
+
 
     public void onMessageReceived(GameMessage m) {
         System.out.println(m.moveMessage);
