@@ -54,8 +54,9 @@ public class Board extends GridPane implements Serializable {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
-                        GameMessage toSend = new GameMessage(MessageType.MOVE, "Testing move", null);
+                        GameMessage toSend = this.createMessage("test");
                         this.isWhiteTurn = !isWhiteTurn;
+                        this.updatePieceBoards();
                         this.sendMessage(toSend);
                     } else {
                         this.activeTile = null;
@@ -77,6 +78,10 @@ public class Board extends GridPane implements Serializable {
             isWhite = !isWhite;
         }
 
+    }
+
+    public GameMessage createMessage(String move) {
+        return new GameMessage(MessageType.MOVE, move, null);
     }
 
     public void sendMessage(GameMessage m) {
