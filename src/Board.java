@@ -20,45 +20,18 @@ public class Board extends GridPane {
     public Tile activeTile = null;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
-    public Socket socket;
-    public ObjectInputStream in;
-    public ObjectOutputStream out;
-    public boolean isWhitePlayer;
 
-    public Board(String ip, int port) {
+    public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
         PieceImages pi = new PieceImages();
         this.capturedPieces = new ArrayList<>();
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-        this.isWhiteTurn.addListener((o, b, b1) -> {
-            if (this.isWhiteTurn.getValue() != this.isWhitePlayer) {
-                GameMessage m = new GameMessage(MessageType.BOARD, this, null, false);
-                try {
-                    this.sendMessage(m);
-                } catch (Exception e) {e.printStackTrace();}
-            }
-        });
-        try {
-            this.socket = new Socket(ip, port);
-            System.out.println("client connected");
-
-            this.in = new ObjectInputStream(socket.getInputStream());
-            this.out = new ObjectOutputStream(socket.getOutputStream());
-            GameMessage m = (GameMessage) this.in.readObject();
-            if (m.type == MessageType.INIT) this.isWhitePlayer = m.white;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
-
-    private void sendMessage(GameMessage msg) throws IOException {
-        System.out.println("Sending message...");
-        this.out.writeObject(msg);
-        this.out.flush();
-        System.out.println("Message sent!");
+    
+    public void onMessage(GameMessage m) {
+        System.out.println(m.type);
     }
 
     /**
@@ -85,6 +58,7 @@ public class Board extends GridPane {
                         this.clearHighlightedTiles();
                         checks();
                         this.isWhiteTurn.set(!isWhiteTurn.getValue());
+
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();

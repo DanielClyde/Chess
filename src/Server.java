@@ -46,12 +46,13 @@ public class Server {
         public void run() {
             try {
                 System.out.println("In Run of Handler");
+                System.out.println("test");
                 this.input = new ObjectInputStream(socket.getInputStream());
                 this.output = new ObjectOutputStream(socket.getOutputStream());
                 writers.put(this.isWhite, output);
-                this.output.writeObject(new GameMessage(MessageType.INIT, null, null, this.isWhite));
-                this.output.flush();
                 while (true) {
+                    this.output.writeObject(new GameMessage(MessageType.INIT, null, null, this.isWhite));
+                    this.output.flush();
                     GameMessage m  = (GameMessage) this.input.readObject();
                     writers.get(!this.isWhite).writeObject(m);
                     writers.get(!this.isWhite).flush();
