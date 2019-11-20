@@ -41,7 +41,7 @@ public class Chess extends Application{
                 return;
             }
             try {
-                out.writeObject(new GameMessage(MessageType.BOARD, board, null, !board.isWhiteTurn.getValue()));
+                out.writeObject(new GameMessage(MessageType.BOARD, board, null));
                 GameMessage msg = null;
                 while (true) {
                     msg = (GameMessage)in.readObject();

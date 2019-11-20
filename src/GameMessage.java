@@ -2,7 +2,6 @@ import java.io.Serializable;
 enum MessageType {
     CHAT,
     BOARD,
-    INIT,
 }
 public class GameMessage implements Serializable {
     public MessageType type;
@@ -10,7 +9,7 @@ public class GameMessage implements Serializable {
     public Board board;
     public boolean white;
 
-    GameMessage(MessageType type, Board b, String chatMessage, boolean isWhite) {
+    GameMessage(MessageType type, Board b, String chatMessage) {
         this.type = type;
         switch (this.type) {
             case CHAT:
@@ -18,9 +17,6 @@ public class GameMessage implements Serializable {
                 break;
             case BOARD:
                 this.board = b;
-                break;
-            case INIT:
-                this.white = isWhite;
                 break;
             default:
                 break;
