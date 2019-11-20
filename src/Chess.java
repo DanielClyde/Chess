@@ -12,6 +12,9 @@ import java.util.Scanner;
 public class Chess extends Application{
     public static Board board;
     public static boolean isWhitePlayer;
+    public static Socket socket = null;
+    public static ObjectInputStream in = null;
+    public static ObjectOutputStream out = null;
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -32,28 +35,32 @@ public class Chess extends Application{
         stage.setScene(sc);
         stage.show();
         connectToServer(ip, 58901);
+        System.out.println("Connected... adding listener");
+        board.isWhiteTurn.addListener((o, b1, b2) -> {
+            if (socket == null || in == null || out == null) {
+                System.out.println("null values, returning ");
+                return;
+            }
+            try {
+                out.writeObject(new GameMessage(MessageType.CHAT, null, null, false));
+                GameMessage msg = null;
+                while (true) {
+                    msg = (GameMessage)in.readObject();
+                    if (msg != null) {
+                        System.out.println(msg.type);
+                        break;
+                    }
+                }
+            } catch (Exception e) {e.printStackTrace();}
+        });
     }
 
     private static void connectToServer(String ip, int port) {
         try {
-            Socket socket = new Socket(ip, port);
+            socket = new Socket(ip, port);
             System.out.println("Connected to Server");
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-            board.isWhiteTurn.addListener((o, b1, b2) -> {
-                try {
-                    output.writeObject(new GameMessage(MessageType.CHAT, null, null, false));
-                    GameMessage msg = null;
-                    while (true) {
-                        msg = (GameMessage)input.readObject();
-                        if (msg != null) {
-                            System.out.println(msg.type);
-                            break;
-                        }
-                    }
-                } catch (Exception e) {e.printStackTrace();}
-            });
-
+            in = new ObjectInputStream(socket.getInputStream());
+            out = new ObjectOutputStream(socket.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
