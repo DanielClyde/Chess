@@ -35,29 +35,20 @@ public class Chess extends Application{
     private static void connectToServer(String ip, int port) {
         try {
             Socket socket = new Socket(ip, port);
-            System.out.println("client connected");
-
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-
-            board.isWhiteTurn.addListener((o,b1,b2) -> {
+            System.out.println("Connected to Server");
+            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+            board.isWhiteTurn.addListener((o, b1, b2) -> {
                 try {
-                    out.writeObject(new GameMessage(MessageType.BOARD, board, null, false));
-                    out.flush();
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
+                    output.writeObject(new GameMessage(MessageType.CHAT, null, null, false));
+                } catch (Exception e) {e.printStackTrace();}
+
             });
+            GameMessage msg = null;
             while (true) {
-                GameMessage m = (GameMessage) in.readObject();
-                if (m.type == MessageType.BOARD || m.type == MessageType.INIT) {
-                    System.out.println("message received");
-                    board.onMessage(m);
-                } else {
-                    // chat room stuff
-                }
-
-
+                msg = (GameMessage)input.readObject();
+                System.out.println("message received");
+                System.out.println(msg.type);
             }
         } catch (Exception e) {
             e.printStackTrace();

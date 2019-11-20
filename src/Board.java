@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class Board extends GridPane {
     public Tile[][] tiles;
     public Tile activeTile = null;
-    public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
+    public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty();
     public ArrayList<Piece> capturedPieces;
 
     public Board() {
@@ -28,10 +28,7 @@ public class Board extends GridPane {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-    }
-
-    public void onMessage(GameMessage m) {
-        System.out.println(m.type);
+        this.isWhiteTurn.set(true);
     }
 
     /**
@@ -58,7 +55,6 @@ public class Board extends GridPane {
                         this.clearHighlightedTiles();
                         checks();
                         this.isWhiteTurn.set(!isWhiteTurn.getValue());
-
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
