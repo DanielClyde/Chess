@@ -41,15 +41,19 @@ public class Chess extends Application{
                 return;
             }
             try {
-                out.writeObject(new GameMessage(MessageType.BOARD, board, null));
+                out.writeObject(new GameMessage(MessageType.MOVE, board.moveMsg, null));
                 GameMessage msg = null;
                 while (true) {
                     msg = (GameMessage)in.readObject();
                     if (msg != null) {
                         switch (msg.type) {
-                            case BOARD:
+                            case MOVE:
                                 System.out.println("Message Received!");
-                                board = msg.board;
+                                System.out.println(msg.moveMessage);
+                                break;
+                            case CHAT:
+                                System.out.println("Chat Message Recieved");
+                                System.out.println(msg.chatMessage);
                                 break;
                             default:
                                 break;

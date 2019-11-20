@@ -1,25 +1,16 @@
 import java.io.Serializable;
 enum MessageType {
     CHAT,
-    BOARD,
+    MOVE,
 }
 public class GameMessage implements Serializable {
     public MessageType type;
     public String chatMessage;
-    public Board board;
-    public boolean white;
+    public String moveMessage;
 
-    GameMessage(MessageType type, Board b, String chatMessage) {
+    GameMessage(MessageType type, String move, String chatMessage) {
         this.type = type;
-        switch (this.type) {
-            case CHAT:
-                this.chatMessage = chatMessage;
-                break;
-            case BOARD:
-                this.board = b;
-                break;
-            default:
-                break;
-        }
+        this.moveMessage = move;
+        this.chatMessage = chatMessage;
     }
 }

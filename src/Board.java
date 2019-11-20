@@ -21,6 +21,7 @@ public class Board extends GridPane implements Serializable {
     public Tile activeTile = null;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty();
     public ArrayList<Piece> capturedPieces;
+    public String moveMsg = "";
 
     public Board() {
         //TODO add method to start client stuffs @Daniel (add port and ip adress to constructor)
@@ -55,6 +56,7 @@ public class Board extends GridPane implements Serializable {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
                         checks();
+                        this.moveMsg = this.toString();
                         System.out.println("Changing white turn from " + isWhiteTurn.getValue() + " to " + !isWhiteTurn.getValue());
                         this.isWhiteTurn.set(!isWhiteTurn.getValue());
                     } else {
