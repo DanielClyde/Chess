@@ -13,4 +13,8 @@ public class GameMessage implements Serializable {
         this.movePositions = move;
         this.chatMessage = chatMessage;
     }
+    GameMessage(MessageType type, String chatMessage){
+        this.type = type;
+        this.chatMessage = chatMessage;
+    }
 }

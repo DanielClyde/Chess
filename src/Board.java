@@ -79,7 +79,7 @@ public class Board extends GridPane implements Serializable {
         }
     }
 
-    public GameMessage createMessage(Position from, Position to) {
+    public GameMessage createMoveMessage(Position from, Position to) {
         Position[] moves = {from ,to};
         return new GameMessage(MessageType.MOVE, moves, null);
     }
@@ -301,7 +301,7 @@ public class Board extends GridPane implements Serializable {
         this.activeTile = null;
         this.clearHighlightedTiles();
         checks();
-        GameMessage toSend = this.createMessage(from, to);
+        GameMessage toSend = this.createMoveMessage(from, to);
         this.updatePieceBoards();
         this.sendMessage(toSend);
         this.isWhiteTurn.set(!isWhiteTurn.getValue());
