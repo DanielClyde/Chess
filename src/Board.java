@@ -1,7 +1,12 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
@@ -57,7 +62,10 @@ public class Board extends GridPane implements Serializable {
                         GameMessage toSend = this.createMessage(from, to);
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
-                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
+                        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000), ae -> {
+                            this.isWhiteTurn.set(!isWhiteTurn.getValue());
+                        }));
+                        timeline.play();
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
