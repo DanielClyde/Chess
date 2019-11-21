@@ -39,19 +39,22 @@ public class Board extends GridPane implements Serializable {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-//        this.isWhiteTurn.addListener((o,b,b1) -> {
-//            this.getMessages();
-//        });
-        Timeline interval = new Timeline(new KeyFrame(Duration.millis(500), e -> {
-            try {
-                GameMessage received = (GameMessage)Chess.in.readObject();
-                if (received != null) {
-                    this.onMessageReceived(received);
-                }
-            } catch (Exception ex) {ex.printStackTrace();}
-        }));
-        interval.setCycleCount(Timeline.INDEFINITE);
-        interval.play();
+        this.isWhiteTurn.addListener((o,b,b1) -> {
+            if (o.getValue() != this.whitePlayer) {
+                Timeline interval = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+                    if (this.isWhiteTurn.getValue() == this.whitePlayer) return;
+                    try {
+                        GameMessage received = (GameMessage)Chess.in.readObject();
+                        if (received != null) {
+                            this.onMessageReceived(received);
+                        }
+                    } catch (Exception ex) {ex.printStackTrace();}
+                }));
+                interval.setCycleCount(Timeline.INDEFINITE);
+                interval.play();
+            }
+        });
+
 //        if (!this.whitePlayer) {
 //            System.out.println("Waiting for white to go first!");
 //            this.getMessages();
@@ -86,7 +89,7 @@ public class Board extends GridPane implements Serializable {
                         GameMessage toSend = this.createMessage(from, to);
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
-                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
+                        this.isWhiteTurn.set(!this.whitePlayer);
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
