@@ -34,10 +34,11 @@ public class Board extends GridPane implements Serializable {
         putTilesOnBoard();
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
-            if (o.getValue() != this.whitePlayer) {
-                this.getMessages();
-            }
+            this.getMessages();
         });
+        if (!this.whitePlayer) {
+            this.getMessages();
+        }
     }
 
     /**
