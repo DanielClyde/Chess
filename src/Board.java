@@ -1,26 +1,7 @@
-import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
@@ -29,7 +10,6 @@ public class Board extends GridPane implements Serializable {
     public StackPane topPane;
     public boolean whitePlayer;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
-    public Timeline interval;
     public ArrayList<Piece> capturedPieces;
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white) {
@@ -41,25 +21,12 @@ public class Board extends GridPane implements Serializable {
         putTilesOnBoard();
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
-            if (o.getValue() != this.whitePlayer) {
-                interval = new Timeline(new KeyFrame(Duration.millis(300), e -> {
-                    if (this.isWhiteTurn.getValue() == this.whitePlayer) return;
-                    try {
-                        GameMessage received = (GameMessage)Chess.in.readObject();
-                        if (received != null) {
-                            this.onMessageReceived(received);
-                        }
-                    } catch (Exception ex) {ex.printStackTrace();}
-                }));
-                interval.setCycleCount(Timeline.INDEFINITE);
-                interval.play();
-            }
+            this.getMessages();
         });
-
-//        if (!this.whitePlayer) {
-//            System.out.println("Waiting for white to go first!");
-//            this.getMessages();
-//        }
+        if (!this.whitePlayer) {
+            System.out.println("Waiting for white to go first!");
+            this.getMessages();
+        }
     }
 
     /**
@@ -90,7 +57,7 @@ public class Board extends GridPane implements Serializable {
                         GameMessage toSend = this.createMessage(from, to);
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
-                        this.isWhiteTurn.set(!this.whitePlayer);
+                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -113,18 +80,17 @@ public class Board extends GridPane implements Serializable {
 
     }
 
-//    public void getMessages() {
-//
-//        while(true){
-//            try {
-//                GameMessage received = (GameMessage)Chess.in.readObject();
-//                if (received != null) {
-//                    this.onMessageReceived(received);
-//                    break;
-//                }
-//            } catch (Exception e) {e.printStackTrace();}
-//        }
-//    }
+    public void getMessages() {
+        while(true){
+            try {
+                GameMessage received = (GameMessage)Chess.in.readObject();
+                if (received != null) {
+                    this.onMessageReceived(received);
+                    break;
+                }
+            } catch (Exception e) {e.printStackTrace();}
+        }
+    }
 
     public GameMessage createMessage(Position from, Position to) {
         Position[] moves = {from ,to};
