@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
@@ -33,13 +35,25 @@ public class Board extends GridPane implements Serializable {
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
-        this.isWhiteTurn.addListener((o,b,b1) -> {
-            this.getMessages();
-        });
-        if (!this.whitePlayer) {
-            System.out.println("Waiting for white to go first!");
-            this.getMessages();
-        }
+//        this.isWhiteTurn.addListener((o,b,b1) -> {
+//            this.getMessages();
+//        });
+        new Timer().schedule(
+                new TimerTask() {
+                    @Override
+                    public void run() {
+                        try {
+                            GameMessage received = (GameMessage)Chess.in.readObject();
+                            if (received != null) {
+                                onMessageReceived(received);
+                            }
+                        } catch (Exception e) {e.printStackTrace();}
+                    }
+                }, 2000, 500);
+//        if (!this.whitePlayer) {
+//            System.out.println("Waiting for white to go first!");
+//            this.getMessages();
+//        }
     }
 
     /**
@@ -93,17 +107,18 @@ public class Board extends GridPane implements Serializable {
 
     }
 
-    public void getMessages() {
-        while(true){
-            try {
-                GameMessage received = (GameMessage)Chess.in.readObject();
-                if (received != null) {
-                    this.onMessageReceived(received);
-                    break;
-                }
-            } catch (Exception e) {e.printStackTrace();}
-        }
-    }
+//    public void getMessages() {
+//
+//        while(true){
+//            try {
+//                GameMessage received = (GameMessage)Chess.in.readObject();
+//                if (received != null) {
+//                    this.onMessageReceived(received);
+//                    break;
+//                }
+//            } catch (Exception e) {e.printStackTrace();}
+//        }
+//    }
 
     public GameMessage createMessage(Position from, Position to) {
         Position[] moves = {from ,to};
