@@ -125,7 +125,7 @@ public class Board extends GridPane implements Serializable {
         Tile fromTile = this.tiles[from.col][from.row];
         Tile toTile = this.tiles[to.col][to.row];
 
-        if (toTile.getChildren().size() > 0) toTile.getChildren().remove(1);
+        if (toTile.getChildren() != null && toTile.getChildren().size() > 0) toTile.getChildren().remove(1);
         if (toTile.hasPiece) graveyard.addPiece(toTile.piece); //adds the piece to the captured pieces arrayList
         toTile.setPiece(fromTile.piece);
         fromTile.setPiece(null);
