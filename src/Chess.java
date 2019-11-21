@@ -1,17 +1,18 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Chess extends Application{
     public static Board board;
@@ -25,31 +26,16 @@ public class Chess extends Application{
 
     @Override
     public void start(Stage stage) {
-        stage.setWidth(300);
-        stage.setHeight(400);
-        BorderPane menu = new BorderPane();
-        TextField ipAddress = new TextField("Enter ip address or localhost: ");
-        menu.setCenter(ipAddress);
-        Scene sc = new Scene(menu);
-        stage.setScene(sc);
-        stage.show();
-        ipAddress.setOnKeyPressed(event -> {
-            if (event.getCode()== KeyCode.ENTER){
-                System.out.println("yey");
-                startUp(ipAddress.getText(), stage);
-
-            }
-        });
 
 
 
 
-}
 
-
-
-    private static void startUp(String ip, Stage stage){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter ip address or localhost: ");
+        String ip = input.nextLine();
         connectToServer(ip, 58901);
+        System.out.println("Connected... Let's Play!");
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
@@ -60,16 +46,11 @@ public class Chess extends Application{
         bp.setTop(topPane);
         Scene sc = new Scene(bp);
         stage.setScene(sc);
-//        Pane pane = new Pane();
-//        Text tx = new Text(";lasjdf");
-//        tx.setX(200);
-//        tx.setY(200);
-//        pane.getChildren().add(tx);
-//        Scene sc = new Scene(pane);
-//        stage.setScene(sc);
-
-
+        stage.show();
     }
+
+
+
     private static void connectToServer(String ip, int port) {
         try {
             socket = new Socket(ip, port);
