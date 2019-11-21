@@ -44,20 +44,7 @@ public class Board extends GridPane implements Serializable {
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
                     } else if (t.isHighlighted.getValue() && this.activeTile.piece != null ) {
-                        Position from = this.activeTile.position;
-                        Position to = t.position;
-                        t.getChildren().remove(1);
-                        if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
-                        t.setPiece(activeTile.piece);
-                        this.activeTile.setPiece(null);
-                        activeTile.hasPiece = false;
-                        this.activeTile = null;
-                        this.clearHighlightedTiles();
-                        checks();
-                        GameMessage toSend = this.createMessage(from, to);
-                        this.updatePieceBoards();
-                        this.sendMessage(toSend);
-                        this.isWhiteTurn.set(!isWhiteTurn.getValue());
+                        movePieces(t);
                     } else {
                         this.activeTile = null;
                         this.clearHighlightedTiles();
@@ -302,5 +289,21 @@ public class Board extends GridPane implements Serializable {
                 }
             }
         }
+    }
+    private void movePieces(Tile t){
+        Position from = this.activeTile.position;
+        Position to = t.position;
+        t.getChildren().remove(1);
+        if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
+        t.setPiece(activeTile.piece);
+        this.activeTile.setPiece(null);
+        activeTile.hasPiece = false;
+        this.activeTile = null;
+        this.clearHighlightedTiles();
+        checks();
+        GameMessage toSend = this.createMessage(from, to);
+        this.updatePieceBoards();
+        this.sendMessage(toSend);
+        this.isWhiteTurn.set(!isWhiteTurn.getValue());
     }
 }
