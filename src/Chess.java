@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -25,21 +26,31 @@ public class Chess extends Application{
 
     @Override
     public void start(Stage stage) {
-        Pane menu = new Pane();
+        stage.setWidth(300);
+        stage.setHeight(400);
+        BorderPane menu = new BorderPane();
         TextField ipAddress = new TextField("Enter ip address or localhost: ");
-        menu.getChildren().add(ipAddress);
+        menu.setCenter(ipAddress);
         Scene sc = new Scene(menu);
         stage.setScene(sc);
+        stage.show();
+        ipAddress.setOnKeyPressed(event -> {
+            if (event.getCode()== KeyCode.ENTER){
+                System.out.println("yey");
+                startUp(ipAddress.getText(), sc, stage);
+
+            }
+        });
 
 
 
 
-        Scanner input = new Scanner(System.in);
-        if (input.next().equals("1")){
-        System.out.println("Enter ip address or localhost: ");
-        String ip = input.nextLine();
+}
+
+
+
+    private static void startUp(String ip, Scene sc, Stage stage){
         connectToServer(ip, 58901);
-        System.out.println("Connected... Let's Play!");
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
@@ -49,10 +60,10 @@ public class Chess extends Application{
         bp.setLeft(graveyard);
         bp.setTop(topPane);
         sc = new Scene(bp);
-        stage.setScene(sc);}
-        stage.show();
-    }
+        stage.setScene(sc);
 
+
+    }
     private static void connectToServer(String ip, int port) {
         try {
             socket = new Socket(ip, port);
