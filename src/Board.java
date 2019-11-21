@@ -29,6 +29,7 @@ public class Board extends GridPane implements Serializable {
     public StackPane topPane;
     public boolean whitePlayer;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
+    public Timeline interval;
     public ArrayList<Piece> capturedPieces;
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white) {
@@ -41,7 +42,7 @@ public class Board extends GridPane implements Serializable {
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
             if (o.getValue() != this.whitePlayer) {
-                Timeline interval = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+                interval = new Timeline(new KeyFrame(Duration.millis(300), e -> {
                     if (this.isWhiteTurn.getValue() == this.whitePlayer) return;
                     try {
                         GameMessage received = (GameMessage)Chess.in.readObject();
