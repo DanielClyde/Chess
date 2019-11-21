@@ -1,4 +1,3 @@
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ public class King extends Piece {
 
         return moves;
     }
-    
+
     public String toString() {
         return "King at " + this.pos.col + "x" + this.pos.row;
     }

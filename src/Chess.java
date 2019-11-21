@@ -1,7 +1,9 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -23,7 +25,17 @@ public class Chess extends Application{
 
     @Override
     public void start(Stage stage) {
+        Pane menu = new Pane();
+        TextField ipAddress = new TextField("Enter ip address or localhost: ");
+        menu.getChildren().add(ipAddress);
+        Scene sc = new Scene(menu);
+        stage.setScene(sc);
+
+
+
+
         Scanner input = new Scanner(System.in);
+        if (input.next().equals("1")){
         System.out.println("Enter ip address or localhost: ");
         String ip = input.nextLine();
         connectToServer(ip, 58901);
@@ -36,8 +48,8 @@ public class Chess extends Application{
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);
-        Scene sc = new Scene(bp);
-        stage.setScene(sc);
+        sc = new Scene(bp);
+        stage.setScene(sc);}
         stage.show();
     }
 
