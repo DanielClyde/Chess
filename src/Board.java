@@ -37,6 +37,7 @@ public class Board extends GridPane implements Serializable {
             this.getMessages();
         });
         if (!this.whitePlayer) {
+            System.out.println("Waiting for white to go first!");
             this.getMessages();
         }
     }
@@ -50,7 +51,7 @@ public class Board extends GridPane implements Serializable {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && t.piece.isWhite == isWhiteTurn.getValue()) {
+                    if (t.piece != null && this.activeTile == null && this.whitePlayer == isWhiteTurn.getValue()) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
