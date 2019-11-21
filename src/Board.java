@@ -51,7 +51,7 @@ public class Board extends GridPane implements Serializable {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && this.whitePlayer == isWhiteTurn.getValue()) {
+                    if (t.piece != null && this.activeTile == null && this.whitePlayer == t.piece.isWhite) {
                         System.out.println(t.piece.toString());
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
@@ -122,6 +122,30 @@ public class Board extends GridPane implements Serializable {
         Position from = m.movePositions[0];
         Position to = m.movePositions[1];
         System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col);
+        Tile fromTile = null;
+        for (Tile [] col : this.tiles) {
+            for (Tile t : col) {
+                if (t.position.col == from.col && t.position.row == from.row) {
+                    fromTile = t;
+                }
+            }
+        }
+
+        for (Tile [] col : this.tiles) {
+            for (Tile t : col) {
+                if (t.position.col == to.col && t.position.row == to.row) {
+                    t.getChildren().remove(1);
+                    if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
+                    t.setPiece(fromTile.piece);
+                    fromTile.setPiece(null);
+                    fromTile.hasPiece = false;
+                    fromTile = null;
+                    this.clearHighlightedTiles();
+                    checks();
+                    updatePieceBoards();
+                }
+            }
+        }
     }
 
     private void updatePieceBoards() {
