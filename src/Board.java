@@ -1,7 +1,11 @@
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -38,18 +42,16 @@ public class Board extends GridPane implements Serializable {
 //        this.isWhiteTurn.addListener((o,b,b1) -> {
 //            this.getMessages();
 //        });
-        new Timer().schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        try {
-                            GameMessage received = (GameMessage)Chess.in.readObject();
-                            if (received != null) {
-                                onMessageReceived(received);
-                            }
-                        } catch (Exception e) {e.printStackTrace();}
-                    }
-                }, 2000, 500);
+        Timeline interval = new Timeline(new KeyFrame(Duration.millis(500), e -> {
+            try {
+                GameMessage received = (GameMessage)Chess.in.readObject();
+                if (received != null) {
+                    this.onMessageReceived(received);
+                }
+            } catch (Exception ex) {ex.printStackTrace();}
+        }));
+        interval.setCycleCount(Timeline.INDEFINITE);
+        interval.play();
 //        if (!this.whitePlayer) {
 //            System.out.println("Waiting for white to go first!");
 //            this.getMessages();
