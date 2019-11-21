@@ -1,18 +1,17 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Chess extends Application{
     public static Board board;
@@ -37,7 +36,7 @@ public class Chess extends Application{
         ipAddress.setOnKeyPressed(event -> {
             if (event.getCode()== KeyCode.ENTER){
                 System.out.println("yey");
-                startUp(ipAddress.getText(), sc, stage);
+                startUp(ipAddress.getText(), stage);
 
             }
         });
@@ -49,7 +48,7 @@ public class Chess extends Application{
 
 
 
-    private static void startUp(String ip, Scene sc, Stage stage){
+    private static void startUp(String ip, Stage stage){
         connectToServer(ip, 58901);
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
@@ -59,8 +58,15 @@ public class Chess extends Application{
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);
-        sc = new Scene(bp);
+        Scene sc = new Scene(bp);
         stage.setScene(sc);
+//        Pane pane = new Pane();
+//        Text tx = new Text(";lasjdf");
+//        tx.setX(200);
+//        tx.setY(200);
+//        pane.getChildren().add(tx);
+//        Scene sc = new Scene(pane);
+//        stage.setScene(sc);
 
 
     }
