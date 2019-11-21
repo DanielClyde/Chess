@@ -32,7 +32,9 @@ public class Chess extends Application{
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
         Board board = new Board(graveyard, topPane, ip.equals("localhost"));
+        ChatBox cb = new ChatBox();
         //TODO add in the chatbox pane
+        bp.setRight(cb);
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);

@@ -60,8 +60,8 @@ public class ChatBox extends VBox {
     public void getMessages(){
         while(true){
             try{
-                GameMessage received = (GameMessage)Chess.in.readObject();
-                if (received != null){
+                if ((GameMessage)Chess.in.readObject() != null){
+                    GameMessage received = (GameMessage)Chess.in.readObject();
                     this.onMessageReceived(received);
                     break;
                 }
