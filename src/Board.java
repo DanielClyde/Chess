@@ -122,30 +122,17 @@ public class Board extends GridPane implements Serializable {
         Position from = m.movePositions[0];
         Position to = m.movePositions[1];
         System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col);
-        Tile fromTile = null;
-        for (Tile [] col : this.tiles) {
-            for (Tile t : col) {
-                if (t.position.col == from.col && t.position.row == from.row) {
-                    fromTile = t;
-                }
-            }
-        }
+        Tile fromTile = this.tiles[from.col][from.row];
+        Tile toTile = this.tiles[to.col][to.row];
 
-        for (Tile [] col : this.tiles) {
-            for (Tile t : col) {
-                if (t.position.col == to.col && t.position.row == to.row) {
-                    t.getChildren().remove(1);
-                    if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
-                    t.setPiece(fromTile.piece);
-                    fromTile.setPiece(null);
-                    fromTile.hasPiece = false;
-                    fromTile = null;
-                    this.clearHighlightedTiles();
-                    checks();
-                    updatePieceBoards();
-                }
-            }
-        }
+        if (toTile.getChildren().size() > 0) toTile.getChildren().remove(1);
+        if (toTile.hasPiece) graveyard.addPiece(toTile.piece); //adds the piece to the captured pieces arrayList
+        toTile.setPiece(fromTile.piece);
+        fromTile.setPiece(null);
+        fromTile.hasPiece = false;
+        this.clearHighlightedTiles();
+        checks();
+        updatePieceBoards();
     }
 
     private void updatePieceBoards() {
