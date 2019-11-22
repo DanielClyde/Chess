@@ -14,7 +14,7 @@ public class Board extends GridPane implements Serializable {
     public GraveyardPane graveyard;
     public StackPane topPane;
     public boolean whitePlayer;
-    public SimpleStringProperty turnStatus = new SimpleStringProperty("White Turn");
+    public SimpleStringProperty turnStatus = new SimpleStringProperty();
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
@@ -29,15 +29,17 @@ public class Board extends GridPane implements Serializable {
         putTilesOnBoard();
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
-            String turn = this.whitePlayer ? "Black Turn" : "White Turn";
-            this.turnStatus.set(turn);
+            this.turnStatus.set("Opponent's Turn!");
             this.getMessages();
-            turn = this.whitePlayer ? "White Turn" : "Black Turn";
-            this.turnStatus.set(turn);
+            this.turnStatus.set("Your Turn!");
         });
         if (!this.whitePlayer) {
             System.out.println("Waiting for white to go first!");
+            this.turnStatus.set("Oppenent's Turn!");
             this.getMessages();
+            this.turnStatus.set("Your Turn!");
+        } else {
+            this.turnStatus.set("Your Turn!");
         }
     }
 
