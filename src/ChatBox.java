@@ -1,5 +1,7 @@
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -9,20 +11,22 @@ import java.util.Queue;
 
 public class ChatBox extends VBox {
     private Integer cfIndex=0;
-    private int cfLimit = 7;
-    private Queue<String> messages = new LinkedList<>();
+    private int cfLimit = 20;
     private Text[] chatText = new Text[cfLimit];
 
 
     public ChatBox(){
         VBox chatField = new VBox();
+        HBox tFAndSend = new HBox();
+        Button send = new Button("Send");
         TextField textField = new TextField("Type Here");
+        tFAndSend.getChildren().add(textField);
+        tFAndSend.getChildren().add(send);
         for ( int i=0; i < chatText.length; i++ ){
             chatText[i] = new Text(" ");
             chatField.getChildren().add(chatText[i]);
         }
-        this.getChildren().addAll(chatField, textField);
-//        getMessages();
+        this.getChildren().add(tFAndSend);
 
 
         textField.setOnKeyPressed(e -> {
@@ -31,6 +35,11 @@ public class ChatBox extends VBox {
                 sendChatMessage(createChatMessage(textField.getText()));
                 textField.setText("");
             }
+        });
+        send.setOnMouseClicked(e -> {
+            receiveText("You> " + textField.getText());
+            sendChatMessage(createChatMessage(textField.getText()));
+            textField.setText("");
         });
     }
     public void receiveText(String text){
