@@ -28,8 +28,8 @@ public class ChatBox extends VBox {
         textField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER){
                 receiveText(textField.getText());
-                textField.setText("");
                 sendChatMessage(createChatMessage(textField.getText()));
+                textField.setText("");
             }
         });
     }
@@ -54,6 +54,8 @@ public class ChatBox extends VBox {
         }
     }
     public void onMessageReceived(GameMessage m){
+        System.out.println("DEBUG: onMessageReceived():  " + m.type + "\n" + m.chatMessage + "\n.");
+
         receiveText(m.chatMessage);
     }
 

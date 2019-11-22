@@ -11,8 +11,10 @@ public class Board extends GridPane implements Serializable {
     public boolean whitePlayer;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
+    public ChatBox chatBox;
 
-    public Board(GraveyardPane graveyard, StackPane topPane, boolean white) {
+    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
+        this.chatBox = chatBox;
         this.whitePlayer = white;
         PieceImages pi = new PieceImages();
         this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
@@ -74,6 +76,9 @@ public class Board extends GridPane implements Serializable {
                 if (received != null && received.type==MessageType.MOVE) {
                     this.onMessageReceived(received);
                     break;
+                }
+                else if (received != null && received.type == MessageType.CHAT){
+                    chatBox.onMessageReceived(received);
                 }
             } catch (Exception e) {e.printStackTrace();}
         }

@@ -31,8 +31,8 @@ public class Chess extends Application{
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
-        Board board = new Board(graveyard, topPane, ip.equals("localhost"));
         ChatBox cb = new ChatBox();
+        Board board = new Board(graveyard, topPane, ip.equals("localhost"), cb);
         //TODO add in the chatbox pane
         bp.setRight(cb);
         bp.setCenter(board);
