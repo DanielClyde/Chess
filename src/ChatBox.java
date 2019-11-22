@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class ChatBox extends VBox {
     private Integer cfIndex=0;
-    private int cfLimit = 20;
+    private int cfLimit = 7;
     private Queue<String> messages = new LinkedList<>();
     private Text[] chatText = new Text[cfLimit];
 
@@ -27,7 +27,7 @@ public class ChatBox extends VBox {
 
         textField.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER){
-                receiveText("You>" + textField.getText());
+                receiveText(textField.getText());
                 sendChatMessage(createChatMessage(textField.getText()));
                 textField.setText("");
             }
@@ -56,7 +56,7 @@ public class ChatBox extends VBox {
     public void onMessageReceived(GameMessage m){
         System.out.println("DEBUG: onMessageReceived():  " + m.type + "\n" + m.chatMessage + "\n.");
 
-        receiveText("Them>" + m.chatMessage);
+        receiveText(m.chatMessage);
     }
 
     public void getMessages(){
