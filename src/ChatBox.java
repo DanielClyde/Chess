@@ -1,8 +1,9 @@
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -11,11 +12,17 @@ import java.util.Queue;
 
 public class ChatBox extends VBox {
     private Integer cfIndex=0;
-    private int cfLimit = 20;
+    private int cfLimit = 21;
     private Text[] chatText = new Text[cfLimit];
 
 
     public ChatBox(){
+//        BackgroundImage myBI= new BackgroundImage(new Image("/forrest.jpg"),
+//                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+//                BackgroundSize.DEFAULT);
+//        Background bg = new Background(myBI);
+//        this.setBackground(bg);
+        Label title = new Label("Chat Box\n_________________________________________________");
         VBox chatField = new VBox();
         HBox tFAndSend = new HBox();
         Button send = new Button("Send");
@@ -27,7 +34,7 @@ public class ChatBox extends VBox {
             chatField.getChildren().add(chatText[i]);
         }
 
-        this.getChildren().addAll(chatField,tFAndSend);
+        this.getChildren().addAll(title,chatField,tFAndSend);
 
 
         textField.setOnKeyPressed(e -> {

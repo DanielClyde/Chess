@@ -6,7 +6,7 @@ public class Window extends Application {
     public void start(Stage stage){
         ChatBox chatBox = new ChatBox();
         stage.setTitle("Chat away");
-        stage.setHeight(175);
+        stage.setHeight(500);
         Scene sc = new Scene(chatBox);
         stage.setScene(sc);
         stage.show();
