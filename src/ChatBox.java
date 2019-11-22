@@ -22,7 +22,7 @@ public class ChatBox extends VBox {
             chatField.getChildren().add(chatText[i]);
         }
         this.getChildren().addAll(chatField, textField);
-        getMessages();
+//        getMessages();
 
 
         textField.setOnKeyPressed(e -> {
