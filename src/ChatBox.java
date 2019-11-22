@@ -26,7 +26,8 @@ public class ChatBox extends VBox {
             chatText[i] = new Text(" ");
             chatField.getChildren().add(chatText[i]);
         }
-        this.getChildren().add(tFAndSend);
+
+        this.getChildren().addAll(chatField,tFAndSend);
 
 
         textField.setOnKeyPressed(e -> {
