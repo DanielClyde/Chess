@@ -73,13 +73,13 @@ public class Board extends GridPane implements Serializable {
         while(true){
             try {
                 GameMessage received = (GameMessage)Chess.in.readObject();
-                if (received != null && received.type==MessageType.MOVE) {
+                if (received != null && received.type == MessageType.CHAT){
+                    chatBox.onMessageReceived(received);
+                } else if (received != null && received.type==MessageType.MOVE) {
                     this.onMessageReceived(received);
                     break;
                 }
-                else if (received != null && received.type == MessageType.CHAT){
-                    chatBox.onMessageReceived(received);
-                }
+
             } catch (Exception e) {e.printStackTrace();}
         }
     }
