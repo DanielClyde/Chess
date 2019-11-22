@@ -63,6 +63,9 @@ public class Board extends GridPane implements Serializable {
                         this.updatePieceBoards();
                         this.sendMessage(toSend);
                         this.isWhiteTurn.set(!isWhiteTurn.getValue());
+<<<<<<< HEAD
+>>>>>>> parent of cde2817... putting  timeout after a move is made for animations to finish before message is sent
+=======
 >>>>>>> parent of cde2817... putting  timeout after a move is made for animations to finish before message is sent
                     } else {
                         this.activeTile = null;
