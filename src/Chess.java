@@ -38,11 +38,8 @@ public class Chess extends Application{
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);
-
-        board.isWhiteTurn.addListener((o,b1,b2) -> {
-            stage.setTitle(o.getValue() ? "White Turn" : "Black Turn");
-        });
         Scene sc = new Scene(bp);
+        stage.titleProperty().bind(board.turnStatus);
         stage.setScene(sc);
         stage.show();
     }
