@@ -26,6 +26,7 @@ public class Board extends GridPane implements Serializable {
         this.whitePlayer = white;
         PieceImages pi = new PieceImages();
         this.topPane = topPane;
+        topPane.getChildren().add(new Label(""));
         this.graveyard = graveyard;
         changeTopPane("Game Start");
         this.tiles = new Tile[8][8];
@@ -335,7 +336,7 @@ public class Board extends GridPane implements Serializable {
     }
 
     private void changeTopPane(String message){
-        topPane.getChildren().remove(0, 1);
+        topPane.getChildren().remove(0, 0);
         topPane.getChildren().add(new Label(message));
     }
 
