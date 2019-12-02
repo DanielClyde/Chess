@@ -233,7 +233,7 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(boolean isWhite) {
         String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) changeTopPane(isWhite + " is in Check!");
+        if (check(isWhite)) changeTopPane(player + " is in Check!");
         else changeTopPane("");
     }
 
