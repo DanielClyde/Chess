@@ -4,6 +4,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -17,20 +18,17 @@ public class ChatBox extends VBox {
 
 
     public ChatBox(){
-//        BackgroundImage myBI= new BackgroundImage(new Image("/forrest.jpg"),
-//                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-//                BackgroundSize.DEFAULT);
-//        Background bg = new Background(myBI);
-//        this.setBackground(bg);
         Label title = new Label("Chat Box\n_________________________________________________");
+        title.setTextFill(Color.WHITE);
         VBox chatField = new VBox();
         HBox tFAndSend = new HBox();
         Button send = new Button("Send");
-        TextField textField = new TextField("Type Here");
+        TextField textField = new TextField("");
         tFAndSend.getChildren().add(textField);
         tFAndSend.getChildren().add(send);
         for ( int i=0; i < chatText.length; i++ ){
             chatText[i] = new Text(" ");
+            chatText[i].setStroke(Color.WHITE);
             chatField.getChildren().add(chatText[i]);
         }
 

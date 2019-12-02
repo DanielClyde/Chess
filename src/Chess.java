@@ -24,7 +24,7 @@ public class Chess extends Application{
     @Override
     public void start(Stage stage) {
         Pane pane = new Pane();
-        BackgroundImage myBI= new BackgroundImage(new Image("/doggypotter.jpg", 1200, 500, false, true),
+        BackgroundImage myBI= new BackgroundImage(new Image("/mountain.jpg", 1200, 500, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         Background bg = new Background(myBI);

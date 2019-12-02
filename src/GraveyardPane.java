@@ -13,13 +13,7 @@ public class GraveyardPane extends VBox {
     FlowPane blackPieces;
 
     public GraveyardPane(){
-//        Image im = new Image("/doggypotter.jpg", 800, 800, false, false);
 
-//        BackgroundImage myBI= new BackgroundImage(im,
-//                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-//                BackgroundSize.DEFAULT);
-//        Background bg = new Background(myBI);
-//        this.setBackground(bg);
         System.out.println(this.getHeight() + "\n" + this.getWidth());
 
         //to show what it will look like still need to add functionality to add pieces to graveyard
