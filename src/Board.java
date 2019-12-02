@@ -317,6 +317,8 @@ public class Board extends GridPane implements Serializable {
     private void movePieces(Tile t){
         Position from = this.activeTile.position;
         Position to = t.position;
+        System.out.println("Piece being taken: " + t.piece);
+        System.out.println("Piece taking: " + this.activeTile.piece);
         t.getChildren().remove(1);
         if (t.hasPiece) {
             graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
