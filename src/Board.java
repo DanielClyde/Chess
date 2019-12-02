@@ -343,6 +343,7 @@ public class Board extends GridPane implements Serializable {
 
     private void gameEnd(){
         changeTopPane("Game over");
+        System.out.println("The game is ended");
     }
 
 }
