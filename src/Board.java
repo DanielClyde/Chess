@@ -127,12 +127,15 @@ public class Board extends GridPane implements Serializable {
         try {
             toTile.getChildren().remove(1);
         } catch (Exception e) {}
-        if (toTile.hasPiece) graveyard.addPiece(toTile.piece); //adds the piece to the captured pieces arrayList
+        if (toTile.hasPiece){
+            graveyard.addPiece(toTile.piece); //adds the piece to the captured pieces arrayList
+            if(toTile.piece instanceof King) gameEnd();
+        }
         toTile.setPiece(fromTile.piece);
         fromTile.setPiece(null);
         fromTile.hasPiece = false;
         this.clearHighlightedTiles();
-        checks();
+        if (gameInProgress) checks();
         updatePieceBoards();
     }
 
