@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
+//TODO Clean up
 public class Tile extends StackPane {
     boolean isWhite;
     public Piece piece;
@@ -31,8 +31,8 @@ public class Tile extends StackPane {
         if (p != null) {
             this.getChildren().add(1, this.piece);
             this.hasPiece = true;
-            this.piece.pos = this.position;
-            this.piece.isFirstMove = false;
+            this.piece.setPos(this.position);
+            this.piece.setFirstMove(false);
         }
     }
 

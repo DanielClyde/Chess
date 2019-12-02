@@ -1,45 +1,43 @@
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 public class Pawn extends Piece {
     public Pawn(Position p, boolean isWhite, PieceImages images, Board bd) {
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.width);
-        this.pos = p;
-        this.isWhite = isWhite;
-        this.img = this.isWhite ? images.whitePawn : images.blackPawn;
-        this.setImage(img);
-        this.board = bd;
-        this.isFirstMove = true;
+        super(p, isWhite, bd);
+        this.setImg(isWhite ? images.whitePawn : images.blackPawn);
     }
 
+    /**
+     * Finds the legal moves for the piece
+     * @return an array list of positions where the piece can legally move
+     */
     public ArrayList<Position> getLegalMoves() {
-        //TODO add lepeon move thing maybe i don't know @Josh
         ArrayList<Position> moves = new ArrayList<>();
-        int forwardTwo = this.isWhite ? 2 : -2;
-        int forwardOne = this.isWhite ? 1 : -1;
-        if (this.pos.row + forwardOne >= 0 && this.pos.row + forwardOne <= 7) {
-            if (!this.board.tiles[this.pos.col][this.pos.row + forwardOne].hasPiece) {
-                moves.add(new Position(this.pos.col, this.pos.row + forwardOne));
-                if (this.pos.row + forwardTwo >= 0 && this.pos.row + forwardTwo <= 7 && this.isFirstMove) {
-                    if (!this.board.tiles[this.pos.col][this.pos.row + forwardTwo].hasPiece) {
-                    moves.add(new Position(this.pos.col, this.pos.row + forwardTwo));}
+
+        int forwardTwo = this.isWhite() ? 2 : -2;
+        int forwardOne = this.isWhite() ? 1 : -1;
+
+        if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7) {
+            if (!this.getBoard().tiles[this.getPos().col][this.getPos().row + forwardOne].hasPiece) {
+
+                moves.add(new Position(this.getPos().col, this.getPos().row + forwardOne));
+
+                if (this.getPos().row + forwardTwo >= 0 && this.getPos().row + forwardTwo <= 7 && this.isFirstMove()) {
+                    if (!this.getBoard().tiles[this.getPos().col][this.getPos().row + forwardTwo].hasPiece) {
+                    moves.add(new Position(this.getPos().col, this.getPos().row + forwardTwo));}
                 }
             }
         }
 
-        if (this.pos.row + forwardOne >= 0 && this.pos.row + forwardOne <= 7 && this.pos.col - 1 >= 0) {
-            if (this.board.tiles[this.pos.col - 1][this.pos.row + forwardOne].hasPiece && (
-                    this.board.tiles[this.pos.col - 1][this.pos.row + forwardOne].piece.isWhite ^ this.isWhite)) {
-                moves.add(new Position(this.pos.col - 1, this.pos.row + forwardOne));
+        if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7 && this.getPos().col - 1 >= 0) {
+            if (this.getBoard().tiles[this.getPos().col - 1][this.getPos().row + forwardOne].hasPiece && (
+                    this.getBoard().tiles[this.getPos().col - 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
+                moves.add(new Position(this.getPos().col - 1, this.getPos().row + forwardOne));
             }
         }
-        if (this.pos.row + forwardOne >= 0 && this.pos.row + forwardOne <= 7 && this.pos.col + 1 <= 7) {
-            if (this.board.tiles[this.pos.col + 1][this.pos.row + forwardOne].hasPiece && (
-                    this.board.tiles[this.pos.col + 1][this.pos.row + forwardOne].piece.isWhite ^ this.isWhite)) {
-                moves.add(new Position(this.pos.col + 1, this.pos.row + forwardOne));
+        if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7 && this.getPos().col + 1 <= 7) {
+            if (this.getBoard().tiles[this.getPos().col + 1][this.getPos().row + forwardOne].hasPiece && (
+                    this.getBoard().tiles[this.getPos().col + 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
+                moves.add(new Position(this.getPos().col + 1, this.getPos().row + forwardOne));
             }
         }
 
@@ -48,6 +46,6 @@ public class Pawn extends Piece {
     }
 
     public String toString() {
-        return "Pawn at " + this.pos.col + "x" + this.pos.row;
+        return "Pawn at " + this.getPos().col + "x" + this.getPos().row;
     }
 }

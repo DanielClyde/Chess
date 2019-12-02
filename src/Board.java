@@ -2,6 +2,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -18,13 +19,16 @@ public class Board extends GridPane implements Serializable {
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
+    public StackPane bottomPane;
 
-    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
+    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox, StackPane bottomPane) {
         this.chatBox = chatBox;
         this.whitePlayer = white;
+        this.bottomPane = bottomPane;
         PieceImages pi = new PieceImages();
         this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
         this.graveyard = graveyard;
+        topPane.getChildren().add(new Label("White's Turn"));
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -52,8 +56,8 @@ public class Board extends GridPane implements Serializable {
             for (int y = 0; y < 8; y++) {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
-                    if (t.piece != null && this.activeTile == null && this.whitePlayer == t.piece.isWhite) {
-                        System.out.println(t.piece.toString());
+                    if (t.piece != null && this.activeTile == null && this.whitePlayer == t.piece.isWhite()) {
+                        System.out.println(t.piece.toString());//TODO remove
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
@@ -112,7 +116,7 @@ public class Board extends GridPane implements Serializable {
     public void onMessageReceived(GameMessage m) {
         Position from = m.movePositions[0];
         Position to = m.movePositions[1];
-        System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col);
+        System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col); //TODO remove when done
         Tile fromTile = this.tiles[from.col][from.row];
         Tile toTile = this.tiles[to.col][to.row];
 
@@ -156,11 +160,11 @@ public class Board extends GridPane implements Serializable {
             for (Tile t : row) {
                 if (t.position.row == 1) {
                     t.setPiece(new Pawn(t.position, true, pi, this));
-                    t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
+                    t.piece.setFirstMove(true); //setPiece sets this to false, this is where we will make it true just once
                 }
                 else if (t.position.row == 6) {
                     t.setPiece(new Pawn(t.position, false, pi, this));
-                    t.piece.isFirstMove = true; //setPiece sets this to false, this is where we will make it true just once
+                    t.piece.setFirstMove(true); //setPiece sets this to false, this is where we will make it true just once
 
                 }
                 if (t.position.row == 0) {
@@ -229,9 +233,7 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(boolean isWhite) {
         String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) {
-            if (checkMate(isWhite)) System.out.println("Game over! " + player + " is in checkmate!");
-            else System.out.println(player + " is in check!"); }
+        if (check(isWhite)) changeBottomPane(isWhite + " is in Check!");
     }
 
     /**
@@ -245,10 +247,10 @@ public class Board extends GridPane implements Serializable {
         // find king's tile and populate opponent moves
         for (Tile[] t : this.tiles) {
             for (Tile tile : t) {
-                if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
+                if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
                     kingTile = tile;
                 }
-                if (tile.hasPiece && tile.piece.isWhite != isWhite) {
+                if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
                     opponentMoves.addAll(tile.piece.getLegalMoves());
                 }
             }
@@ -273,10 +275,10 @@ public class Board extends GridPane implements Serializable {
         // find king's tile and populate opponent moves
         for (Tile[] t : this.tiles) {
             for (Tile tile : t) {
-                if (tile.piece instanceof King && tile.piece.isWhite == isWhite) {
+                if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
                     kingMoves = tile.piece.getLegalMoves();
                 }
-                if (tile.hasPiece && tile.piece.isWhite != isWhite) {
+                if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
                     opponentMoves.addAll(tile.piece.getLegalMoves());
                 }
             }
@@ -308,6 +310,7 @@ public class Board extends GridPane implements Serializable {
         }
     }
     private void movePieces(Tile t){
+        //TODO if king is taken end game...
         Position from = this.activeTile.position;
         Position to = t.position;
         t.getChildren().remove(1);
@@ -325,5 +328,14 @@ public class Board extends GridPane implements Serializable {
             this.isWhiteTurn.set(!isWhiteTurn.getValue());
         }));
         timeline.play();
+    }
+
+    private void changeTopPane(String Message){
+        //TODO change so when called the topPane's message is changed to message
+    }
+
+    private void changeBottomPane(String message){
+        bottomPane.getChildren().removeAll();
+        bottomPane.getChildren().add(new Label(message));
     }
 }

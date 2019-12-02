@@ -1,16 +1,9 @@
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
-
+//TODO Clean up
 public class Bishop extends Piece {
     public Bishop(Position p, boolean isWhite, PieceImages images, Board bd) {
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.width);
-        this.pos = p;
-        this.isWhite = isWhite;
-        this.img = this.isWhite ? images.whiteBishop: images.blackBishop;
-        this.setImage(img);
-        this.board = bd;
+        super(p, isWhite, bd);
+        this.setImg(isWhite ? images.whiteBishop : images.blackBishop);
     }
 
     public ArrayList<Position> getLegalMoves() {
@@ -22,11 +15,11 @@ public class Bishop extends Piece {
         return moves;
     }
     public ArrayList<Position> addDownLeft(ArrayList<Position> moves){
-        int row = this.pos.row+1;
-        int col = this.pos.col-1;
+        int row = this.getPos().row+1;
+        int col = this.getPos().col-1;
         while(row <= 7 && col >= 0) {
-                if (this.board.tiles[col][row].hasPiece) {
-                    if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite) {
+                if (this.getBoard().tiles[col][row].hasPiece) {
+                    if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()) {
                         moves.add(new Position(col, row));
                         break;
                     } else break;
@@ -39,11 +32,11 @@ public class Bishop extends Piece {
     }
 
     public ArrayList<Position> addUpLeft(ArrayList<Position> moves){
-        int row = this.pos.row-1;
-        int col = this.pos.col-1;
+        int row = this.getPos().row-1;
+        int col = this.getPos().col-1;
         while(row >= 0 && col >= 0){
-            if (this.board.tiles[col][row].hasPiece){
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+            if (this.getBoard().tiles[col][row].hasPiece){
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -57,11 +50,11 @@ public class Bishop extends Piece {
     }
 
     public ArrayList<Position> addDownRight(ArrayList<Position> moves){
-        int row = this.pos.row+1;
-        int col = this.pos.col+1;
+        int row = this.getPos().row+1;
+        int col = this.getPos().col+1;
         while(row <= 7 && col <= 7){
-                if (this.board.tiles[col][row].hasPiece){
-                    if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+                if (this.getBoard().tiles[col][row].hasPiece){
+                    if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, row));
                         break;
                     }
@@ -75,11 +68,11 @@ public class Bishop extends Piece {
     }
 
     public ArrayList<Position> addUpRight(ArrayList<Position> moves){
-        int row = this.pos.row-1;
-        int col = this.pos.col+1;
+        int row = this.getPos().row-1;
+        int col = this.getPos().col+1;
         while(row >= 0 && col <= 7){
-            if (this.board.tiles[col][row].hasPiece){
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+            if (this.getBoard().tiles[col][row].hasPiece){
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -93,6 +86,6 @@ public class Bishop extends Piece {
     }
 
     public String toString() {
-        return "Bishop at " + this.pos.col + "x" + this.pos.row;
+        return "Bishop at " + this.getPos().col + "x" + this.getPos().row;
     }
 }

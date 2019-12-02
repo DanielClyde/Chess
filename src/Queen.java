@@ -1,20 +1,16 @@
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 public class Queen extends Piece {
-    public Queen(Position p, boolean isWhite, PieceImages images, Board bd) {
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.width);
-        this.pos = p;
-        this.isWhite = isWhite;
-        this.img = this.isWhite ?
-                images.whiteQueen :
-                images.blackQueen;
-        this.setImage(img);
-        this.board = bd;
+
+    public Queen(Position position, boolean isWhite, PieceImages images, Board bd) {
+        super(position, isWhite, bd);
+        this.setImg(isWhite ? images.whiteQueen : images.blackQueen);
     }
 
+    /**
+     * Finds the legal moves for the piece
+     * @return an array list of positions where the piece can legally move
+     */
     public ArrayList<Position> getLegalMoves() {
         ArrayList<Position> moves = new ArrayList<>();
         moves = addDownLeft(moves);
@@ -25,22 +21,25 @@ public class Queen extends Piece {
         moves = addLeft(moves);
         moves = addDown(moves);
         moves = addRight(moves);
-
-
         return moves;
     }
-    public ArrayList<Position> addUp(ArrayList<Position> moves){
+
+    public String toString() {
+        return "Queen at " + this.getPos().col + "x" + this.getPos().row;
+    }
+
+    private ArrayList<Position> addUp(ArrayList<Position> moves){
         boolean done = false;
-        int row = this.pos.row-1;
+        int row = this.getPos().row-1;
         while (!done){
             if (row >= 0){
-                if (this.board.tiles[this.pos.col][row].hasPiece){
-                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
-                        moves.add(new Position(this.pos.col, row));
+                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                        moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
                 }
-                moves.add(new Position(this.pos.col, row));
+                moves.add(new Position(this.getPos().col, row));
                 row--;
             }
             else done = true;
@@ -48,18 +47,18 @@ public class Queen extends Piece {
         return moves;
     }
 
-    public ArrayList<Position> addDown(ArrayList<Position> moves){
+    private ArrayList<Position> addDown(ArrayList<Position> moves){
         boolean done = false;
-        int row = this.pos.row+1;
+        int row = this.getPos().row+1;
         while (!done){
             if (row <= 7){
-                if (this.board.tiles[this.pos.col][row].hasPiece){
-                    if (this.board.tiles[this.pos.col][row].piece.isWhite ^ this.isWhite){
-                        moves.add(new Position(this.pos.col, row));
+                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                        moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
                 }
-                moves.add(new Position(this.pos.col, row));
+                moves.add(new Position(this.getPos().col, row));
                 row++;
             }
             else done = true;
@@ -67,35 +66,35 @@ public class Queen extends Piece {
         return moves;
     }
 
-    public ArrayList<Position> addRight(ArrayList<Position> moves){
+    private ArrayList<Position> addRight(ArrayList<Position> moves){
         boolean done = false;
-        int col = this.pos.col+1;
+        int col = this.getPos().col+1;
         while (!done){
             if (col <= 7){
-                if (this.board.tiles[col][this.pos.row].hasPiece){
-                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
-                        moves.add(new Position(col, this.pos.row));
+                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                        moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;
                 }
-                moves.add(new Position(col, this.pos.row));
+                moves.add(new Position(col, this.getPos().row));
                 col++; }
             else done = true; }
         return moves;
     }
 
-    public ArrayList<Position> addLeft(ArrayList<Position> moves){
+    private ArrayList<Position> addLeft(ArrayList<Position> moves){
         boolean done = false;
-        int col = this.pos.col-1;
+        int col = this.getPos().col-1;
         while (!done){
             if (col >= 0){
-                if (this.board.tiles[col][this.pos.row].hasPiece){
-                    if (this.board.tiles[col][this.pos.row].piece.isWhite ^ this.isWhite){
-                        moves.add(new Position(col, this.pos.row));
+                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                        moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;
                 }
-                moves.add(new Position(col, this.pos.row));
+                moves.add(new Position(col, this.getPos().row));
                 col--;
             }
             else done = true;
@@ -104,12 +103,12 @@ public class Queen extends Piece {
 
     }
 
-    public ArrayList<Position> addDownLeft(ArrayList<Position> moves){
-        int row = this.pos.row+1;
-        int col = this.pos.col-1;
+    private ArrayList<Position> addDownLeft(ArrayList<Position> moves){
+        int row = this.getPos().row+1;
+        int col = this.getPos().col-1;
         while(row <= 7 && col >= 0) {
-            if (this.board.tiles[col][row].hasPiece) {
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite) {
+            if (this.getBoard().tiles[col][row].hasPiece) {
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()) {
                     moves.add(new Position(col, row));
                     break;
                 } else break;
@@ -121,12 +120,12 @@ public class Queen extends Piece {
         return moves;
     }
 
-    public ArrayList<Position> addUpLeft(ArrayList<Position> moves){
-        int row = this.pos.row-1;
-        int col = this.pos.col-1;
+    private ArrayList<Position> addUpLeft(ArrayList<Position> moves){
+        int row = this.getPos().row-1;
+        int col = this.getPos().col-1;
         while(row >= 0 && col >= 0){
-            if (this.board.tiles[col][row].hasPiece){
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+            if (this.getBoard().tiles[col][row].hasPiece){
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -139,12 +138,12 @@ public class Queen extends Piece {
         return moves;
     }
 
-    public ArrayList<Position> addDownRight(ArrayList<Position> moves){
-        int row = this.pos.row+1;
-        int col = this.pos.col+1;
+    private ArrayList<Position> addDownRight(ArrayList<Position> moves){
+        int row = this.getPos().row+1;
+        int col = this.getPos().col+1;
         while(row <= 7 && col <= 7){
-            if (this.board.tiles[col][row].hasPiece){
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+            if (this.getBoard().tiles[col][row].hasPiece){
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -157,12 +156,12 @@ public class Queen extends Piece {
         return moves;
     }
 
-    public ArrayList<Position> addUpRight(ArrayList<Position> moves){
-        int row = this.pos.row-1;
-        int col = this.pos.col+1;
+    private ArrayList<Position> addUpRight(ArrayList<Position> moves){
+        int row = this.getPos().row-1;
+        int col = this.getPos().col+1;
         while(row >= 0 && col <= 7){
-            if (this.board.tiles[col][row].hasPiece){
-                if (this.board.tiles[col][row].piece.isWhite ^ this.isWhite){
+            if (this.getBoard().tiles[col][row].hasPiece){
+                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -175,10 +174,4 @@ public class Queen extends Piece {
         return moves;
     }
 
-
-
-
-    public String toString() {
-        return "Queen at " + this.pos.col + "x" + this.pos.row;
-    }
 }

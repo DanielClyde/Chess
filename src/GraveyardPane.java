@@ -3,7 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
-
+//TODO Clean up
 /**
  * a pane that displays captured pieces in a chess program
  */
@@ -35,7 +35,7 @@ public class GraveyardPane extends VBox {
     }
 
     public void addPiece(Piece piece){
-        if (piece.isWhite) whitePieces.getChildren().add(piece);
+        if (piece.isWhite()) whitePieces.getChildren().add(piece);
         else blackPieces.getChildren().add(piece);
     }
 }

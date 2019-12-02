@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
-
+//TODO Clean up
 public class Chess extends Application{
     public static Board board;
     public static Socket socket = null;
@@ -37,10 +37,10 @@ public class Chess extends Application{
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
-        ChatBox cb = new ChatBox();
-        Board board = new Board(graveyard, topPane, ip.equals("localhost"), cb);
-        //TODO add in the chatbox pane
-        bp.setRight(cb);
+        StackPane bottomPane = new StackPane();
+        ChatBox chatBox = new ChatBox();
+        Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox, bottomPane);
+        bp.setRight(chatBox);
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);

@@ -1,28 +1,26 @@
 
 import java.util.ArrayList;
-
+//TODO Clean up
 public class King extends Piece {
     public King(Position p, boolean isWhite, PieceImages images, Board bd) {
-        this.setFitWidth(this.width);
-        this.setFitHeight(this.width);
-        this.pos = p;
-        this.isWhite = isWhite;
-        this.img = this.isWhite ? images.whiteKing : images.blackKing;
-        this.setImage(img);
-        this.board = bd;
+        super(p, isWhite, bd);
+        this.setImg(isWhite ? images.whiteKing : images.blackKing);
     }
 
-        public ArrayList<Position> getLegalMoves() {
-        //TODO add castleing @Josh
+    /**
+     * Finds the legal moves for the piece
+     * @return an array list of positions where the piece can legally move
+     */
+    public ArrayList<Position> getLegalMoves() {
         ArrayList<Position> moves = new ArrayList<>();
-        for (int rows = this.pos.row - 1; rows <= this.pos.row + 1; rows++) {
-            for (int cols = this.pos.col - 1; cols <= this.pos.col + 1; cols++) {
+        for (int rows = super.getPos().row - 1; rows <= this.getPos().row + 1; rows++) {
+            for (int cols = this.getPos().col - 1; cols <= this.getPos().col + 1; cols++) {
                 if (rows >= 0 && rows <= 7 && cols >= 0 && cols <= 7) {
-                    if (this.board.tiles[cols][rows].hasPiece){
-                        if (this.board.tiles[cols][rows].piece.isWhite ^ this.isWhite){
+                    if (this.getBoard().tiles[cols][rows].hasPiece){
+                        if (this.getBoard().tiles[cols][rows].piece.isWhite() ^ this.isWhite()){
                             moves.add(new Position(cols, rows));}
-                        } else{
-                            moves.add(new Position(cols, rows));}
+                    } else{
+                        moves.add(new Position(cols, rows));}
                 }
             }
         }
@@ -31,6 +29,6 @@ public class King extends Piece {
     }
 
     public String toString() {
-        return "King at " + this.pos.col + "x" + this.pos.row;
+        return "King at " + this.getPos().col + "x" + this.getPos().row;
     }
 }
