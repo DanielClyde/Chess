@@ -29,6 +29,7 @@ public class Board extends GridPane implements Serializable {
         this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
         this.graveyard = graveyard;
         topPane.getChildren().add(new Label("White's Turn"));
+        bottomPane.getChildren().add(new Label("Nothing Special"));
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
