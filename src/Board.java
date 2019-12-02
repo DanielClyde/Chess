@@ -21,6 +21,7 @@ public class Board extends GridPane implements Serializable {
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
     private Text txt = new Text();
+    private boolean gameInProgress = true;
 
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
@@ -320,7 +321,6 @@ public class Board extends GridPane implements Serializable {
         if (t.hasPiece) {
             graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
             if(t.piece instanceof King) gameEnd();
-            else checks();
         }
 
         t.setPiece(activeTile.piece);
@@ -328,7 +328,7 @@ public class Board extends GridPane implements Serializable {
         activeTile.hasPiece = false;
         this.activeTile = null;
         this.clearHighlightedTiles();
-//        checks();
+        if (this.gameInProgress) checks();
         GameMessage toSend = this.createMoveMessage(from, to);
         this.updatePieceBoards();
         this.sendMessage(toSend);
@@ -345,6 +345,7 @@ public class Board extends GridPane implements Serializable {
     private void gameEnd(){
         changeTopPane("Game over");
         System.out.println("The game is ended");
+        this.gameInProgress = false;
     }
 
 }
