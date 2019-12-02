@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class Board extends GridPane implements Serializable {
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
+    private Text txt = new Text();
 
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
@@ -26,9 +28,10 @@ public class Board extends GridPane implements Serializable {
         this.whitePlayer = white;
         PieceImages pi = new PieceImages();
         this.topPane = topPane;
-        topPane.getChildren().add(new Label(""));
+        topPane.getChildren().add(this.txt);
         this.graveyard = graveyard;
         changeTopPane("Game Start");
+        //TODO make txt formated to look good...
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -265,38 +268,38 @@ public class Board extends GridPane implements Serializable {
         return false;
     }
 
-    /**
-     * check to see if a king is in checkmate
-     * @param isWhite
-     * @return
-     */
-    private boolean checkMate(boolean isWhite){
-        ArrayList<Position> kingMoves = new ArrayList<>();
-        ArrayList<Position> opponentMoves = new ArrayList<>();
-        // find king's tile and populate opponent moves
-        for (Tile[] t : this.tiles) {
-            for (Tile tile : t) {
-                if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
-                    kingMoves = tile.piece.getLegalMoves();
-                }
-                if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
-                    opponentMoves.addAll(tile.piece.getLegalMoves());
-                }
-            }
-        }
-        // check every possible move of the opponent against every possible move of the king, only return true if ALL
-        // of the king's moves equal the opponent's
-        int matchingTiles = 0;
-        for (int i=0; i<kingMoves.size(); i++){
-        for (Position opponentMove : opponentMoves) {
-            if (opponentMove.equals(kingMoves.get(i))) {
-                matchingTiles++;
-                break;
-            }
-            }
-        }
-        return matchingTiles >= kingMoves.size();
-    }
+//    /**
+//     * check to see if a king is in checkmate
+//     * @param isWhite
+//     * @return
+//     */
+//    private boolean checkMate(boolean isWhite){
+//        ArrayList<Position> kingMoves = new ArrayList<>();
+//        ArrayList<Position> opponentMoves = new ArrayList<>();
+//        // find king's tile and populate opponent moves
+//        for (Tile[] t : this.tiles) {
+//            for (Tile tile : t) {
+//                if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
+//                    kingMoves = tile.piece.getLegalMoves();
+//                }
+//                if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
+//                    opponentMoves.addAll(tile.piece.getLegalMoves());
+//                }
+//            }
+//        }
+//        // check every possible move of the opponent against every possible move of the king, only return true if ALL
+//        // of the king's moves equal the opponent's
+//        int matchingTiles = 0;
+//        for (int i=0; i<kingMoves.size(); i++){
+//        for (Position opponentMove : opponentMoves) {
+//            if (opponentMove.equals(kingMoves.get(i))) {
+//                matchingTiles++;
+//                break;
+//            }
+//            }
+//        }
+//        return matchingTiles >= kingMoves.size();
+//    }
 
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i++) {
@@ -311,7 +314,6 @@ public class Board extends GridPane implements Serializable {
         }
     }
     private void movePieces(Tile t){
-        //TODO if king is taken end game...
         Position from = this.activeTile.position;
         Position to = t.position;
         t.getChildren().remove(1);
@@ -336,12 +338,11 @@ public class Board extends GridPane implements Serializable {
     }
 
     private void changeTopPane(String message){
-        topPane.getChildren().remove(0, 0);
-        topPane.getChildren().add(new Label(message));
+        txt.setText(message);
     }
 
     private void gameEnd(){
-        //TODO
+        changeTopPane("Game over");
     }
 
 }
