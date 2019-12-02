@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-//TODO Clean up
+
 public class King extends Piece {
     public King(Position p, boolean isWhite, PieceImages images, Board bd) {
         super(p, isWhite, bd);

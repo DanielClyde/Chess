@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+//TODO I've noticed that the chatbox only sends messeges when the player moves a piece is there a way to change this?
 public class Board extends GridPane implements Serializable {
     public Tile[][] tiles;
     public Tile activeTile = null;
@@ -351,6 +351,7 @@ public class Board extends GridPane implements Serializable {
         changeTopPane("Game over");
         System.out.println("The game is ended");
         this.gameInProgress = false;
+        //TODO Anything else we want ot happen whent the game ends (disable all pieces, etc.)
     }
 
 }

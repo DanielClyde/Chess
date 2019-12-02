@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 //TODO Clean up
-//TODO add exception or loop for when user enters incorect ip adress or localhost spelled wrong we get a repeated null pointer exceptions when this happens
+//TODO add exception handling for server client communication
 public class Chess extends Application{
     public static Board board;
     public static Socket socket = null;

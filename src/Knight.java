@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-//TODO Clean up
+
 public class Knight extends Piece {
     public Knight(Position p, boolean isWhite, PieceImages images, Board bd) {
         super(p, isWhite, bd);
@@ -88,6 +88,7 @@ public class Knight extends Piece {
 
         return moves;
     }
+
     public String toString() {
         return "Knight at " + this.getPos().col + "x" + this.getPos().row;
     }

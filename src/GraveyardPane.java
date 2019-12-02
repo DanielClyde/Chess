@@ -3,7 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
-//TODO Clean up
+//TODO Clean up before submitting i.e remove commented out code and add docstrings
 /**
  * a pane that displays captured pieces in a chess program
  */

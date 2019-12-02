@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-//TODO Clean up
+//TODO Clean up before submitting i.e remove commented out code and add docstrings
 public class ChatBox extends VBox {
     private Integer cfIndex=0;
     private int cfLimit = 21;

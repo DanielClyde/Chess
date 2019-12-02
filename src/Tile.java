@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-//TODO Clean up
+//TODO Add docstrings ane remove commented out code maybe make variable private with getters and setters
 public class Tile extends StackPane {
     boolean isWhite;
     public Piece piece;

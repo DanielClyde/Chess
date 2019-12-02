@@ -1,5 +1,5 @@
 import java.io.Serializable;
-//TODO Clean up
+
 public class Position implements Serializable {
     public int col;
     public int row;

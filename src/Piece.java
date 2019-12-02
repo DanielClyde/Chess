@@ -2,9 +2,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
-//TODO Clean up
+
 public abstract class Piece extends ImageView {
-    private Image img;
     private Position pos;
     private boolean isWhite;
     private boolean isFirstMove = true;
@@ -23,12 +22,7 @@ public abstract class Piece extends ImageView {
         this.board = bd;
     }
 
-    public Image getImg() {
-        return img;
-    }
-
     public void setImg(Image img) {
-        this.img = img;
         this.setImage(img);
     }
 
@@ -42,10 +36,6 @@ public abstract class Piece extends ImageView {
 
     public boolean isWhite() {
         return isWhite;
-    }
-
-    public void setWhite(boolean white) {
-        isWhite = white;
     }
 
     public Board getBoard() {

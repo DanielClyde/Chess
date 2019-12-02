@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-//TODO Server needs to close when clients close (I don't know how to do that so...)
+//TODO Server needs to close when clients close
 public class Server {
     private static Hashtable<Boolean, ObjectOutputStream> writers = new Hashtable<>();
 
