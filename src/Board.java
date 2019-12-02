@@ -320,6 +320,7 @@ public class Board extends GridPane implements Serializable {
         if (t.hasPiece) {
             graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
             if(t.piece instanceof King) gameEnd();
+            else checks();
         }
 
         t.setPiece(activeTile.piece);
@@ -327,7 +328,7 @@ public class Board extends GridPane implements Serializable {
         activeTile.hasPiece = false;
         this.activeTile = null;
         this.clearHighlightedTiles();
-        checks();
+//        checks();
         GameMessage toSend = this.createMoveMessage(from, to);
         this.updatePieceBoards();
         this.sendMessage(toSend);
