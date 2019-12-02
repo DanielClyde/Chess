@@ -314,7 +314,11 @@ public class Board extends GridPane implements Serializable {
         Position from = this.activeTile.position;
         Position to = t.position;
         t.getChildren().remove(1);
-        if (t.hasPiece) graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
+        if (t.hasPiece) {
+            graveyard.addPiece(t.piece); //adds the piece to the captured pieces arrayList
+            if(t.piece instanceof King) gameEnd();
+        }
+
         t.setPiece(activeTile.piece);
         this.activeTile.setPiece(null);
         activeTile.hasPiece = false;
@@ -330,8 +334,13 @@ public class Board extends GridPane implements Serializable {
         timeline.play();
     }
 
-    private void changeTopPane(String Message){
-        //TODO change so when called the topPane's message is changed to message
+    private void changeTopPane(String message){
+        topPane.getChildren().remove(0, 1);
+        topPane.getChildren().add(new Label(message));
+    }
+
+    private void gameEnd(){
+        //TODO
     }
 
 }
