@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 //TODO Clean up
+//TODO add exception or loop for when user enters incorect ip adress or localhost spelled wrong we get a repeated null pointer exceptions when this happens
 public class Chess extends Application{
     public static Board board;
     public static Socket socket = null;
@@ -37,9 +38,8 @@ public class Chess extends Application{
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
-        StackPane bottomPane = new StackPane();
         ChatBox chatBox = new ChatBox();
-        Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox, bottomPane);
+        Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox);
         bp.setRight(chatBox);
         bp.setCenter(board);
         bp.setLeft(graveyard);

@@ -19,17 +19,15 @@ public class Board extends GridPane implements Serializable {
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
-    public StackPane bottomPane;
 
-    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox, StackPane bottomPane) {
+
+    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
         this.chatBox = chatBox;
         this.whitePlayer = white;
-        this.bottomPane = bottomPane;
         PieceImages pi = new PieceImages();
-        this.topPane = topPane; //TODO add functionality to topPane (signaling check, when pawn gets to end it can change to another piece) etc.
+        this.topPane = topPane;
         this.graveyard = graveyard;
-        topPane.getChildren().add(new Label("White's Turn"));
-        bottomPane.getChildren().add(new Label("Nothing Special"));
+        changeTopPane("Game Start");
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -234,7 +232,8 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(boolean isWhite) {
         String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) changeBottomPane(isWhite + " is in Check!");
+        if (check(isWhite)) changeTopPane(isWhite + " is in Check!");
+        else changeTopPane("");
     }
 
     /**
@@ -335,8 +334,4 @@ public class Board extends GridPane implements Serializable {
         //TODO change so when called the topPane's message is changed to message
     }
 
-    private void changeBottomPane(String message){
-        bottomPane.getChildren().removeAll();
-        bottomPane.getChildren().add(new Label(message));
-    }
 }
