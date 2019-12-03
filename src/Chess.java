@@ -47,11 +47,13 @@ public class Chess extends Application{
         GraveyardPane graveyard = new GraveyardPane();
         StackPane topPane = new StackPane();
         ChatBox chatBox = new ChatBox();
-        Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox);
+        StackPane bottomPane = new StackPane();
+        Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox, bottomPane);
         bp.setRight(chatBox);
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);
+        bp.setBottom(bottomPane);
         pane.getChildren().add(bp);
         board.gameInProgress.addListener((o, b, b2) -> {
             if (!o.getValue()) {

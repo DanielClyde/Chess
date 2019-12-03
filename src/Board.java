@@ -1,9 +1,9 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -17,20 +17,28 @@ public class Board extends GridPane implements Serializable {
     public StackPane topPane;
     public boolean whitePlayer;
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
-    public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
-    private Text txt = new Text();
+    private Text topTxt = new Text("Game Start");
+    private Text btmTxt = new Text("Test Message");
     public SimpleBooleanProperty gameInProgress = new SimpleBooleanProperty(true);
+    public StackPane bottomPane;
 
 
-    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
+    public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox, StackPane bottomPane) {
         this.chatBox = chatBox;
         this.whitePlayer = white;
         PieceImages pi = new PieceImages();
         this.topPane = topPane;
-        topPane.getChildren().add(this.txt);
+        this.bottomPane = bottomPane;
+
+        this.topTxt.setFill(Color.BLACK);
+        this.btmTxt.setFill(Color.WHITE);
+        topTxt.setFont(Font.font("Verdana", 20));
+        btmTxt.setFont(Font.font("Verdana", 40));
+
+        topPane.getChildren().add(this.topTxt);
+        bottomPane.getChildren().add(this.btmTxt);
         this.graveyard = graveyard;
-        changeTopPane("Game Start");
         //TODO make txt formated to look good...
         this.tiles = new Tile[8][8];
         putTilesOnBoard();
@@ -234,8 +242,8 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(boolean isWhite) {
         String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) changeTopPane(player + " is in Check!");
-        else changeTopPane("");
+        if (check(isWhite)) changeBottomPane(player + " is in Check!");
+        else changeBottomPane("");
     }
 
     /**
@@ -339,8 +347,9 @@ public class Board extends GridPane implements Serializable {
     }
 
     private void changeTopPane(String message){
-        txt.setText(message);
+        topTxt.setText(message);
     }
+    private void changeBottomPane(String message) {btmTxt.setText(message);}
 
     private void gameEnd(){
         changeTopPane("Game over");
