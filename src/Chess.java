@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -46,7 +48,9 @@ public class Chess extends Application{
         bp.setTop(topPane);
         pane.getChildren().add(bp);
         Scene sc = new Scene(pane);
-        stage.titleProperty().bind(board.turnStatus);
+        board.turnStatus.addListener((o, s, s1) -> {
+            stage.setTitle(o.getValue());
+        });
         stage.setScene(sc);
         stage.show();
     }
