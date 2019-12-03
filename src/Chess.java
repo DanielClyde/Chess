@@ -1,10 +1,7 @@
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,12 +9,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Stack;
+
 //TODO Clean up
 //TODO add exception handling for server client communication
 public class Chess extends Application{
@@ -33,11 +31,21 @@ public class Chess extends Application{
     @Override
     public void start(Stage stage) {
         Pane pane = new StackPane();
-        BackgroundImage myBI= new BackgroundImage(new Image("/doggypotter.jpg", 1200, 500, false, true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
+        Image bgImage = new Image("/doggypotter.jpg", 1200, 500, false, true);
+        BackgroundImage myBI= new BackgroundImage(
+                bgImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+        ImageView iv = new ImageView(bgImage);
         Background bg = new Background(myBI);
-        pane.setBackground(bg);
+        iv.fitHeightProperty().bind(stage.heightProperty());
+        iv.fitWidthProperty().bind(stage.widthProperty());
+//        pane.setBackground(bg);
+        Text t1 = new Text("Hello");
+        Text t2 = new Text();
+        t2.textProperty().bind(t1.textProperty());
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address or localhost: ");
         String ip = input.nextLine();
@@ -49,11 +57,17 @@ public class Chess extends Application{
         ChatBox chatBox = new ChatBox();
         StackPane bottomPane = new StackPane();
         Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox, bottomPane);
+
+//        board.minHeightProperty().bind(stage.heightProperty());
+//        board.maxHeightProperty().bind(stage.heightProperty());
+
+
         bp.setRight(chatBox);
         bp.setCenter(board);
         bp.setLeft(graveyard);
         bp.setTop(topPane);
         bp.setBottom(bottomPane);
+        pane.getChildren().add(iv);
         pane.getChildren().add(bp);
         board.gameInProgress.addListener((o, b, b2) -> {
             if (!o.getValue()) {

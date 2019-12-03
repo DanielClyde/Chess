@@ -1,10 +1,12 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ public class Board extends GridPane implements Serializable {
 
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox, StackPane bottomPane) {
+
         this.chatBox = chatBox;
         this.whitePlayer = white;
         PieceImages pi = new PieceImages();
