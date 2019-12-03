@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -53,11 +55,13 @@ public class Chess extends Application{
         pane.getChildren().add(bp);
         board.gameInProgress.addListener((o, b, b2) -> {
             if (!o.getValue()) {
-                Pane gameOverPane = new Pane();
+                Pane gameOverPane = new StackPane();
+                Rectangle r = new Rectangle(myBI.getImage().getWidth(), myBI.getImage().getHeight());
+                r.setFill(Color.TRANSPARENT);
                 Text gameOver = new Text("Game Over!");
                 gameOver.setFont(new Font(80));
                 gameOver.setTextAlignment(TextAlignment.CENTER);
-                gameOverPane.getChildren().add(gameOver);
+                gameOverPane.getChildren().addAll(r, gameOver);
                 pane.getChildren().add(gameOverPane);
             }
         });
