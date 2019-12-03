@@ -19,7 +19,7 @@ public class Board extends GridPane implements Serializable {
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ChatBox chatBox;
     private Text topTxt = new Text("Game Start");
-    private Text btmTxt = new Text("Test Message");
+    private Text btmTxt = new Text("");
     public SimpleBooleanProperty gameInProgress = new SimpleBooleanProperty(true);
     public StackPane bottomPane;
 
@@ -247,7 +247,7 @@ public class Board extends GridPane implements Serializable {
     }
 
     /**
-     * check to see if a king is in check
+     * check to see if a king is in check TODO for some reason it doesn't catch it when white is in check but it does when black is in check so I don't know what is going on?
      * @param isWhite
      * @return
      */
