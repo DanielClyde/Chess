@@ -1,10 +1,13 @@
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class Chess extends Application{
 
     @Override
     public void start(Stage stage) {
-        Pane pane = new Pane();
+        Pane pane = new StackPane();
         BackgroundImage myBI= new BackgroundImage(new Image("/doggypotter.jpg", 1200, 500, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
@@ -47,6 +50,15 @@ public class Chess extends Application{
         bp.setLeft(graveyard);
         bp.setTop(topPane);
         pane.getChildren().add(bp);
+        board.gameInProgress.addListener((o, b, b2) -> {
+            if (!o.getValue()) {
+                Pane gameOverPane = new Pane();
+                Text gameOver = new Text("Game Over!");
+                gameOver.setTextAlignment(TextAlignment.CENTER);
+                gameOverPane.getChildren().add(gameOver);
+                pane.getChildren().add(gameOverPane);
+            }
+        });
         Scene sc = new Scene(pane);
         stage.setScene(sc);
         stage.show();

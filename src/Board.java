@@ -20,7 +20,7 @@ public class Board extends GridPane implements Serializable {
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
     private Text txt = new Text();
-    private boolean gameInProgress = true;
+    public SimpleBooleanProperty gameInProgress = new SimpleBooleanProperty(true);
 
 
     public Board(GraveyardPane graveyard, StackPane topPane, boolean white, ChatBox chatBox) {
@@ -128,7 +128,7 @@ public class Board extends GridPane implements Serializable {
         fromTile.setPiece(null);
         fromTile.hasPiece = false;
         this.clearHighlightedTiles();
-        if (gameInProgress) checks();
+        if (gameInProgress.getValue()) checks();
         updatePieceBoards();
         this.changeTopPane("Your Turn!");
     }
@@ -327,7 +327,7 @@ public class Board extends GridPane implements Serializable {
         activeTile.hasPiece = false;
         this.activeTile = null;
         this.clearHighlightedTiles();
-        if (this.gameInProgress) checks();
+        if (this.gameInProgress.getValue()) checks();
         GameMessage toSend = this.createMoveMessage(from, to);
         this.updatePieceBoards();
         this.changeTopPane("Opponent's Turn!");
@@ -345,7 +345,7 @@ public class Board extends GridPane implements Serializable {
     private void gameEnd(){
         changeTopPane("Game over");
         System.out.println("The game is ended");
-        this.gameInProgress = false;
+        this.gameInProgress.set(false);
         //TODO Anything else we want ot happen whent the game ends (disable all pieces, etc.)
     }
 
