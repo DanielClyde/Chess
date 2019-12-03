@@ -27,8 +27,8 @@ public class Bishop extends Piece {
         int row = this.getPos().row+1;
         int col = this.getPos().col-1;
         while(row <= 7 && col >= 0) {
-                if (this.getBoard().tiles[col][row].hasPiece) {
-                    if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()) {
+                if (this.getBoard().board[col][row].hasPiece) {
+                    if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()) {
                         moves.add(new Position(col, row));
                         break;
                     } else break;
@@ -44,8 +44,8 @@ public class Bishop extends Piece {
         int row = this.getPos().row-1;
         int col = this.getPos().col-1;
         while(row >= 0 && col >= 0){
-            if (this.getBoard().tiles[col][row].hasPiece){
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[col][row].hasPiece){
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -62,8 +62,8 @@ public class Bishop extends Piece {
         int row = this.getPos().row+1;
         int col = this.getPos().col+1;
         while(row <= 7 && col <= 7){
-                if (this.getBoard().tiles[col][row].hasPiece){
-                    if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[col][row].hasPiece){
+                    if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, row));
                         break;
                     }
@@ -80,8 +80,8 @@ public class Bishop extends Piece {
         int row = this.getPos().row-1;
         int col = this.getPos().col+1;
         while(row >= 0 && col <= 7){
-            if (this.getBoard().tiles[col][row].hasPiece){
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[col][row].hasPiece){
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }

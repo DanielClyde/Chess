@@ -14,8 +14,8 @@ public class Knight extends Piece {
         ArrayList<Position> moves = new ArrayList<>();
         // left two up one
         if (this.getPos().col - 2 >= 0 && this.getPos().row-1 >= 0){
-            if (this.getBoard().tiles[this.getPos().col-2][this.getPos().row-1].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col-2][this.getPos().row-1].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col-2][this.getPos().row-1].hasPiece){
+                if (this.getBoard().board[this.getPos().col-2][this.getPos().row-1].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col-2, this.getPos().row-1));
                 }
             }
@@ -23,8 +23,8 @@ public class Knight extends Piece {
 
         // right two up one
         if (this.getPos().col + 2 <= 7 && this.getPos().row-1 >= 0){
-            if (this.getBoard().tiles[this.getPos().col+2][this.getPos().row-1].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col+2][this.getPos().row-1].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col+2][this.getPos().row-1].hasPiece){
+                if (this.getBoard().board[this.getPos().col+2][this.getPos().row-1].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col+2, this.getPos().row-1));
                 }
             }
@@ -32,8 +32,8 @@ public class Knight extends Piece {
 
         // right two down one
         if (this.getPos().col + 2 <= 7 && this.getPos().row+1 <= 7){
-            if (this.getBoard().tiles[this.getPos().col+2][this.getPos().row+1].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col+2][this.getPos().row+1].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col+2][this.getPos().row+1].hasPiece){
+                if (this.getBoard().board[this.getPos().col+2][this.getPos().row+1].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col+2, this.getPos().row+1));
                 }
             }
@@ -41,8 +41,8 @@ public class Knight extends Piece {
 
         // left one up two
         if (this.getPos().col - 1 >= 0 && this.getPos().row-2 >= 0){
-            if (this.getBoard().tiles[this.getPos().col-1][this.getPos().row-2].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col-1][this.getPos().row-2].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col-1][this.getPos().row-2].hasPiece){
+                if (this.getBoard().board[this.getPos().col-1][this.getPos().row-2].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col-1, this.getPos().row-2));
                 }
             }
@@ -50,8 +50,8 @@ public class Knight extends Piece {
 
         // right one up two
         if (this.getPos().col + 1 <= 7 && this.getPos().row-2 >= 0){
-            if (this.getBoard().tiles[this.getPos().col+1][this.getPos().row-2].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col+1][this.getPos().row-2].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col+1][this.getPos().row-2].hasPiece){
+                if (this.getBoard().board[this.getPos().col+1][this.getPos().row-2].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col+1, this.getPos().row-2));
                 }
             }
@@ -59,8 +59,8 @@ public class Knight extends Piece {
 
         // left one down two
         if (this.getPos().col - 1 >= 0 && this.getPos().row+2 <= 7){
-            if (this.getBoard().tiles[this.getPos().col-1][this.getPos().row+2].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col-1][this.getPos().row+2].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col-1][this.getPos().row+2].hasPiece){
+                if (this.getBoard().board[this.getPos().col-1][this.getPos().row+2].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col-1, this.getPos().row+2));
                 }
             }
@@ -68,8 +68,8 @@ public class Knight extends Piece {
 
         // right one down two
         if (this.getPos().col + 1 <= 7 && this.getPos().row+2 <= 7){
-            if (this.getBoard().tiles[this.getPos().col+1][this.getPos().row+2].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col+1][this.getPos().row+2].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col+1][this.getPos().row+2].hasPiece){
+                if (this.getBoard().board[this.getPos().col+1][this.getPos().row+2].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col+1, this.getPos().row+2));
                 }
             }
@@ -78,8 +78,8 @@ public class Knight extends Piece {
 
         // left two up one
         if (this.getPos().col - 2 >= 0 && this.getPos().row+1 <= 7){
-            if (this.getBoard().tiles[this.getPos().col-2][this.getPos().row+1].hasPiece){
-                if (this.getBoard().tiles[this.getPos().col-2][this.getPos().row+1].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[this.getPos().col-2][this.getPos().row+1].hasPiece){
+                if (this.getBoard().board[this.getPos().col-2][this.getPos().row+1].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(this.getPos().col-2, this.getPos().row+1));
                 }
             }

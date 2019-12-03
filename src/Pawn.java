@@ -17,26 +17,26 @@ public class Pawn extends Piece {
         int forwardOne = this.isWhite() ? 1 : -1;
 
         if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7) {
-            if (!this.getBoard().tiles[this.getPos().col][this.getPos().row + forwardOne].hasPiece) {
+            if (!this.getBoard().board[this.getPos().col][this.getPos().row + forwardOne].hasPiece) {
 
                 moves.add(new Position(this.getPos().col, this.getPos().row + forwardOne));
 
                 if (this.getPos().row + forwardTwo >= 0 && this.getPos().row + forwardTwo <= 7 && this.isFirstMove()) {
-                    if (!this.getBoard().tiles[this.getPos().col][this.getPos().row + forwardTwo].hasPiece) {
+                    if (!this.getBoard().board[this.getPos().col][this.getPos().row + forwardTwo].hasPiece) {
                     moves.add(new Position(this.getPos().col, this.getPos().row + forwardTwo));}
                 }
             }
         }
 
         if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7 && this.getPos().col - 1 >= 0) {
-            if (this.getBoard().tiles[this.getPos().col - 1][this.getPos().row + forwardOne].hasPiece && (
-                    this.getBoard().tiles[this.getPos().col - 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
+            if (this.getBoard().board[this.getPos().col - 1][this.getPos().row + forwardOne].hasPiece && (
+                    this.getBoard().board[this.getPos().col - 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
                 moves.add(new Position(this.getPos().col - 1, this.getPos().row + forwardOne));
             }
         }
         if (this.getPos().row + forwardOne >= 0 && this.getPos().row + forwardOne <= 7 && this.getPos().col + 1 <= 7) {
-            if (this.getBoard().tiles[this.getPos().col + 1][this.getPos().row + forwardOne].hasPiece && (
-                    this.getBoard().tiles[this.getPos().col + 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
+            if (this.getBoard().board[this.getPos().col + 1][this.getPos().row + forwardOne].hasPiece && (
+                    this.getBoard().board[this.getPos().col + 1][this.getPos().row + forwardOne].piece.isWhite() ^ this.isWhite())) {
                 moves.add(new Position(this.getPos().col + 1, this.getPos().row + forwardOne));
             }
         }

@@ -33,8 +33,8 @@ public class Queen extends Piece {
         int row = this.getPos().row-1;
         while (!done){
             if (row >= 0){
-                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
-                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().board[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
@@ -52,8 +52,8 @@ public class Queen extends Piece {
         int row = this.getPos().row+1;
         while (!done){
             if (row <= 7){
-                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
-                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().board[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
@@ -71,8 +71,8 @@ public class Queen extends Piece {
         int col = this.getPos().col+1;
         while (!done){
             if (col <= 7){
-                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
-                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().board[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;
@@ -88,8 +88,8 @@ public class Queen extends Piece {
         int col = this.getPos().col-1;
         while (!done){
             if (col >= 0){
-                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
-                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().board[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;
@@ -107,8 +107,8 @@ public class Queen extends Piece {
         int row = this.getPos().row+1;
         int col = this.getPos().col-1;
         while(row <= 7 && col >= 0) {
-            if (this.getBoard().tiles[col][row].hasPiece) {
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()) {
+            if (this.getBoard().board[col][row].hasPiece) {
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()) {
                     moves.add(new Position(col, row));
                     break;
                 } else break;
@@ -124,8 +124,8 @@ public class Queen extends Piece {
         int row = this.getPos().row-1;
         int col = this.getPos().col-1;
         while(row >= 0 && col >= 0){
-            if (this.getBoard().tiles[col][row].hasPiece){
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[col][row].hasPiece){
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -142,8 +142,8 @@ public class Queen extends Piece {
         int row = this.getPos().row+1;
         int col = this.getPos().col+1;
         while(row <= 7 && col <= 7){
-            if (this.getBoard().tiles[col][row].hasPiece){
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[col][row].hasPiece){
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }
@@ -160,8 +160,8 @@ public class Queen extends Piece {
         int row = this.getPos().row-1;
         int col = this.getPos().col+1;
         while(row >= 0 && col <= 7){
-            if (this.getBoard().tiles[col][row].hasPiece){
-                if (this.getBoard().tiles[col][row].piece.isWhite() ^ this.isWhite()){
+            if (this.getBoard().board[col][row].hasPiece){
+                if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
                     break;
                 }

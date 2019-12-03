@@ -28,8 +28,8 @@ public class Rook extends Piece {
         int row = this.getPos().row-1;
         while (!done){
             if (row >= 0){
-                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
-                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().board[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
@@ -47,8 +47,8 @@ public class Rook extends Piece {
         int row = this.getPos().row+1;
         while (!done){
             if (row <= 7){
-                if (this.getBoard().tiles[this.getPos().col][row].hasPiece){
-                    if (this.getBoard().tiles[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[this.getPos().col][row].hasPiece){
+                    if (this.getBoard().board[this.getPos().col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(this.getPos().col, row));
                         break;
                     }else break;
@@ -66,8 +66,8 @@ public class Rook extends Piece {
         int col = this.getPos().col+1;
         while (!done){
             if (col <= 7){
-                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
-                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().board[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;
@@ -83,8 +83,8 @@ public class Rook extends Piece {
         int col = this.getPos().col-1;
         while (!done){
             if (col >= 0){
-                if (this.getBoard().tiles[col][this.getPos().row].hasPiece){
-                    if (this.getBoard().tiles[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
+                if (this.getBoard().board[col][this.getPos().row].hasPiece){
+                    if (this.getBoard().board[col][this.getPos().row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, this.getPos().row));
                         break;
                     }else break;

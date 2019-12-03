@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 //TODO I've noticed that the chatbox only sends messeges when the player moves a piece is there a way to change this?
 public class Board extends GridPane implements Serializable {
-    public Tile[][] tiles;
+    public Tile[][] board;
     public Tile activeTile = null;
     public GraveyardPane graveyard;
     public StackPane topPane;
@@ -40,7 +40,7 @@ public class Board extends GridPane implements Serializable {
         bottomPane.getChildren().add(this.btmTxt);
         this.graveyard = graveyard;
         //TODO make txt formated to look good...
-        this.tiles = new Tile[8][8];
+        this.board = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
@@ -81,8 +81,8 @@ public class Board extends GridPane implements Serializable {
                         t.clearHighlight();
                     }
                 });
-                this.tiles[x][y] = t;
-                this.add(this.tiles[x][y], x, y);
+                this.board[x][y] = t;
+                this.add(this.board[x][y], x, y);
                 isWhite = !isWhite;
             }
             isWhite = !isWhite;
@@ -122,8 +122,8 @@ public class Board extends GridPane implements Serializable {
         Position from = m.movePositions[0];
         Position to = m.movePositions[1];
         System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col); //TODO remove when done
-        Tile fromTile = this.tiles[from.col][from.row];
-        Tile toTile = this.tiles[to.col][to.row];
+        Tile fromTile = this.board[from.col][from.row];
+        Tile toTile = this.board[to.col][to.row];
 
         try {
             toTile.getChildren().remove(1);
@@ -142,7 +142,7 @@ public class Board extends GridPane implements Serializable {
     }
 
     private void updatePieceBoards() {
-        for (Tile[] row : this.tiles) {
+        for (Tile[] row : this.board) {
             for (Tile t : row) {
                 if (t.piece != null) {
                     t.piece.updateBoard(this);
@@ -152,7 +152,7 @@ public class Board extends GridPane implements Serializable {
     }
 
     private void clearHighlightedTiles() {
-        for (Tile[] row : this.tiles) {
+        for (Tile[] row : this.board) {
             for (Tile t : row) {
                 if (t.isHighlighted.getValue()) {
                     t.isHighlighted.set(false);
@@ -165,7 +165,7 @@ public class Board extends GridPane implements Serializable {
     private void addPieces(PieceImages pi) {
 
 
-        for (Tile[] row : this.tiles) {
+        for (Tile[] row : this.board) {
             for (Tile t : row) {
                 if (t.position.row == 1) {
                     t.setPiece(new Pawn(t.position, true, pi, this));
@@ -255,13 +255,14 @@ public class Board extends GridPane implements Serializable {
         Tile kingTile = null;
         ArrayList<Position> opponentMoves = new ArrayList<>();
         // find king's tile and populate opponent moves
-        for (Tile[] t : this.tiles) {
+        for (Tile[] t : this.board) {
             for (Tile tile : t) {
                 if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
                     kingTile = tile;
                 }
                 if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
-                    opponentMoves.addAll(tile.piece.getLegalMoves());
+//                    opponentMoves.addAll(tile.piece.getLegalMoves());
+                    for(Position move : tile.piece.getLegalMoves()) opponentMoves.add(move);
                 }
             }
         }
@@ -310,10 +311,10 @@ public class Board extends GridPane implements Serializable {
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Position p = this.tiles[i][j].position;
+                Position p = this.board[i][j].position;
                 for (Position pos : moves) {
                     if (pos.col == p.col && pos.row == p.row) {
-                        this.tiles[i][j].isHighlighted.set(true);
+                        this.board[i][j].isHighlighted.set(true);
                     }
                 }
             }

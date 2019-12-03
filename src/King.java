@@ -16,8 +16,8 @@ public class King extends Piece {
         for (int rows = super.getPos().row - 1; rows <= this.getPos().row + 1; rows++) {
             for (int cols = this.getPos().col - 1; cols <= this.getPos().col + 1; cols++) {
                 if (rows >= 0 && rows <= 7 && cols >= 0 && cols <= 7) {
-                    if (this.getBoard().tiles[cols][rows].hasPiece){
-                        if (this.getBoard().tiles[cols][rows].piece.isWhite() ^ this.isWhite()){
+                    if (this.getBoard().board[cols][rows].hasPiece){
+                        if (this.getBoard().board[cols][rows].piece.isWhite() ^ this.isWhite()){
                             moves.add(new Position(cols, rows));}
                     } else{
                         moves.add(new Position(cols, rows));}
