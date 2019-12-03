@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -54,12 +55,13 @@ public class Chess extends Application{
             if (!o.getValue()) {
                 Pane gameOverPane = new Pane();
                 Text gameOver = new Text("Game Over!");
+                gameOver.setFont(new Font(80));
                 gameOver.setTextAlignment(TextAlignment.CENTER);
                 gameOverPane.getChildren().add(gameOver);
                 pane.getChildren().add(gameOverPane);
             }
         });
-        Scene sc = new Scene(pane);
+        Scene sc = new Scene(pane, myBI.getImage().getWidth(), myBI.getImage().getHeight());
         stage.setScene(sc);
         stage.show();
     }
