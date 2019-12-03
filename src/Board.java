@@ -16,7 +16,6 @@ public class Board extends GridPane implements Serializable {
     public GraveyardPane graveyard;
     public StackPane topPane;
     public boolean whitePlayer;
-    public SimpleStringProperty turnStatus = new SimpleStringProperty();
     public SimpleBooleanProperty isWhiteTurn = new SimpleBooleanProperty(true);
     public ArrayList<Piece> capturedPieces;
     public ChatBox chatBox;
@@ -37,17 +36,11 @@ public class Board extends GridPane implements Serializable {
         putTilesOnBoard();
         addPieces(pi);
         this.isWhiteTurn.addListener((o,b,b1) -> {
-            this.turnStatus.set("Opponent's Turn!");
             this.getMessages();
-            this.turnStatus.set("Your Turn!");
         });
         if (!this.whitePlayer) {
             System.out.println("Waiting for white to go first!");
-            this.turnStatus.set("Oppenent's Turn!");
             this.getMessages();
-            this.turnStatus.set("Your Turn!");
-        } else {
-            this.turnStatus.set("Your Turn!");
         }
     }
 
@@ -137,6 +130,7 @@ public class Board extends GridPane implements Serializable {
         this.clearHighlightedTiles();
         if (gameInProgress) checks();
         updatePieceBoards();
+        this.changeTopPane("Your Turn!");
     }
 
     private void updatePieceBoards() {
@@ -336,6 +330,7 @@ public class Board extends GridPane implements Serializable {
         if (this.gameInProgress) checks();
         GameMessage toSend = this.createMoveMessage(from, to);
         this.updatePieceBoards();
+        this.changeTopPane("Opponent's Turn!");
         this.sendMessage(toSend);
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(2000), ae -> {
             this.isWhiteTurn.set(!isWhiteTurn.getValue());

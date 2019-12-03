@@ -50,9 +50,6 @@ public class Chess extends Application{
         Scene sc = new Scene(pane);
         stage.setScene(sc);
         stage.show();
-        board.turnStatus.addListener((o, s, s1) -> {
-            stage.setTitle(o.getValue());
-        });
     }
 
     private static void connectToServer(String ip, int port) {
