@@ -47,6 +47,10 @@ public class Server {
                         writers.get(!this.isWhite).flush();
 
                     } catch (EOFException eof){break;}
+                    catch (NullPointerException nullPointer) {
+                        System.out.println("Opponent left the game");
+                        break;
+                    }
                     catch (Exception e) {e.printStackTrace();}
                 }
             } catch (Exception e) {
