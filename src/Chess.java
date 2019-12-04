@@ -16,8 +16,6 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.Stack;
 
-//TODO Clean up
-//TODO add exception handling for server client communication
 public class Chess extends Application{
     public static Board board;
     public static Socket socket = null;
@@ -42,7 +40,6 @@ public class Chess extends Application{
         Background bg = new Background(myBI);
         iv.fitHeightProperty().bind(stage.heightProperty());
         iv.fitWidthProperty().bind(stage.widthProperty());
-//        pane.setBackground(bg);
         Text t1 = new Text("Hello");
         Text t2 = new Text();
         t2.textProperty().bind(t1.textProperty());
@@ -62,10 +59,6 @@ public class Chess extends Application{
         ChatBox chatBox = new ChatBox();
         StackPane bottomPane = new StackPane();
         Board board = new Board(graveyard, topPane, ip.equals("localhost"), chatBox, bottomPane);
-
-//        board.minHeightProperty().bind(stage.heightProperty());
-//        board.maxHeightProperty().bind(stage.heightProperty());
-
 
         bp.setRight(chatBox);
         bp.setCenter(board);

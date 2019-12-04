@@ -246,13 +246,6 @@ public class Board extends GridPane implements Serializable {
         }
     }
 
-//    /**
-//     * run checks on one king to see if it is in checkmate or check
-//     * @param isWhite
-//     */
-//    private boolean checks(boolean isWhite) {
-//        return check(isWhite);
-//    }
 
     /**
      * check to see if a king is in check
@@ -269,7 +262,6 @@ public class Board extends GridPane implements Serializable {
                     kingTile = tile;
                 }
                 if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
-//                    opponentMoves.addAll(tile.piece.getLegalMoves());
                     for(Position move : tile.piece.getLegalMoves()) opponentMoves.add(move);
                 }
             }
@@ -282,39 +274,6 @@ public class Board extends GridPane implements Serializable {
         }
         return false;
     }
-
-//    /**
-//     * check to see if a king is in checkmate
-//     * @param isWhite
-//     * @return
-//     */
-//    private boolean checkMate(boolean isWhite){
-//        ArrayList<Position> kingMoves = new ArrayList<>();
-//        ArrayList<Position> opponentMoves = new ArrayList<>();
-//        // find king's tile and populate opponent moves
-//        for (Tile[] t : this.tiles) {
-//            for (Tile tile : t) {
-//                if (tile.piece instanceof King && tile.piece.isWhite() == isWhite) {
-//                    kingMoves = tile.piece.getLegalMoves();
-//                }
-//                if (tile.hasPiece && tile.piece.isWhite() != isWhite) {
-//                    opponentMoves.addAll(tile.piece.getLegalMoves());
-//                }
-//            }
-//        }
-//        // check every possible move of the opponent against every possible move of the king, only return true if ALL
-//        // of the king's moves equal the opponent's
-//        int matchingTiles = 0;
-//        for (int i=0; i<kingMoves.size(); i++){
-//        for (Position opponentMove : opponentMoves) {
-//            if (opponentMove.equals(kingMoves.get(i))) {
-//                matchingTiles++;
-//                break;
-//            }
-//            }
-//        }
-//        return matchingTiles >= kingMoves.size();
-//    }
 
     private void highlightAvailableMoves(ArrayList<Position> moves, boolean isWhite) {
         for (int i = 0; i < 8; i++) {
@@ -366,7 +325,6 @@ public class Board extends GridPane implements Serializable {
         changeTopPane("Game over");
         System.out.println("The game is ended");
         this.gameInProgress.set(false);
-        //TODO Anything else we want ot happen whent the game ends (disable all pieces, etc.)
     }
 
 }
