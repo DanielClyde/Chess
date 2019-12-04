@@ -47,9 +47,14 @@ public class Chess extends Application{
         Text t2 = new Text();
         t2.textProperty().bind(t1.textProperty());
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter ip address or localhost: ");
-        String ip = input.nextLine();
-        connectToServer(ip, 58901);
+        boolean connected;
+        String ip;
+        do {
+            System.out.println("Enter ip address or localhost: ");
+            ip = input.nextLine();
+            connected = connectToServer(ip, 58901);
+        }while(!connected);
+
         System.out.println("Connected... Let's Play!");
         BorderPane bp = new BorderPane();
         GraveyardPane graveyard = new GraveyardPane();
@@ -86,12 +91,13 @@ public class Chess extends Application{
         stage.show();
     }
 
-    private static void connectToServer(String ip, int port) {
+    private static boolean connectToServer(String ip, int port) {
         try {
             socket = new Socket(ip, port);
             System.out.println("Connected to Server");
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
-        } catch(IOException e) {e.printStackTrace();}
+            return true;
+        } catch(IOException e) {return false;}
     }
 }
