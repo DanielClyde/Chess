@@ -46,12 +46,12 @@ public class Server {
                         System.out.println("writing!...");
                         writers.get(!this.isWhite).flush();
 
-                    } catch (EOFException eof){break;}
-                    catch (NullPointerException nullPointer) {
-                        System.out.println("Opponent left the game");
-                        break;
+//                    } catch (EOFException eof){break;}
+//                    catch (NullPointerException nullPointer) {
+//                        System.out.println("Opponent left the game");
+//                        break;
                     }
-                    catch (Exception e) {e.printStackTrace();}
+                    catch (Exception e) {break;}
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
