@@ -45,7 +45,9 @@ public class Server {
                         writers.get(!this.isWhite).writeObject(m);
                         System.out.println("writing!...");
                         writers.get(!this.isWhite).flush();
-                    } catch (Exception e) {e.printStackTrace();}
+
+                    } catch (EOFException eof){break;}
+                    catch (Exception e) {e.printStackTrace();}
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
