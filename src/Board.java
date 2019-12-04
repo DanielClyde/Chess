@@ -235,22 +235,24 @@ public class Board extends GridPane implements Serializable {
      * run checks on both kings to see if one is in checkmate or check
      */
     private void checks(){
-        checks(true);
-        checks(false);
+        if (check(true)){
+            changeBottomPane("White is in check?");
+        }
+        else if (check(false)){
+            changeBottomPane("Black is in check?");
+        }
+        else{
+            changeBottomPane("");
+        }
     }
 
-    /**
-     * run checks on one king to see if it is in checkmate or check
-     * @param isWhite
-     */
-    private void checks(boolean isWhite) {
-        String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) {
-            System.out.println("player = " + player);
-            changeBottomPane(player + " is in Check!");
-        }
-        else changeBottomPane("no check");
-    }
+//    /**
+//     * run checks on one king to see if it is in checkmate or check
+//     * @param isWhite
+//     */
+//    private boolean checks(boolean isWhite) {
+//        return check(isWhite);
+//    }
 
     /**
      * check to see if a king is in check TODO for some reason it doesn't catch it when white is in check but it does when black is in check so I don't know what is going on?
