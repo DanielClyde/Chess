@@ -11,7 +11,7 @@ import javafx.util.Duration;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-//TODO I've noticed that the chatbox only sends messeges when the player moves a piece is there a way to change this?
+
 public class Board extends GridPane implements Serializable {
     public Tile[][] board;
     public Tile activeTile = null;
@@ -236,10 +236,10 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(){
         if (check(true)){
-            changeBottomPane("White is in check?");
+            changeBottomPane("White is in check! :(");
         }
         else if (check(false)){
-            changeBottomPane("Black is in check?");
+            changeBottomPane("Black is in check!!!!!!!!!!!");
         }
         else{
             changeBottomPane("");
@@ -255,7 +255,7 @@ public class Board extends GridPane implements Serializable {
 //    }
 
     /**
-     * check to see if a king is in check TODO for some reason it doesn't catch it when white is in check but it does when black is in check so I don't know what is going on?
+     * check to see if a king is in check
      * @param isWhite
      * @return
      */
