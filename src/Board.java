@@ -245,8 +245,11 @@ public class Board extends GridPane implements Serializable {
      */
     private void checks(boolean isWhite) {
         String player = isWhite ? "White" : "Black";
-        if (check(isWhite)) changeBottomPane(player + " is in Check!");
-        else changeBottomPane("");
+        if (check(isWhite)) {
+            System.out.println("player = " + player);
+            changeBottomPane(player + " is in Check!");
+        }
+        else changeBottomPane("no check");
     }
 
     /**
@@ -353,7 +356,9 @@ public class Board extends GridPane implements Serializable {
     private void changeTopPane(String message){
         topTxt.setText(message);
     }
-    private void changeBottomPane(String message) {btmTxt.setText(message);}
+    private void changeBottomPane(String message) {
+        btmTxt.setText(message);
+    }
 
     private void gameEnd(){
         changeTopPane("Game over");
