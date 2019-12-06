@@ -30,8 +30,8 @@ public class Bishop extends Piece {
                 if (this.getBoard().board[col][row].hasPiece) {
                     if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()) {
                         moves.add(new Position(col, row));
-                        break;
-                    } else break;
+                    }
+                    break;
                 }
                 moves.add(new Position(col, row));
                 row++;
@@ -47,9 +47,8 @@ public class Bishop extends Piece {
             if (this.getBoard().board[col][row].hasPiece){
                 if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
-                    break;
                 }
-                else break;
+                break;
             }
             moves.add(new Position(col, row));
             row--;
@@ -65,9 +64,8 @@ public class Bishop extends Piece {
                 if (this.getBoard().board[col][row].hasPiece){
                     if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                         moves.add(new Position(col, row));
-                        break;
                     }
-                    else break;
+                    break;
                 }
                 moves.add(new Position(col, row));
                 row++;
@@ -83,9 +81,8 @@ public class Bishop extends Piece {
             if (this.getBoard().board[col][row].hasPiece){
                 if (this.getBoard().board[col][row].piece.isWhite() ^ this.isWhite()){
                     moves.add(new Position(col, row));
-                    break;
                 }
-                else break;
+                break;
             }
             moves.add(new Position(col, row));
             row--;

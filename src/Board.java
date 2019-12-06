@@ -42,7 +42,7 @@ public class Board extends GridPane implements Serializable {
         topPane.getChildren().add(this.topTxt);
         bottomPane.getChildren().add(this.btmTxt);
         this.graveyard = graveyard;
-        //TODO make txt formated to look good...
+
         this.board = new Tile[8][8];
         putTilesOnBoard();
         addPieces(pi);
@@ -65,7 +65,6 @@ public class Board extends GridPane implements Serializable {
                 Tile t = new Tile(isWhite, new Position(x, y));
                 t.setOnMouseClicked(e -> {
                     if (t.piece != null && this.activeTile == null && this.whitePlayer == t.piece.isWhite()) {
-                        System.out.println(t.piece.toString());//TODO remove
                         this.activeTile = t;
                         ArrayList<Position> moves = t.piece.getLegalMoves();
                         this.highlightAvailableMoves(moves, t.isWhite);
@@ -124,7 +123,6 @@ public class Board extends GridPane implements Serializable {
     public void onMessageReceived(GameMessage m) {
         Position from = m.movePositions[0];
         Position to = m.movePositions[1];
-        System.out.println(from.row + "x" + from.col + " to " + to.row + "x" + to.col); //TODO remove when done
         Tile fromTile = this.board[from.col][from.row];
         Tile toTile = this.board[to.col][to.row];
 
