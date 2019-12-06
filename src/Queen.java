@@ -24,6 +24,10 @@ public class Queen extends Piece {
         return moves;
     }
 
+    /**
+     * Returns a string representation of the piece
+     * @return
+     */
     public String toString() {
         return "Queen at " + this.getPos().col + "x" + this.getPos().row;
     }
